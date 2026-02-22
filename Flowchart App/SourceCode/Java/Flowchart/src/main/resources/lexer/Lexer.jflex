@@ -17,7 +17,6 @@ import java.util.*;
 
 // STATES ----------------------------------------------------------------------
 %state STRING
-%state COMMENTS_BLOCK
 
 // CONSTRUCTOR -----------------------------------------------------------------
 %init{
@@ -28,103 +27,50 @@ import java.util.*;
 %init}
 
 // MACROS ----------------------------------------------------------------------
-
-Digit                   = [:jdigit:]
-Letter                  = [:jletter:]
-LetterDigit             = [:jletterdigit:]
-
-Integer                 = (Digit)+
-Double                  = {Integer}\.{Integer}
-
-Text                    = (Letter)*
-Identifier              = {Letter}{LetterDigit}
-
 LineTerminator          = \r|\n|\r\n
 WhiteSpace              = {LineTerminator} | [ \t\f]
 
+Integer                 = [0-9]+
+Double                  = {Integer}\.{Integer}
+
+Text                    = ([:jletterdigit:]_)*
+Identifier              = [:jletter:]{Text}
+
 // JAVA CODE -------------------------------------------------------------------
 %{
-
-    // REFERENCE VARIABLES:
     StringBuffer string;
-    private List<String> errorList;
 
-
-    // SPECIFIC METHODS:
     private void reportar(String message){
         System.out.println(message + " - line: " + (yyline + 1) + " col: " +
         (yycolumn + 1));
     }
+
+    /*---------------------------------------------
+        Codigo para el manejo de errores
+    -----------------------------------------------*/
+
+    private List<String> errorList;
     
-    /**
-     * Method of error report
-    */
     public List<String> getLexicalErrors(){
         return this.errorList;
     }
-    
-    /**
-     * Report of errors
-    */
-    private void error(String message){
-         errorList.add("Error en la line: " + (yyline+1) + ", column: " +
-         (yycolumn+1) + " : " + message);
-    }
 
-     /*
-      * Parser code
-     */
+    /*-----------------------------------------------
+          Codigo para el parser
+    -------------------------------------------------*/
     private Symbol symbol(int type){
         return new Symbol(type, yyline+1, yycolumn+1);
+    }
+
+    private void error(String message){
+         errorList.add("Error en la linea: " + (yyline+1) + ", columna: " +
+         (yycolumn+1) + " : " + message);
     }
 
 %}
 
 %%
 /********************************* LEXICAL RULES ******************************/
-
-/* RESERVED WORDS */
-INICIO                = [INICIO]
-VAR                   = [VAR]
-FIN                   = [FIN]
-
-SI                    = [SI]
-ENTONCES              = [ENTONCES]
-FINSI                 = [FINSI]
-
-MIENTRAS              = [MIENTRAS]
-HACER                 = [HACER]
-FINMIENTRAS           = [FINMIENTRAS]
-
-MOSTRAR               = [MOSTRAR]
-
-/* ARITHMETIC OPERATORS */
-Plus                  = \+
-Minus                 = \-
-Multiply              = \*
-Divide                = \/
-Equal                 = =
-
-/* RELATIONSHIP OPERATORS */
-Equal                 = ==
-Different             = !=
-GreaterThan           = >
-LessThan              = <
-GreaterThanOrEqual    = >=
-LessThanOrEqual       = <=
-
-/* LOGIC OPERATORS */
-And                   = &&
-Or                    = ||
-Not                   = !
-
-
-/* GROUPING SYMBOLS */
-LParen      = \(
-RParen      = \)
-
-
-
 <YYINITIAL> {
 
         /*------------ pronombres ------------*/
@@ -162,21 +108,15 @@ RParen      = \)
     "+"                 { reportar("    +"); }
     "-"                 { reportar("    -"); }
 
-    {Integer}           { reportar("Entero: " + yytext()); }
-    {Double}            { reportar("Decimal: " + yytext()); }
+    {IntNumber}         { reportar("Entero: " + yytext()); }
+    {FloatNumber}       { reportar("Decimal: " + yytext()); }
+    {Email}             { reportar("Correo: " + yytext()); }
     {Identifier}        { reportar("Identificador: " + yytext()); }
 
     \"                  { string.setLength(0); yybegin(STRING); }
 
     {WhiteSpace}        { /* ignorar */ }
 
-}
-
-<COMMENT_BLOCK> {
-    \/*                 { yybegin(BLOCK_COMMENT);}
-    <COMMENT>"*/"   { yybegin(YYINITIAL); }
-    <COMMENT>.|\n   { /* ignorar */ }
-    
 }
 
 <STRING> {
@@ -194,8 +134,7 @@ RParen      = \)
     \\                  { string.append('\\'); }
 }
 
-{NUM_MAL}               {saveError(new Word(yytext(), yyline, yycolumn, true), ErrorType.GRAMMAR_ERROR, yycharat(yycolumn));}
-.                       { error("Lexeme: <" + yytext() + ">"); }
+.          { error("Lexeme: <" + yytext() + ">"); }
 
 <<EOF>>    {
                 return symbol(sym.EOF);
