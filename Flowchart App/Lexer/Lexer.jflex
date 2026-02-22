@@ -13,17 +13,16 @@ import java.util.*;
 %cup
 %line
 %column
-%debug
 
 // STATES ----------------------------------------------------------------------
 %state STRING
-%state COMMENTS_BLOCK
+%state COMMENT
 
 // CONSTRUCTOR -----------------------------------------------------------------
 %init{
     
+    buffer = new StringBuffer();
     errorList = new ArrayList<>();
-    string = new StringBuffer();
 
 %init}
 
@@ -36,8 +35,7 @@ LetterDigit             = [:jletterdigit:]
 Integer                 = (Digit)+
 Double                  = {Integer}\.{Integer}
 
-Text                    = (Letter)*
-Identifier              = {Letter}{LetterDigit}
+Identifier              = {Letter}({LetterDigit})*
 
 LineTerminator          = \r|\n|\r\n
 WhiteSpace              = {LineTerminator} | [ \t\f]
@@ -45,159 +43,132 @@ WhiteSpace              = {LineTerminator} | [ \t\f]
 // JAVA CODE -------------------------------------------------------------------
 %{
 
-    // REFERENCE VARIABLES:
-    StringBuffer string;
+    // REFERENCE VARIABLES -----------------------------------------------------
+    StringBuffer buffer;
     private List<String> errorList;
 
-
-    // SPECIFIC METHODS:
-    private void reportar(String message){
-        System.out.println(message + " - line: " + (yyline + 1) + " col: " +
-        (yycolumn + 1));
-    }
-    
-    /**
-     * Method of error report
-    */
-    public List<String> getLexicalErrors(){
-        return this.errorList;
-    }
-    
-    /**
-     * Report of errors
-    */
+    // SPECIFIC METHODS --------------------------------------------------------
+    // ERROR REPORT
     private void error(String message){
-         errorList.add("Error en la line: " + (yyline+1) + ", column: " +
+         errorList.add("Error in line: " + (yyline+1) + ", column: " +
          (yycolumn+1) + " : " + message);
     }
 
-     /*
-      * Parser code
-     */
+     // PARSER METHDOS
     private Symbol symbol(int type){
         return new Symbol(type, yyline+1, yycolumn+1);
+    }
+    
+    private Symbol symbol(int type, Object value){
+        return new Symbol(type, yyline+1, yycolumn+1, value);
+    }
+
+    // GETTERS -----------------------------------------------------------------
+    public List<String> getLexicalErrors(){
+        return this.errorList;
     }
 
 %}
 
 %%
 /********************************* LEXICAL RULES ******************************/
+<YYINITIAL>{
+    // RESERVED WORDS
+    "INICIO"          { return symbol(sym.START); }
+    "VAR"             { return symbol(sym.VAR); }
+    "FIN"             { return symbol(sym.END); }
+    "SI"              { return symbol(sym.IF); }
+    "ENTONCES"        { return symbol(sym.THEN); }
+    "FINSI"           { return symbol(sym.IF_END); }
+    "MIENTRAS"        { return symbol(sym.WHILE); }
+    "HACER"           { return symbol(sym.DO); }
+    "FINMIENTRAS"     { return symbol(sym.WHILE_END); }
+    "MOSTRAR"         { return symbol(sym.SHOW); }
 
-/* RESERVED WORDS */
-INICIO                = [INICIO]
-VAR                   = [VAR]
-FIN                   = [FIN]
+    // ARITHMETIC OPERATORS
+    "+"               { return symbol(sym.PLUS); }
+    "-"               { return symbol(sym.MINUS); }
+    "*"               { return symbol(sym.MULTIPLY); }
+    "/"               { return symbol(sym.DIVIDE); }
 
-SI                    = [SI]
-ENTONCES              = [ENTONCES]
-FINSI                 = [FINSI]
+    // RELATIONSHIP OPERATORS
+    "=="              { return symbol(sym.EQUAL); }
+    "!="              { return symbol(sym.DIFERENT); }
+    ">="              { return symbol(sym.GOE); }
+    "<="              { return symbol(sym.LOE); }
+    ">"               { return symbol(sym.GREATER); }
+    "<"               { return symbol(sym.LESS); }
+    "="               { return symbol(sym.ASSIGN); }
 
-MIENTRAS              = [MIENTRAS]
-HACER                 = [HACER]
-FINMIENTRAS           = [FINMIENTRAS]
+    // LOGIC OPERATORS
+    "&&"              { return symbol(sym.AND); }
+    "||"              { return symbol(sym.OR); }
+    "!"               { return symbol(sym.NOT); }
 
-MOSTRAR               = [MOSTRAR]
+    // GROUPING SYMBOLS
+    "("               { return symbol(sym.OPEN_PARENT); }
+    ")"               { return symbol(sym.CLOSED_PARENT); }
 
-/* ARITHMETIC OPERATORS */
-Plus                  = \+
-Minus                 = \-
-Multiply              = \*
-Divide                = \/
-Equal                 = =
+    // MACROS
+    {Double}          { return symbol(sym.DOUBLE, Double.parseDouble(yytext())); }
+    {Integer}         { return symbol(sym.INTEGER, Integer.parseInt(yytext())); }
 
-/* RELATIONSHIP OPERATORS */
-Equal                 = ==
-Different             = !=
-GreaterThan           = >
-LessThan              = <
-GreaterThanOrEqual    = >=
-LessThanOrEqual       = <=
+    {Identifier}      { return symbol(sym.IDENTIFIER, yytext()); }
 
-/* LOGIC OPERATORS */
-And                   = &&
-Or                    = ||
-Not                   = !
+    {WhiteSpace}+     { /* IGNORE */ }
 
+    // STATES
+    "#"               { yybegin(COMMENT); }
 
-/* GROUPING SYMBOLS */
-LParen      = \(
-RParen      = \)
-
-
-
-<YYINITIAL> {
-
-        /*------------ pronombres ------------*/
-    "I"                 { return symbol(sym.I); }
-    "You"               { return symbol(sym.YOU); }
-    "She"               { return symbol(sym.SHE); }
-    "He"                { return symbol(sym.HE); }
-    "It"                { return symbol(sym.IT); }
-    "We"                { return symbol(sym.WE); }
-    "They"              { return symbol(sym.THEY); }
-
-    /*------------- verbos ----------------*/
-    "Have"              { return symbol(sym.HAVE); }
-    "Has"               { return symbol(sym.HAS); }
-    "Sing"              { return symbol(sym.SING); }
-    "Sings"             { return symbol(sym.SINGS); }
-    "Drive"             { return symbol(sym.DRIVE); }
-    "Drives"            { return symbol(sym.DRIVES); }
-    "Walk"              { return symbol(sym.WALK); }
-    "Walks"             { return symbol(sym.WALKS); }
-
-    /*--------------- emojis ----------------*/
-    ":)"                { return symbol(sym.HAPPY); }
-    ":("                { return symbol(sym.SAD); }
-    ":|"                { return symbol(sym.SERIOUS); }
-
-    /*--------------- Otros -----------------*/
-    "."                 { return symbol(sym.POINT); }
-    ","                 { return symbol(sym.COMMA); }
+    // String
+    \"                { buffer.setLength(0); yybegin(STRING); }
     
+    .                 {
+                        error("Lexical error: " + yytext());
+                        return symbol(sym.ERROR, yytext());
+                      }
 
-    \"                  { string.setLength(0); yybegin(STRING); }
-
-
-    "+"                 { reportar("    +"); }
-    "-"                 { reportar("    -"); }
-
-    {Integer}           { reportar("Entero: " + yytext()); }
-    {Double}            { reportar("Decimal: " + yytext()); }
-    {Identifier}        { reportar("Identificador: " + yytext()); }
-
-    \"                  { string.setLength(0); yybegin(STRING); }
-
-    {WhiteSpace}        { /* ignorar */ }
-
-}
-
-<COMMENT_BLOCK> {
-    \/*                 { yybegin(BLOCK_COMMENT);}
-    <COMMENT>"*/"   { yybegin(YYINITIAL); }
-    <COMMENT>.|\n   { /* ignorar */ }
-    
 }
 
 <STRING> {
-    \"                  {
-                            yybegin(YYINITIAL);
-                            return symbol(sym.COMPLEMENT);
-                            //reportar("String: " + string.toString());
-                        }
-    [^\n\r\"\\]+        { string.append( yytext() ); }
-    \\t                 { string.append('\t'); }
-    \\n                 { string.append('\n'); }
-
-    \\r                 { string.append('\r'); }
-    \\\"                { string.append('\"'); }
-    \\                  { string.append('\\'); }
+    
+    \"                {
+                        yybegin(YYINITIAL);
+                        return symbol(sym.STRING, buffer.toString());
+                      }
+                  
+    [^\n\r\"\\]+      { buffer.append( yytext() ); }
+    \\n               { buffer.append('\n'); }
+    \\t               { buffer.append('\t'); }
+    \\r               { buffer.append('\r'); }
+    \\\"              { buffer.append('\"'); }
+    \\\\              { buffer.append('\\'); }
 }
 
-{NUM_MAL}               {saveError(new Word(yytext(), yyline, yycolumn, true), ErrorType.GRAMMAR_ERROR, yycharat(yycolumn));}
-.                       { error("Lexeme: <" + yytext() + ">"); }
+<STRING>\n {
+                        error("Unclosed string literal");
+                        yybegin(YYINITIAL);
+                        return symbol(sym.ERROR);
+}
 
-<<EOF>>    {
-                return symbol(sym.EOF);
-           }
+<STRING><<EOF>> {
+                        error("Unclosed string at EOF");
+                        return symbol(sym.EOF);
+}
+
+<COMMENT>{
+
+    \n                { yybegin(YYINITIAL); }
+    .                 { /* IGNORE */ }
+
+}
+
+<COMMENT><<EOF>> {
+                        error("Unclosed comment at EOF");
+                        return symbol(sym.EOF);
+}
+
+<<EOF>>           {
+                        return symbol(sym.EOF);
+                  }
 

@@ -13,130 +13,162 @@ import java.util.*;
 %cup
 %line
 %column
-%debug
 
 // STATES ----------------------------------------------------------------------
 %state STRING
+%state COMMENT
 
 // CONSTRUCTOR -----------------------------------------------------------------
 %init{
     
+    buffer = new StringBuffer();
     errorList = new ArrayList<>();
-    string = new StringBuffer();
 
 %init}
 
 // MACROS ----------------------------------------------------------------------
+
+Digit                   = [:jdigit:]
+Letter                  = [:jletter:]
+LetterDigit             = [:jletterdigit:]
+
+Integer                 = (Digit)+
+Double                  = {Integer}\.{Integer}
+
+Identifier              = {Letter}({LetterDigit})*
+
 LineTerminator          = \r|\n|\r\n
 WhiteSpace              = {LineTerminator} | [ \t\f]
 
-Integer                 = [0-9]+
-Double                  = {Integer}\.{Integer}
-
-Text                    = ([:jletterdigit:]_)*
-Identifier              = [:jletter:]{Text}
-
 // JAVA CODE -------------------------------------------------------------------
 %{
-    StringBuffer string;
 
-    private void reportar(String message){
-        System.out.println(message + " - line: " + (yyline + 1) + " col: " +
-        (yycolumn + 1));
-    }
-
-    /*---------------------------------------------
-        Codigo para el manejo de errores
-    -----------------------------------------------*/
-
+    // REFERENCE VARIABLES -----------------------------------------------------
+    StringBuffer buffer;
     private List<String> errorList;
-    
-    public List<String> getLexicalErrors(){
-        return this.errorList;
+
+    // SPECIFIC METHODS --------------------------------------------------------
+    // ERROR REPORT
+    private void error(String message){
+         errorList.add("Error in line: " + (yyline+1) + ", column: " +
+         (yycolumn+1) + " : " + message);
     }
 
-    /*-----------------------------------------------
-          Codigo para el parser
-    -------------------------------------------------*/
+     // PARSER METHDOS
     private Symbol symbol(int type){
         return new Symbol(type, yyline+1, yycolumn+1);
     }
+    
+    private Symbol symbol(int type, Object value){
+        return new Symbol(type, yyline+1, yycolumn+1, value);
+    }
 
-    private void error(String message){
-         errorList.add("Error en la linea: " + (yyline+1) + ", columna: " +
-         (yycolumn+1) + " : " + message);
+    // GETTERS -----------------------------------------------------------------
+    public List<String> getLexicalErrors(){
+        return this.errorList;
     }
 
 %}
 
 %%
 /********************************* LEXICAL RULES ******************************/
-<YYINITIAL> {
+<YYINITIAL>{
+    // RESERVED WORDS
+    "INICIO"          { return symbol(sym.START); }
+    "VAR"             { return symbol(sym.VAR); }
+    "FIN"             { return symbol(sym.END); }
+    "SI"              { return symbol(sym.IF); }
+    "ENTONCES"        { return symbol(sym.THEN); }
+    "FINSI"           { return symbol(sym.IF_END); }
+    "MIENTRAS"        { return symbol(sym.WHILE); }
+    "HACER"           { return symbol(sym.DO); }
+    "FINMIENTRAS"     { return symbol(sym.WHILE_END); }
+    "MOSTRAR"         { return symbol(sym.SHOW); }
 
-        /*------------ pronombres ------------*/
-    "I"                 { return symbol(sym.I); }
-    "You"               { return symbol(sym.YOU); }
-    "She"               { return symbol(sym.SHE); }
-    "He"                { return symbol(sym.HE); }
-    "It"                { return symbol(sym.IT); }
-    "We"                { return symbol(sym.WE); }
-    "They"              { return symbol(sym.THEY); }
+    // ARITHMETIC OPERATORS
+    "+"               { return symbol(sym.PLUS); }
+    "-"               { return symbol(sym.MINUS); }
+    "*"               { return symbol(sym.MULTIPLY); }
+    "/"               { return symbol(sym.DIVIDE); }
 
-    /*------------- verbos ----------------*/
-    "Have"              { return symbol(sym.HAVE); }
-    "Has"               { return symbol(sym.HAS); }
-    "Sing"              { return symbol(sym.SING); }
-    "Sings"             { return symbol(sym.SINGS); }
-    "Drive"             { return symbol(sym.DRIVE); }
-    "Drives"            { return symbol(sym.DRIVES); }
-    "Walk"              { return symbol(sym.WALK); }
-    "Walks"             { return symbol(sym.WALKS); }
+    // RELATIONSHIP OPERATORS
+    "=="              { return symbol(sym.EQUAL); }
+    "!="              { return symbol(sym.DIFERENT); }
+    ">="              { return symbol(sym.GOE); }
+    "<="              { return symbol(sym.LOE); }
+    ">"               { return symbol(sym.GREATER); }
+    "<"               { return symbol(sym.LESS); }
+    "="               { return symbol(sym.ASSIGN); }
 
-    /*--------------- emojis ----------------*/
-    ":)"                { return symbol(sym.HAPPY); }
-    ":("                { return symbol(sym.SAD); }
-    ":|"                { return symbol(sym.SERIOUS); }
+    // LOGIC OPERATORS
+    "&&"              { return symbol(sym.AND); }
+    "||"              { return symbol(sym.OR); }
+    "!"               { return symbol(sym.NOT); }
 
-    /*--------------- Otros -----------------*/
-    "."                 { return symbol(sym.POINT); }
-    ","                 { return symbol(sym.COMMA); }
+    // GROUPING SYMBOLS
+    "("               { return symbol(sym.OPEN_PARENT); }
+    ")"               { return symbol(sym.CLOSED_PARENT); }
+
+    // MACROS
+    {Double}          { return symbol(sym.DOUBLE, Double.parseDouble(yytext())); }
+    {Integer}         { return symbol(sym.INTEGER, Integer.parseInt(yytext())); }
+
+    {Identifier}      { return symbol(sym.IDENTIFIER, yytext()); }
+
+    {WhiteSpace}+     { /* IGNORE */ }
+
+    // STATES
+    "#"               { yybegin(COMMENT); }
+
+    // String
+    \"                { buffer.setLength(0); yybegin(STRING); }
     
-
-    \"                  { string.setLength(0); yybegin(STRING); }
-
-
-    "+"                 { reportar("    +"); }
-    "-"                 { reportar("    -"); }
-
-    {IntNumber}         { reportar("Entero: " + yytext()); }
-    {FloatNumber}       { reportar("Decimal: " + yytext()); }
-    {Email}             { reportar("Correo: " + yytext()); }
-    {Identifier}        { reportar("Identificador: " + yytext()); }
-
-    \"                  { string.setLength(0); yybegin(STRING); }
-
-    {WhiteSpace}        { /* ignorar */ }
+    .                 {
+                        error("Lexical error: " + yytext());
+                        return symbol(sym.ERROR, yytext());
+                      }
 
 }
 
 <STRING> {
-    \"                  {
-                            yybegin(YYINITIAL);
-                            return symbol(sym.COMPLEMENT);
-                            //reportar("String: " + string.toString());
-                        }
-    [^\n\r\"\\]+        { string.append( yytext() ); }
-    \\t                 { string.append('\t'); }
-    \\n                 { string.append('\n'); }
-
-    \\r                 { string.append('\r'); }
-    \\\"                { string.append('\"'); }
-    \\                  { string.append('\\'); }
+    
+    \"                {
+                        yybegin(YYINITIAL);
+                        return symbol(sym.STRING, buffer.toString());
+                      }
+                  
+    [^\n\r\"\\]+      { buffer.append( yytext() ); }
+    \\n               { buffer.append('\n'); }
+    \\t               { buffer.append('\t'); }
+    \\r               { buffer.append('\r'); }
+    \\\"              { buffer.append('\"'); }
+    \\\\              { buffer.append('\\'); }
 }
 
-.          { error("Lexeme: <" + yytext() + ">"); }
+<STRING>\n {
+                        error("Unclosed string literal");
+                        yybegin(YYINITIAL);
+                        return symbol(sym.ERROR);
+}
 
-<<EOF>>    {
-                return symbol(sym.EOF);
-           }
+<STRING><<EOF>> {
+                        error("Unclosed string at EOF");
+                        return symbol(sym.EOF);
+}
+
+<COMMENT>{
+
+    \n                { yybegin(YYINITIAL); }
+    .                 { /* IGNORE */ }
+
+}
+
+<COMMENT><<EOF>> {
+                        error("Unclosed comment at EOF");
+                        return symbol(sym.EOF);
+}
+
+<<EOF>>           {
+                        return symbol(sym.EOF);
+                  }
 
