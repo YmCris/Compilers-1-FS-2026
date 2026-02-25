@@ -1,1 +1,136 @@
-X
+package ymcris.compilers.flowchart.parser;
+
+import java_cup.runtime.*;
+
+/* ---------------- PARSER CODE ---------------- */
+
+parser code {:
+
+    @Override
+    public void report_error(String message, Object info) {
+        System.err.println("Syntax error: " + message);
+    }
+
+    @Override
+    public void syntax_error(Symbol cur_token) {
+        System.err.println("Unexpected token at line " 
+            + cur_token.left + ", column " + cur_token.right);
+    }
+
+:};
+
+/* ---------------- TERMINALS ---------------- */
+
+terminal START, END;
+terminal VAR;
+terminal IF, THEN, IF_END;
+terminal WHILE, DO, WHILE_END;
+terminal SHOW;
+
+terminal PLUS, MINUS, MULTIPLY, DIVIDE;
+terminal EQUAL, DIFERENT, GOE, LOE, GREATER, LESS, ASSIGN;
+terminal AND, OR, NOT;
+
+terminal OPEN_PARENT, CLOSED_PARENT;
+
+terminal Integer INTEGER;
+terminal Double DOUBLE;
+terminal String STRING;
+terminal String IDENTIFIER;
+
+terminal ERROR;
+terminal EOF;
+
+/* ---------------- NON TERMINALS ---------------- */
+
+non terminal program;
+non terminal stmt_list;
+non terminal top_stmt;
+non terminal simple_stmt;
+non terminal expr;
+non terminal condition;
+
+/* ---------------- PRECEDENCE ---------------- */
+
+precedence left OR;
+precedence left AND;
+precedence right NOT;
+
+precedence nonassoc EQUAL, DIFERENT, GREATER, LESS, GOE, LOE;
+
+precedence left PLUS, MINUS;
+precedence left MULTIPLY, DIVIDE;
+
+/* ---------------- START ---------------- */
+
+start with program;
+
+/* ---------------- GRAMMAR ---------------- */
+
+program ::= START stmt_list END
+          ;
+
+stmt_list ::= stmt_list top_stmt
+            | top_stmt
+            ;
+
+/* ----------- NIVEL SUPERIOR ----------- */
+
+top_stmt ::= simple_stmt
+           | if_stmt
+           | while_stmt
+           | error   {: System.err.println("Recovered from statement error"); :}
+           ;
+
+/* ----------- SENTENCIAS SIMPLES (SIN ESTRUCTURAS) ----------- */
+
+simple_stmt ::= VAR IDENTIFIER ASSIGN expr
+              | IDENTIFIER ASSIGN expr
+              | SHOW expr
+              ;
+
+/* ----------- IF SIN ANIDAMIENTO ----------- */
+
+if_stmt ::= IF OPEN_PARENT condition CLOSED_PARENT THEN
+            simple_stmt_list
+            IF_END
+          ;
+
+/* ----------- WHILE SIN ANIDAMIENTO ----------- */
+
+while_stmt ::= WHILE OPEN_PARENT condition CLOSED_PARENT DO
+               simple_stmt_list
+               WHILE_END
+             ;
+
+/* Solo permite sentencias simples dentro */
+simple_stmt_list ::= simple_stmt_list simple_stmt
+                   | simple_stmt
+                   ;
+
+/* ----------- EXPRESSIONS ----------- */
+
+expr ::= expr PLUS expr
+       | expr MINUS expr
+       | expr MULTIPLY expr
+       | expr DIVIDE expr
+       | OPEN_PARENT expr CLOSED_PARENT
+       | INTEGER
+       | DOUBLE
+       | STRING
+       | IDENTIFIER
+       ;
+
+/* ----------- CONDITIONS ----------- */
+
+condition ::= expr EQUAL expr
+            | expr DIFERENT expr
+            | expr GREATER expr
+            | expr LESS expr
+            | expr GOE expr
+            | expr LOE expr
+            | condition AND condition
+            | condition OR condition
+            | NOT condition
+            | OPEN_PARENT condition CLOSED_PARENT
+            ;
