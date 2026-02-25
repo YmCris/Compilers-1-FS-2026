@@ -8,6 +8,7 @@ package ymcris.compilers.flowchart.lexer;
 
 import java_cup.runtime.*;
 import java.util.*;
+import ymcris.compilers.flowchart.parser.sym;
 
 
 @SuppressWarnings("fallthrough")
@@ -673,7 +674,6 @@ public class Lexer implements java_cup.runtime.Scanner {
    * @param   in  the java.io.Reader to read input from.
    */
   public Lexer(java.io.Reader in) {
-      
     buffer = new StringBuffer();
     errorList = new ArrayList<>();
 
@@ -1111,7 +1111,7 @@ public class Lexer implements java_cup.runtime.Scanner {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
             { error("Lexical error: " + yytext());
-                        return symbol(sym.ERROR, yytext());
+                        return symbol(sym.error, yytext());
             }
           // fall through
           case 43: break;
@@ -1193,7 +1193,7 @@ public class Lexer implements java_cup.runtime.Scanner {
           case 17:
             { error("Unclosed string literal");
                         yybegin(YYINITIAL);
-                        return symbol(sym.ERROR);
+                        return symbol(sym.error);
             }
           // fall through
           case 59: break;

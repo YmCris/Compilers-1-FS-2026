@@ -1,6 +1,6 @@
-package ymcris.compilers.flowchart.parser;
-
+//package ymcris.compilers.flowchart.parser;
 import java_cup.runtime.*;
+
 
 /* ---------------- PARSER CODE ---------------- */
 
@@ -38,8 +38,6 @@ terminal Double DOUBLE;
 terminal String STRING;
 terminal String IDENTIFIER;
 
-terminal ERROR;
-terminal EOF;
 
 /* ---------------- NON TERMINALS ---------------- */
 
@@ -47,6 +45,9 @@ non terminal program;
 non terminal stmt_list;
 non terminal top_stmt;
 non terminal simple_stmt;
+non terminal if_stmt;
+non terminal while_stmt;
+non terminal simple_stmt_list;
 non terminal expr;
 non terminal condition;
 
