@@ -1,0 +1,322 @@
+/********************************** CUP FILE **********************************/
+// JAVA IMPORTS ----------------------------------------------------------------
+//package ymcris.compilers.flowchart.lexer;
+
+import java.util.*;
+import java_cup.runtime.*;
+import ymcris.compilers.flowchart.lexer.Lexer;
+import ymcris.compilers.flowchart.backend.errors.ErrorToken;
+import ymcris.compilers.flowchart.backend.errors.ErrorType;
+import ymcris.compilers.flowchart.backend.operators.Operator;
+import ymcris.compilers.flowchart.backend.operators.OperatorType;
+import ymcris.compilers.flowchart.backend.control.structures.ControlStructure;
+import ymcris.compilers.flowchart.backend.control.structures.ControlStructureType;
+
+/******************************** PARSER CODE *********************************/
+
+parser code {:
+
+    // REFERENCE VARIABLES -----------------------------------------------------
+    private Lexer lexer;
+    private List<ErrorToken> errorList;
+    private List<Operator> operators;
+    private List<ControlStructure> controlStructures;
+
+    // CONSTRUCTOR METHOD ------------------------------------------------------
+    /**
+     * Lexer and parser connection
+     */
+    public parser(Lexer lexer){
+        super(lexer);
+        
+        operators = new ArrayList<>();
+        controlStructures = new ArrayList<>();
+
+        this.errorList = lexer.getLexicalErrors();
+    }
+
+    // OVERRIDE METHODS --------------------------------------------------------
+    @Override
+    public void report_error(String message, Object info) {
+        try{
+            Symbol cur_token = (Symbol) info;
+
+            StringBuilder builder= new StringBuilder();
+
+            builder.append("Simbolo: ");
+            builder.append(symbl_name_from_id(cur_token.sym));
+            
+            if(cur_token != null){
+                builder.append(", Lexema: ");
+                builder.append(cur_token.value);
+            }
+
+            if(message != null){
+                builder.append(", Info: ");
+                builder.append(message);
+            }
+            
+            errorList.add(new ErrorToken(
+                cur_token.value.toString(),// Lexeme?
+                builder.toString(),
+                ErrorType.SYNTACTIC,
+                cur_token.left,
+                cur_token.right
+            ));
+
+        } catch (Exception e){
+           System.out.println("Erroooooooooooooooor");
+        }
+    }
+
+    @Override
+    public void syntax_error(Symbol cur_token) {
+        System.err.println("Unexpected token at line " 
+            + cur_token.left + ", column " + cur_token.right);
+
+        StringBuilder mssBuilder = new StringBuilder();
+
+        String lexeme = (cur_token.value != null) ? cur_token.value.toString() : symbl_name_from_id(cur_token.sym);
+        mssBuilder.append(symbl_name_from_id(cur_token.sym));
+        
+        if(cur_token.value != null) {
+            mssBuilder.append(cur_token.value.toString());
+        }
+
+        mssBuilder.append(", line: ");
+        mssBuilder.append(cur_token.left);
+        mssBuilder.append(", col: ");
+        mssBuilder.append(cur_token.right);
+        
+        if( expected_token_ids().isEmpty()  ){
+            mssBuilder.append(" -- ya no se esperaba ningun simbolo");
+        } else {
+            mssBuilder.append("Se esperaba: ");
+            for(Integer expected_token_id : expected_token_ids() ){ 
+                if(!symbl_name_from_id(expected_token_id).equals("error")){
+                    mssBuilder.append(symbl_name_from_id(expected_token_id));
+                    mssBuilder.append(" ");
+                }
+            }
+        }
+
+            errorList.add(new ErrorToken(
+                lexeme,
+                mssBuilder.toString(),
+                ErrorType.SYNTACTIC,
+                cur_token.left,
+                cur_token.right
+            ));
+
+        System.err.println(mssBuilder.toString() + " in line: " + cur_token.left);
+    }
+
+    @Override
+    public void unrecovered_syntax_error(Symbol cur_token){
+        System.out.println("Tronó, ya perdíste");
+        String lexeme = (cur_token.value != null) ? cur_token.value.toString() : symbl_name_from_id(cur_token.sym);
+
+           errorList.add(new ErrorToken(
+                lexeme,
+                "Unrecovered error :(",
+                ErrorType.SYNTACTIC,
+                cur_token.left,
+                cur_token.right
+            ));
+    }
+
+
+    // GETTERS -----------------------------------------------------------------
+    public Lexer getLexer(){
+        return this.lexer;
+    }
+
+    public List<ErrorToken> getErrorList(){
+        return this.errorList;
+    }
+
+    public List<Operator> getOperators(){
+        return this.operators;
+    }
+    
+    public List<ControlStructure> getControlStructures(){
+        return this.controlStructures;
+    }
+
+
+:};
+
+/********************************* TERMINALS **********************************/
+
+terminal START, END;
+terminal VAR;
+terminal IF, THEN, IF_END;
+terminal WHILE, DO, WHILE_END;
+terminal SHOW, READ;
+
+terminal PLUS, MINUS, MULTIPLY, DIVIDE;
+terminal EQUAL, DIFERENT, GOE, LOE, GREATER, LESS, ASSIGN;
+terminal AND, OR, NOT;
+
+terminal OPEN_PARENT, CLOSED_PARENT;
+
+terminal Integer INTEGER;
+terminal Double DOUBLE;
+terminal String STRING;
+terminal String IDENTIFIER;
+
+
+/******************************** NO TERMINALS ********************************/
+
+non terminal program;
+non terminal stmt_list;
+non terminal top_stmt;
+non terminal simple_stmt;
+
+non terminal if_stmt;
+non terminal while_stmt;
+
+non terminal simple_stmt_list;
+
+non terminal String expr;
+non terminal String condition;
+
+/********************************* PRECEDENCE *********************************/
+
+precedence left OR;
+precedence left AND;
+precedence right NOT;
+
+precedence nonassoc EQUAL, DIFERENT, GREATER, LESS, GOE, LOE;
+
+precedence left PLUS, MINUS;
+precedence left MULTIPLY, DIVIDE;
+
+/********************************** GRAMMAR ***********************************/
+
+// START:
+start with program;
+
+// BETWEEN PROGRAM:
+program ::= START stmt_list END
+          ;
+
+stmt_list ::= stmt_list top_stmt
+            | top_stmt
+            ;
+
+// ERRORS:
+top_stmt ::= simple_stmt
+           | if_stmt
+           | while_stmt
+           | error   {: System.err.println("Recovered from statement error"); :}
+           ;
+
+// SIMPLE STATEMENTS (Without structures):
+simple_stmt ::= VAR IDENTIFIER ASSIGN expr
+              | VAR IDENTIFIER
+              | IDENTIFIER ASSIGN expr
+              | SHOW expr
+              | SHOW STRING
+              | READ IDENTIFIER
+              ;
+
+// IF:
+if_stmt ::= IF:i OPEN_PARENT condition:c CLOSED_PARENT THEN 
+            simple_stmt_list 
+            IF_END
+            {:
+                controlStructures.add(
+                    new ControlStructure(
+                        c,
+                        ControlStructureType.IF,
+                        ileft,
+                        iright
+                    )
+                );
+            :}
+            ;
+
+// WHILE:
+while_stmt ::= WHILE:w OPEN_PARENT condition:c CLOSED_PARENT DO
+               simple_stmt_list
+               WHILE_END
+{:
+    controlStructures.add(
+        new ControlStructure(
+            c,
+            ControlStructureType.WHILE,
+            wleft,
+            wright
+        )
+    );
+:}
+;
+
+// SIMPLES STATEMENTS (NOT ANIDED ALLOWED):
+simple_stmt_list ::= simple_stmt_list simple_stmt
+                   | simple_stmt
+                   ;
+
+// EXPRESIONS:
+expr       ::= expr:e1 PLUS expr:e2
+                {:
+                    operators.add(new Operator("+", OperatorType.PLUS, e1left, e2right));
+                    RESULT = e1 + " + " + e2;
+                :}
+              | expr:e1 MINUS expr:e2
+                {:
+                    operators.add(new Operator("-", OperatorType.MINUS, e1left, e2right));
+                    RESULT = e1 + " - " + e2;
+                :}
+              | expr:e1 MULTIPLY expr:e2
+                {:
+                    operators.add(new Operator("*", OperatorType.MULTIPLY, e1left, e2right));
+                    RESULT = e1 + " * " + e2;
+                :}
+              | expr:e1 DIVIDE expr:e2
+                {:
+                    operators.add(new Operator("/", OperatorType.DIVIDE, e1left, e2right));
+                    RESULT = e1 + " / " + e2;
+                :}
+              | OPEN_PARENT expr:e CLOSED_PARENT
+                {:
+                    RESULT = "(" + e + ")";
+                :}
+              | INTEGER:i
+                {:
+                    RESULT = i.toString();
+                :}
+              | DOUBLE:d
+                {:
+                    RESULT = d.toString();
+                :}
+              | IDENTIFIER:id
+                {:
+                    RESULT = id;
+                :}
+              ;
+
+
+// CONDITIONS:
+condition ::= expr:e1 EQUAL expr:e2
+            {: RESULT = e1 + " == " + e2; :}
+          | expr:e1 DIFERENT expr:e2
+            {: RESULT = e1 + " != " + e2; :}
+          | expr:e1 GREATER expr:e2
+            {: RESULT = e1 + " > " + e2; :}
+          | expr:e1 LESS expr:e2
+            {: RESULT = e1 + " < " + e2; :}
+          | expr:e1 GOE expr:e2
+            {: RESULT = e1 + " >= " + e2; :}
+          | expr:e1 LOE expr:e2
+            {: RESULT = e1 + " <= " + e2; :}
+          | condition:c1 AND condition:c2
+            {: RESULT = c1 + " && " + c2; :}
+          | condition:c1 OR condition:c2
+            {: RESULT = c1 + " || " + c2; :}
+          | NOT condition:c
+            {: RESULT = "!" + c; :}
+          | OPEN_PARENT condition:c CLOSED_PARENT
+            {: RESULT = "(" + c + ")"; :}
+          ;
