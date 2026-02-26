@@ -2,8 +2,11 @@
 // JAVA IMPORTS ----------------------------------------------------------------
 package ymcris.compilers.flowchart.lexer;
 
-import java_cup.runtime.*;
 import java.util.*;
+import java_cup.runtime.*;
+import ymcris.compilers.flowchart.parser.sym;
+import ymcris.compilers.flowchart.backend.errors.ErrorToken;
+import ymcris.compilers.flowchart.backend.errors.ErrorType;
 
 %%
 /******************************* JFLEX DECLARATIONS ***************************/
@@ -28,15 +31,15 @@ import java.util.*;
 
 // MACROS ----------------------------------------------------------------------
 
-Digit                   = [:jdigit:]
 Letter                  = [:jletter:]
 LetterDigit             = [:jletterdigit:]
 
-Integer                 = (Digit)+
+Integer                 = ([0-9])+
 Double                  = {Integer}\.{Integer}
 
 Identifier              = {Letter}({LetterDigit})*
 
+Space                   = [ \t]+
 LineTerminator          = \r|\n|\r\n
 WhiteSpace              = {LineTerminator} | [ \t\f]
 
@@ -45,13 +48,14 @@ WhiteSpace              = {LineTerminator} | [ \t\f]
 
     // REFERENCE VARIABLES -----------------------------------------------------
     StringBuffer buffer;
-    private List<String> errorList;
+    private List<ErrorToken> errorList;
 
     // SPECIFIC METHODS --------------------------------------------------------
     // ERROR REPORT
-    private void error(String message){
-         errorList.add("Error in line: " + (yyline+1) + ", column: " +
-         (yycolumn+1) + " : " + message);
+    private void error(String lexeme, String message){
+        errorList.add(
+            new ErrorToken(lexeme, message, ErrorType.LEXICAL,(yyline+1),(yycolumn+1))
+        );
     }
 
      // PARSER METHDOS
@@ -64,7 +68,7 @@ WhiteSpace              = {LineTerminator} | [ \t\f]
     }
 
     // GETTERS -----------------------------------------------------------------
-    public List<String> getLexicalErrors(){
+    public List<ErrorToken> getLexicalErrors(){
         return this.errorList;
     }
 
@@ -74,16 +78,17 @@ WhiteSpace              = {LineTerminator} | [ \t\f]
 /********************************* LEXICAL RULES ******************************/
 <YYINITIAL>{
     // RESERVED WORDS
+    "FIN"{Space}"SI"          { return symbol(sym.IF_END); }
+    "FIN"{Space}"MIENTRAS"    { return symbol(sym.WHILE_END); }
     "INICIO"          { return symbol(sym.START); }
     "VAR"             { return symbol(sym.VAR); }
     "FIN"             { return symbol(sym.END); }
     "SI"              { return symbol(sym.IF); }
     "ENTONCES"        { return symbol(sym.THEN); }
-    "FINSI"           { return symbol(sym.IF_END); }
     "MIENTRAS"        { return symbol(sym.WHILE); }
     "HACER"           { return symbol(sym.DO); }
-    "FINMIENTRAS"     { return symbol(sym.WHILE_END); }
     "MOSTRAR"         { return symbol(sym.SHOW); }
+    "LEER"            { return symbol(sym.READ); }
 
     // ARITHMETIC OPERATORS
     "+"               { return symbol(sym.PLUS); }
@@ -110,8 +115,8 @@ WhiteSpace              = {LineTerminator} | [ \t\f]
     ")"               { return symbol(sym.CLOSED_PARENT); }
 
     // MACROS
-    {Double}          { return symbol(sym.DOUBLE, Double.parseDouble(yytext())); }
-    {Integer}         { return symbol(sym.INTEGER, Integer.parseInt(yytext())); }
+    {Double}          { return symbol(sym.DOUBLE, Double.valueOf(yytext())); }
+    {Integer}         { return symbol(sym.INTEGER, Integer.valueOf(yytext())); }
 
     {Identifier}      { return symbol(sym.IDENTIFIER, yytext()); }
 
@@ -124,8 +129,8 @@ WhiteSpace              = {LineTerminator} | [ \t\f]
     \"                { buffer.setLength(0); yybegin(STRING); }
     
     .                 {
-                        error("Lexical error: " + yytext());
-                        return symbol(sym.ERROR, yytext());
+                        error(yytext(), "The symbol doesn't exist in the language");
+                        return symbol(sym.error, yytext());
                       }
 
 }
@@ -146,13 +151,13 @@ WhiteSpace              = {LineTerminator} | [ \t\f]
 }
 
 <STRING>\n {
-                        error("Unclosed string literal");
+                        error(yytext(), "The string is not closed");
                         yybegin(YYINITIAL);
-                        return symbol(sym.ERROR);
+                        return symbol(sym.error);
 }
 
 <STRING><<EOF>> {
-                        error("Unclosed string at EOF");
+                        error(yytext(), "The string is not closed EOF");
                         return symbol(sym.EOF);
 }
 
@@ -164,7 +169,7 @@ WhiteSpace              = {LineTerminator} | [ \t\f]
 }
 
 <COMMENT><<EOF>> {
-                        error("Unclosed comment at EOF");
+                        error(yytext(), "The comment is not closed EOF");
                         return symbol(sym.EOF);
 }
 
