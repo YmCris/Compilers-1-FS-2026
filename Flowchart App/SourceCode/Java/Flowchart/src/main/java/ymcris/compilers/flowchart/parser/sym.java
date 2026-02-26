@@ -8,38 +8,39 @@ package ymcris.compilers.flowchart.parser;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int AND = 23;
-  public static final int MULTIPLY = 14;
-  public static final int PLUS = 12;
-  public static final int OR = 24;
-  public static final int EQUAL = 16;
+  public static final int AND = 24;
+  public static final int READ = 12;
+  public static final int MULTIPLY = 15;
+  public static final int PLUS = 13;
+  public static final int OR = 25;
+  public static final int EQUAL = 17;
   public static final int THEN = 6;
   public static final int WHILE = 8;
   public static final int SHOW = 11;
-  public static final int NOT = 25;
+  public static final int NOT = 26;
   public static final int WHILE_END = 10;
-  public static final int IDENTIFIER = 31;
+  public static final int IDENTIFIER = 32;
   public static final int END = 3;
-  public static final int GREATER = 20;
+  public static final int GREATER = 21;
   public static final int IF = 5;
   public static final int IF_END = 7;
-  public static final int LOE = 19;
+  public static final int LOE = 20;
   public static final int DO = 9;
-  public static final int STRING = 30;
+  public static final int STRING = 31;
   public static final int EOF = 0;
-  public static final int OPEN_PARENT = 26;
-  public static final int DIVIDE = 15;
-  public static final int GOE = 18;
-  public static final int MINUS = 13;
+  public static final int OPEN_PARENT = 27;
+  public static final int DIVIDE = 16;
+  public static final int GOE = 19;
+  public static final int MINUS = 14;
   public static final int error = 1;
-  public static final int ASSIGN = 22;
+  public static final int ASSIGN = 23;
   public static final int START = 2;
-  public static final int INTEGER = 28;
-  public static final int DIFERENT = 17;
-  public static final int CLOSED_PARENT = 27;
+  public static final int INTEGER = 29;
+  public static final int DIFERENT = 18;
+  public static final int CLOSED_PARENT = 28;
   public static final int VAR = 4;
-  public static final int LESS = 21;
-  public static final int DOUBLE = 29;
+  public static final int LESS = 22;
+  public static final int DOUBLE = 30;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -53,6 +54,7 @@ public class sym {
   "DO",
   "WHILE_END",
   "SHOW",
+  "READ",
   "PLUS",
   "MINUS",
   "MULTIPLY",

@@ -5,20 +5,20 @@
 import java.util.*;
 import java_cup.runtime.*;
 import ymcris.compilers.flowchart.lexer.Lexer;
-import ymcris.compilers.flowchart.backend.errors.ErrorToken;
+import ymcris.compilers.flowchart.backend.errors.Error;
 import ymcris.compilers.flowchart.backend.errors.ErrorType;
 import ymcris.compilers.flowchart.backend.operators.Operator;
 import ymcris.compilers.flowchart.backend.operators.OperatorType;
-import ymcris.compilers.flowchart.backend.control.structures.ControlStructure;
-import ymcris.compilers.flowchart.backend.control.structures.ControlStructureType;
+import ymcris.compilers.flowchart.backend.control.structure.ControlStructure;
+import ymcris.compilers.flowchart.backend.control.structure.ControlStructureType;
 
 /******************************** PARSER CODE *********************************/
 
 parser code {:
 
     // REFERENCE VARIABLES -----------------------------------------------------
-    private Lexer lexer;
-    private List<ErrorToken> errorList;
+    private Lexer lex;
+    private List<Error> errorList;
     private List<Operator> operators;
     private List<ControlStructure> controlStructures;
 
@@ -56,7 +56,7 @@ parser code {:
                 builder.append(message);
             }
             
-            errorList.add(new ErrorToken(
+            errorList.add(new Error(
                 cur_token.value.toString(),// Lexeme?
                 builder.toString(),
                 ErrorType.SYNTACTIC,
@@ -102,7 +102,7 @@ parser code {:
     @Override
     public void unrecovered_syntax_error(Symbol cur_token){
         System.out.println("Tronó, ya perdíste");
-           errorList.add(new ErrorToken(
+           errorList.add(new Error(
                 cur_token.value.toString(),
                 "Unrecovered error :(",
                 ErrorType.SYNTACTIC,
@@ -117,7 +117,7 @@ parser code {:
         return this.lexer;
     }
 
-    public List<ErrorToken> getErrorList(){
+    public List<Error> getErrorList(){
         return this.errorList;
     }
 
@@ -211,33 +211,22 @@ simple_stmt ::= VAR IDENTIFIER ASSIGN expr
 if_stmt ::= IF:i OPEN_PARENT condition:c CLOSED_PARENT THEN 
             simple_stmt_list 
             IF_END
-            {:
-                controlStructures.add(
-                    new ControlStructure(
-                        c,
-                        ControlStructureType.IF,
-                        ileft,
-                        iright
-                    )
-                );
-            :}
-            ;
-
-// WHILE:
-while_stmt ::= WHILE:w OPEN_PARENT condition:c CLOSED_PARENT DO
-               simple_stmt_list
-               WHILE_END
 {:
     controlStructures.add(
         new ControlStructure(
             c,
-            ControlStructureType.WHILE,
-            wleft,
-            wright
+            ControlStructureType.IF,
+            ileft,
+            iright
         )
     );
 :}
-;
+
+// WHILE:
+while_stmt ::= WHILE OPEN_PARENT condition CLOSED_PARENT DO
+               simple_stmt_list
+               WHILE_END
+             ;
 
 // SIMPLES STATEMENTS (NOT ANIDED ALLOWED):
 simple_stmt_list ::= simple_stmt_list simple_stmt

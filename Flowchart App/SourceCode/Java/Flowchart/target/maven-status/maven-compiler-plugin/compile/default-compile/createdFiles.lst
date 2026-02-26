@@ -1,5 +1,11 @@
-ymcris/compilers/flowchart/parser/sym.class
+ymcris/compilers/flowchart/backend/errors/ErrorToken.class
 ymcris/compilers/flowchart/Flowchart.class
+ymcris/compilers/flowchart/backend/operators/OperatorType.class
 ymcris/compilers/flowchart/parser/parser$CUP$parser$actions.class
+ymcris/compilers/flowchart/backend/errors/ErrorType.class
+ymcris/compilers/flowchart/parser/sym.class
+ymcris/compilers/flowchart/backend/control/structures/ControlStructureType.class
+ymcris/compilers/flowchart/backend/operators/Operator.class
 ymcris/compilers/flowchart/lexer/Lexer.class
+ymcris/compilers/flowchart/backend/control/structures/ControlStructure.class
 ymcris/compilers/flowchart/parser/parser.class

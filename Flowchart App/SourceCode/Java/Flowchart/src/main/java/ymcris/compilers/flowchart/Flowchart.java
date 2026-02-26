@@ -1,9 +1,11 @@
 package ymcris.compilers.flowchart;
 
+import java.io.IOException;
 import java.io.StringReader;
-import java.util.List;
+import java_cup.runtime.Symbol;
 import ymcris.compilers.flowchart.lexer.Lexer;
 import ymcris.compilers.flowchart.parser.parser;
+import ymcris.compilers.flowchart.parser.sym;
 
 /**
  *
@@ -12,83 +14,89 @@ import ymcris.compilers.flowchart.parser.parser;
 public class Flowchart {
 
     public static void main(String[] args) {
-
+        //testLexer();
+        testParser();
     }
 
     private static void testLexer() {
-        String text = """
-INICIO
-VAR a = 10
-VAR b = 20
-SI (a < b) ENTONCES
-MOSTRAR "a es menor que b"
-FIN SI
-MIENTRAS (a < 15) HACER
-a = a + 1
-MOSTRAR a
-FIN MIENTRAS
-MOSTRAR "Fin del programa"
-FIN
-                      """;
+        try {
+            String input = """
+                INICIO
+                           
+                VAR a = 10
+                VAR b = 20
+                SI (a < b) ENTONCES
+                MOSTRAR "a es menor que b"
+                FIN SI
+                MIENTRAS (a < 15) HACER
+                a = a + 1
+                MOSTRAR a
+                FIN MIENTRAS
+                MOSTRAR "Fin del programa"
+                FIN
+                # comment
+                """;
 
-        StringReader reader = new StringReader(text);
-        Lexer lexer = new Lexer(reader);
-        while (!lexer.yyatEOF()) {
-            
-            
+            Lexer lexer = new Lexer(new StringReader(input));
+
+            Symbol token;
+
+            System.out.println("===== TOKENS =====");
+
+            while ((token = lexer.next_token()).sym != sym.EOF) {
+
+                System.out.println(
+                        "Token: " + sym.terminalNames[token.sym]
+                        + " | Lexeme: " + (token.value != null ? token.value : "")
+                        + " | Line: " + token.left
+                        + " | Column: " + token.right
+                );
+            }
+
+            if (!lexer.getLexicalErrors().isEmpty()) {
+                System.out.println("\n===== LEXICAL ERRORS =====");
+                lexer.getLexicalErrors().forEach(System.out::println);
+            } else {
+                System.out.println("\nNo lexical errors detected.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     private static void testParser() {
-        String text = """
-INICIO
-VAR a = 10
-VAR b = 20
-SI (a < b) ENTONCES
-MOSTRAR "a es menor que b"
-FIN SI
-MIENTRAS (a < 15) HACER
-a = a + 1
-MOSTRAR a
-FIN MIENTRAS
-MOSTRAR "Fin del programa"
-FIN
-                      """;
-
-        StringBuilder stringBuilder = new StringBuilder();
-        Lexer lexer = new Lexer(new StringReader(text));
-        parser parser = new parser(lexer);
-
         try {
-            parser.parse();
 
-            stringBuilder.append(getErrors("ERRORES LEXICOS", lexer.getLexicalErrors()));
-            stringBuilder.append(getErrors("ERRORES SINTACTICOS", parser.getSyntaxErrors()));
+            String codigo = """
+                INICIO
+                           
+                VAR a = 10
+                VAR b = 20
+                SI (a < b) ENTONCES
+                MOSTRAR "a es menor que b"
+                FIN SI
+                MIENTRAS (a < 15) HACER
+                a = a + 1
+                MOSTRAR a
+                FIN MIENTRAS
+                MOSTRAR "Fin del programa"
+                FIN
+                # comment
+                """;
 
-            if (lexer.getLexicalErrors().isEmpty() && parser.getSyntaxErrors().isEmpty()) {
-                System.out.println("No hay errores");
-            } else {
-                System.out.println("Hay errores....");
-                System.out.println(stringBuilder.toString());
-            }
+            Lexer lexer = new Lexer(new StringReader(codigo));
+            parser p = new parser(lexer);
+
+            p.parse();
+
+            System.out.println("=== ANÁLISIS FINALIZADO ===");
+
+            System.out.println("Operadores: " + p.getOperators().size());
+            System.out.println("Estructuras: " + p.getControlStructures().size());
+            System.out.println("Errores: " + p.getErrorList().size());
+
         } catch (Exception e) {
-            System.out.println("Ocurrio un error inesperado");
+            e.printStackTrace();
         }
-    }
-
-    private static String getErrors(String title, List<String> errorsList) {
-        StringBuilder builder = new StringBuilder(title);
-        builder.append("\n");
-        builder.append("---------------------------------------");
-        builder.append("\n");
-        if (errorsList.isEmpty()) {
-            builder.append("No hay errores\n\n");
-        } else {
-            for (String error : errorsList) {
-                builder.append(error);
-                builder.append("\n");
-            }
-        }
-        return builder.toString();
     }
 }
