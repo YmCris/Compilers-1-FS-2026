@@ -1,0 +1,72 @@
+###
+Author: Cris
+Fecha: 13/03/2026
+Hora: 15:00
+Description: Formulario guardado ejemplo
+Total de Secciones: 1
+Total de Preguntas: 4
+    Abiertas: 1
+    Desplegables: 1
+    Selección: 1
+    Múltiples: 1
+###
+
+<section=120,80,0,0,VERTICAL>
+
+<style>
+    <color=#000000/>
+    <background color=<10,10,10>/>
+    <font family=MONO/>
+    <text size=14>
+    <border,2,LINE,color=(10,10,10)/>
+</style>
+
+<content>
+
+<open=80,10,"¿Cuál es tu nombre? @[:smile:]"/>
+
+<drop=80,10,"Selecciona Pokémon",{"Bulbasaur","Charmander","Squirtle"},1/>
+
+<select=80,10,"Color favorito",{"Rojo","Azul","Verde"},0/>
+
+<multiple=80,10,"Pokémon favoritos",{"Pikachu","Eevee","Snorlax"},{0,2}/>
+
+<table>
+
+<style>
+    <color=#FF0000/>
+</style>
+
+<content>
+
+<line>
+
+<element>
+<open=40,10,"Celda 1"/>
+</element>
+
+<element>
+<select=40,10,"Pregunta",{"A","B"},1/>
+</element>
+
+</line>
+
+<line>
+
+<element>
+<drop=40,10,"Animal",{"Perro","Gato"},0/>
+</element>
+
+<element>
+<multiple=40,10,"Números",{"1","2","3"},{0,1}/>
+</element>
+
+</line>
+
+</content>
+
+</table>
+
+</content>
+
+</section>
