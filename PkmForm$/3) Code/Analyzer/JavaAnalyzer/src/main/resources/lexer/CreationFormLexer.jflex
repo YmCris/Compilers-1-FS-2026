@@ -50,7 +50,6 @@ Double                  = {Integer}\.{Integer}
 
 Identifier              = {Letter}({LetterDigit})*
 
-Space                   = [ \t]+
 LineTerminator          = \r|\n|\r\n
 WhiteSpace              = {LineTerminator} | [ \t\f]
 
@@ -168,7 +167,7 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
     //STYLES
     "styles"            { return symbol(sym.STYLES); }
     \"color\"           { return symbol(sym.COLOR); }
-    \"background color\"{ return symbol(sym.BACKGROUND_COLOR); }
+    \"background color\" { return symbol(sym.BACKGROUND_COLOR); }
     \"font family\"     { return symbol(sym.FONT_FAMILY); }
     
     "MONO"              { return symbol(sym.MONO); }
@@ -194,9 +193,11 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
     "fourth"            { return symbol(sym.FOURTH); }
     "fifth"             { return symbol(sym.FIFTH); }
     "correct"           { return symbol(sym.CORRECT); }
-    "who_is_that_pokemon"{ return symbol(sym.WHO_IS_THAT_POKEMON); }
+    "who_is_that_pokemon" { return symbol(sym.WHO_IS_THAT_POKEMON); }
     
-
+    // Line comment
+    \$                  { yybegin(COMMENT); }
+    
     // MACROS
     {Double}            { return symbol(sym.DOUBLE, Double.valueOf(yytext())); }
     {Integer}           { return symbol(sym.INTEGER, Integer.valueOf(yytext())); }
@@ -207,7 +208,7 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
                             
                             return symbol(sym.IDENTIFIER, yytext());
                         }
-
+    
     {WhiteSpace}+       { /* IGNORE */ }
     
     {Smile}             { return symbol(sym.SMILE); }
@@ -220,9 +221,6 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
     
 
     // STATES
-    // Line comment
-    "$"                 { yybegin(COMMENT); }
-    
     // Block comment
     "/*"                { yybegin(COMMENT_BLOCK); }
 
@@ -281,7 +279,7 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
 
     "*/"                { yybegin(YYINITIAL); }
     
-    .|\n                { /* IGNORE */ }
+    [^]                { /* IGNORE */ }
 
 }
 
