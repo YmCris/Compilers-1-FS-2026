@@ -8,8 +8,6 @@ import java_cup.runtime.*;
 import ymcris.pkmforms.form.creation.analyzer.parser.sym;
 
 // SYMBOL TABLE
-import ymcris.pkmforms.analyzer.symbols.Symbol;
-import ymcris.pkmforms.analyzer.symbols.SymbolType;
 import ymcris.pkmforms.analyzer.symbols.table.SymbolTable;
 
 // TOKENS
@@ -79,13 +77,11 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
 
      // PARSER METHDOS
     private Symbol symbol(int type){
-        Symbol symbol = new Symbol(type, yyline+1, yycolumn+1);
-        return register(symbol);
+        return new Symbol(type, yyline+1, yycolumn+1);
     }
 
     private Symbol symbol(int type, Object value){
-        Symbol symbol = new Symbol(type, yyline+1, yycolumn+1, value);
-        return register(symbol);
+        return new Symbol(type, yyline+1, yycolumn+1, value);
     }
 
     // GETTERS -----------------------------------------------------------------
@@ -160,6 +156,9 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
     
     "elements"          { return symbol(sym.ELEMENTS); }
     
+    // TABLE
+    "TABLE"             { return symbol(sym.TABLE); }
+    
     // TEXT
     "TEXT"              { return symbol(sym.TEXT); }
     "content"           { return symbol(sym.CONTENT); }
@@ -177,8 +176,8 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
     \"text size\"       { return symbol(sym.TEXT_SIZE); }
     \"border\"          { return symbol(sym.BORDER); }
     "LINE"              { return symbol(sym.LINE_BORDER); }
-    "DOTTED"            { return symbol(sym.LINE_DOTTED); }
-    "DOUBLE"            { return symbol(sym.LINE_DOUBLE); }
+    "DOTTED"            { return symbol(sym.DOTTED_BORDER); }
+    "DOUBLE"            { return symbol(sym.DOUBLE_BORDER); }
     
     // QUESTIONS
     "label"             { return symbol(sym.LABEL); }
