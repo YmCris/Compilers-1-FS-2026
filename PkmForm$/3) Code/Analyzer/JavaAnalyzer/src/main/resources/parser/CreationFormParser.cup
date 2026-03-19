@@ -1,0 +1,349 @@
+/********************************** CUP FILE **********************************/
+// JAVA IMPORTS ----------------------------------------------------------------
+package ymcris.pkmforms.form.creation.analyzer.parser;
+
+// CUP
+import java.util.*;
+import java_cup.runtime.*;
+
+// AST CREATION
+import ymcris.pkmforms.analyzer.ast.Node;
+import ymcris.pkmforms.analyzer.ast.NodeType;
+
+// TOKENS
+import ymcris.pkmforms.analyzer.tokens.errors.ErrorType;
+import ymcris.pkmforms.analyzer.tokens.errors.ErrorToken;
+
+// SYMBOL TABLE
+import ymcris.pkmforms.analyzer.symbols.table.SymbolTable;
+
+// LEXER
+import ymcris.pkmforms.form.creation.analyzer.lexer.FormCreationLexer;
+
+/******************************** PARSER CODE *********************************/
+parser code {:
+
+    // REFERENCE VARIABLES -----------------------------------------------------
+    private SymbolTable table;
+    private FormCreationLexer lexer;
+    private List<ErrorToken> errorList;
+
+    // CONSTRUCTOR METHOD ------------------------------------------------------
+    /**
+     * Lexer and parser connection and error list connection
+     */
+    public CreationFormParser(FormCreationLexer lexer){
+        super(lexer);
+        
+        this.table = lexer.getTable();
+        this.errorList = lexer.getLexicalErrors();
+    }
+
+    // OVERRIDE METHODS --------------------------------------------------------
+    @Override
+    public void report_error(String message, Object info) {
+        try{
+            Symbol cur_token = (Symbol) info;
+
+            StringBuilder builder= new StringBuilder();
+
+            builder.append("Symbol: ");
+            builder.append(symbl_name_from_id(cur_token.sym));
+            
+            if(cur_token != null){
+                builder.append(", Lexeme: ");
+                builder.append(cur_token.value);
+            }
+
+            if(message != null){
+                builder.append(", Info: ");
+                builder.append(message);
+            }
+            
+            errorList.add(new ErrorToken(
+                cur_token.value.toString(),// Lexeme?
+                builder.toString(),
+                ErrorType.SYNTACTIC,
+                cur_token.left,
+                cur_token.right
+            ));
+
+        } catch (Exception e){
+           System.out.println("Erroooooooooooooooor");
+        }
+    }
+
+    @Override
+    public void syntax_error(Symbol cur_token) {
+        System.err.println("Unexpected token at line " 
+            + cur_token.left + ", column " + cur_token.right);
+
+        StringBuilder mssBuilder = new StringBuilder();
+
+        String lexeme = (cur_token.value != null) ? cur_token.value.toString() : symbl_name_from_id(cur_token.sym);
+        mssBuilder.append(symbl_name_from_id(cur_token.sym));
+        
+        if(cur_token.value != null) {
+            mssBuilder.append(cur_token.value.toString());
+        }
+
+        mssBuilder.append(", line: ");
+        mssBuilder.append(cur_token.left);
+        mssBuilder.append(", col: ");
+        mssBuilder.append(cur_token.right);
+        
+        if( expected_token_ids().isEmpty()  ){
+            mssBuilder.append(" -- ya no se esperaba ningun simbolo");
+        } else {
+            mssBuilder.append("Se esperaba: ");
+            for(Integer expected_token_id : expected_token_ids() ){ 
+                if(!symbl_name_from_id(expected_token_id).equals("error")){
+                    mssBuilder.append(symbl_name_from_id(expected_token_id));
+                    mssBuilder.append(" ");
+                }
+            }
+        }
+
+            errorList.add(new ErrorToken(
+                lexeme,
+                mssBuilder.toString(),
+                ErrorType.SYNTACTIC,
+                cur_token.left,
+                cur_token.right
+            ));
+
+        System.err.println(mssBuilder.toString() + " in line: " + cur_token.left);
+    }
+
+    @Override
+    public void unrecovered_syntax_error(Symbol cur_token){
+        System.out.println("Tronó, ya perdíste");
+        String lexeme = (cur_token.value != null) ? cur_token.value.toString() : symbl_name_from_id(cur_token.sym);
+
+           errorList.add(new ErrorToken(
+                lexeme,
+                "Unrecovered error :(",
+                ErrorType.SYNTACTIC,
+                cur_token.left,
+                cur_token.right
+            ));
+    }
+
+
+    // GETTERS -----------------------------------------------------------------
+    public FormCreationLexer getLexer(){
+        return this.lexer;
+    }
+
+    public SymbolTable getTable(){
+        return this.table;
+    }    
+
+    public List<ErrorToken> getErrorList(){
+        return this.errorList;
+    }
+
+:};
+
+/********************************* TERMINALS **********************************/
+    terminal
+            // CODE BLOCKS
+            IF, ELSE_IF, ELSE,
+            WHILE, DO, FOR,
+
+            // RESERVED WORDS TO VARIABLES
+            NUMBER_VARIABLE, STRING_VARIABLE, SPECIAL_VARIABLE,
+
+            DRAW,
+
+            // ELEMENT ATTRIBUTES
+            WIDTH, HEIGHT,
+
+            // ARITHMETIC OPERATORS
+            PLUS, MINUS, MULTIPLY, DIVIDE, EXPO, MODULE,
+
+            // RELATIONSHIP OPERATORS
+            EQUAL, DIFERENT, GOE, LOE, GREATER, LESS, ASSIGN,
+
+            // LOGIC OPERATORS
+            AND, OR, NOT,
+
+            // GROUPING SYMBOLS
+            OPEN_PARENT, CLOSED_PARENT,
+            OPEN_SQR_BRACKETS, CLOSED_SQR_BRACKETS,
+            OPEN_CURLY_BRACKETS, CLOSED_CURLY_BRACKETS,
+
+            // PUNCTUATION SYMBOLS
+            COMMA, TWO_POINTS,
+
+            // SECTIONS
+            POINT_X, POINT_Y, ORIENTATION,
+            VERTICAL, HORIZONTAL,
+            ELEMENTS,
+
+            // TABLE
+            TABLE,
+
+            // TEXT
+            TEXT, CONTENT,
+
+            // STYLES
+            STYLES, COLOR, BACKGROUND_COLOR, TEXT_SIZE,
+            FONT_FAMILY,MONO, SANS_SERIF, CURSIVE,
+            BORDER, LINE_BORDER, DOTTED_BORDER, DOUBLE_BORDER,
+
+            // QUESTIONS
+            LABEL, OPEN_QUESTION, DROP_QUESTION,
+            SELECT_QUESTION, MULTIPLE_QUESTION,
+            OPTIONS,
+            FIRST, SECOND, THIRD, FOURTH, FIFTH,
+            CORRECT,
+            WHO_IS_THAT_POKEMON,
+
+            // EMOJIS
+            SMILE, SAD, SERIOUS, HEART, STAR, STAR_NUMBER, CAT
+
+    ;
+    
+terminal Integer INTEGER;
+terminal Double NUMBER;
+terminal String STRING;
+terminal String IDENTIFIER;
+
+
+/******************************** NO TERMINALS ********************************/
+
+    non terminal Node
+                pkm_forms,
+    
+                // VARIABLES
+                var_declaration, var_initialization, var_assignment,
+                // TEXT
+                general_string,
+                // STYLE
+                style,
+                // SECTIONS
+                section,
+                    // ELEMENTS
+                    elements,
+                // TABLES
+                table,
+                // TEXT ELEMENT
+                text,
+                // QUESTIONS
+                open_question, drop_question, select_question, multiple_question,
+                who_is_that_pokemon,
+                // CODE BLOCKS
+                    // IF
+                    if_stmt,
+                    // IF-ELSE
+                    if_else_stmt,
+                    // ELSE
+                    else_stmt,
+                    // WHILE
+                    while_stmt,
+                    // DO-WHILE
+                    do_while_stmt,
+                    // FOR 
+                    for_stmt
+    ;
+
+non terminal Node logic_expr;
+non terminal Node arithmetic_expr;
+
+/********************************* PRECEDENCE *********************************/
+
+precedence left OR, AND;
+precedence right NOT;
+
+precedence nonassoc EQUAL, DIFERENT, GREATER, LESS, GOE, LOE;
+
+precedence left PLUS, MINUS;
+precedence left MULTIPLY, DIVIDE;
+precedence left EXPO, MODULE;
+
+/********************************** GRAMMAR ***********************************/
+    start with pkm_forms;
+
+    pkm_forms ::= var_declaration:v1{:
+            RESULT = v1;
+        :}
+        | var_initialization:v2 {:
+            RESULT = v2;
+        :}|
+        | var_assignment:v3 {:
+            RESULT = v3;
+        :}
+    ;
+    
+
+    // VARIABLE DECLARATION
+    var_declaration ::= NUMBER_VARIABLE IDENTIFIER:id {: // number x
+
+            Node node = new Node(NodeType.VAR_DECLARATION, null);
+
+            node.addChild(new Node(NodeType.TYPE_NUMBER, null)); //number
+            node.addChild(new Node(NodeType.ID, id)); //x
+
+            RESULT = node;
+        :}
+        | STRING_VARIABLE IDENTIFIER:id {: // string name
+
+            Node node = new Node(NodeType.VAR_DECLARATION, null);
+
+            node.addChild(new Node(NodeType.TYPE_STRING, null)); //string
+            node.addChild(new Node(NodeType.ID, id)); //name
+
+            RESULT = node;
+        :}
+    ;
+
+    // VARIABLE INITIALIZATION
+    var_initialization ::= NUMBER_VARIABLE IDENTIFIER:id ASSIGN arithmetic_expr:e {: // number myHeight = 20.10
+
+            Node node = new Node(NodeType.VAR_INITIALIZATION, null);
+
+            node.addChild(new Node(NodeType.TYPE_NUMBER, null)); // number
+            node.addChild(new Node(NodeType.ID, id)); // myHeight
+            node.addChild(new Node(NodeType.ASSIGN, null)); // =
+            node.addChild(e); // 20.10
+
+            RESULT = node;
+        :}
+        | STRING_VARIABLE IDENTIFIER:id ASSIGN general_string:s {: // string name = "Toribio"
+
+            Node node = new Node(NodeType.VAR_INITIALIZATION, null);
+
+            node.addChild(new Node(NodeType.TYPE_STRING, null)); // string
+            node.addChild(new Node(NodeType.ID, id)); // name
+            node.addChild(new Node(NodeType.ASSIGN, null)); // =
+            node.addChild(s); // "Toribio"
+
+            RESULT = node;
+
+        :}
+    ;
+
+    // VARIABLE ASIGNATION
+    var_assignment ::= IDENTIFIER:id ASSIGN arithmetic_expr:e {: // x = 10
+            
+            Node node = new Node(NodeType.VAR_ASSIGNMENT, null);
+            
+            node.addChild(new Node(NodeType.ID, id)); // x
+            node.addChild(new Node(NodeType.ASSIGN, null)); // = 
+            node.addChild(e); // 10
+            
+            RESULT = node;
+        :}
+        |IDENTIFIER:id ASSIGN general_string:s {: // x = "PEPE"
+            
+            Node node = new Node(NodeType.VAR_ASSIGNMENT, null);
+            
+            node.addChild(new Node(NodeType.ID, id)); // x
+            node.addChild(new Node(NodeType.ASSIGN, null)); // = 
+            node.addChild(s); // 10
+            
+            RESULT = node;
+            
+        :}
+    ;

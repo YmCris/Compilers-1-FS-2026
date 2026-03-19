@@ -9,7 +9,7 @@ package ymcris.pkmforms.form.creation.analyzer.lexer;
 // CUP
 import java.util.*;
 import java_cup.runtime.*;
-import ymcris.pkmforms.form.creation.analyzer.parser.sym;
+import ymcris.pkmforms.form.creation.analyzer.parser.CreationFormSym;
 
 // SYMBOL TABLE
 import ymcris.pkmforms.analyzer.symbols.table.SymbolTable;
@@ -1046,6 +1046,9 @@ public class FormCreationLexer implements java_cup.runtime.Scanner {
         return this.errorList;
     }
 
+    public SymbolTable getTable(){
+        return this.table;
+    }
 
 
   /**
@@ -1475,22 +1478,22 @@ public class FormCreationLexer implements java_cup.runtime.Scanner {
             switch (zzLexicalState) {
             case STRING: {
               error(yytext(), "The string is not closed EOF");
-                        return symbol(sym.EOF);
+                        return symbol(CreationFormSym.EOF);
             }  // fall though
             case 411: break;
             case COMMENT: {
               error(yytext(), "The comment is not closed EOF");
-                        return symbol(sym.EOF);
+                        return symbol(CreationFormSym.EOF);
             }  // fall though
             case 412: break;
             case COMMENT_BLOCK: {
               error(yytext(), "The comment is not closed EOF");
-                        return symbol(sym.EOF);
+                        return symbol(CreationFormSym.EOF);
             }  // fall though
             case 413: break;
             default:
               {
-                return symbol(sym.EOF);
+                return symbol(CreationFormSym.EOF);
               }
         }
       }
@@ -1498,7 +1501,7 @@ public class FormCreationLexer implements java_cup.runtime.Scanner {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
             { error(yytext(), "The symbol doesn't exist in this language");
-                            return symbol(sym.error, yytext());
+                            return symbol(CreationFormSym.error, yytext());
             }
           // fall through
           case 95: break;
@@ -1519,67 +1522,67 @@ public class FormCreationLexer implements java_cup.runtime.Scanner {
           // fall through
           case 98: break;
           case 5:
-            { return symbol(sym.MODULE);
+            { return symbol(CreationFormSym.MODULE);
             }
           // fall through
           case 99: break;
           case 6:
-            { return symbol(sym.OPEN_PARENT);
+            { return symbol(CreationFormSym.OPEN_PARENT);
             }
           // fall through
           case 100: break;
           case 7:
-            { return symbol(sym.CLOSED_PARENT);
+            { return symbol(CreationFormSym.CLOSED_PARENT);
             }
           // fall through
           case 101: break;
           case 8:
-            { return symbol(sym.MULTIPLY);
+            { return symbol(CreationFormSym.MULTIPLY);
             }
           // fall through
           case 102: break;
           case 9:
-            { return symbol(sym.PLUS);
+            { return symbol(CreationFormSym.PLUS);
             }
           // fall through
           case 103: break;
           case 10:
-            { return symbol(sym.COMMA);
+            { return symbol(CreationFormSym.COMMA);
             }
           // fall through
           case 104: break;
           case 11:
-            { return symbol(sym.MINUS);
+            { return symbol(CreationFormSym.MINUS);
             }
           // fall through
           case 105: break;
           case 12:
-            { return symbol(sym.DIVIDE);
+            { return symbol(CreationFormSym.DIVIDE);
             }
           // fall through
           case 106: break;
           case 13:
-            { return symbol(sym.INTEGER, Integer.valueOf(yytext()));
+            { return symbol(CreationFormSym.INTEGER, Integer.valueOf(yytext()));
             }
           // fall through
           case 107: break;
           case 14:
-            { return symbol(sym.TWO_POINTS);
+            { return symbol(CreationFormSym.TWO_POINTS);
             }
           // fall through
           case 108: break;
           case 15:
-            { return symbol(sym.LESS);
+            { return symbol(CreationFormSym.LESS);
             }
           // fall through
           case 109: break;
           case 16:
-            { return symbol(sym.ASSIGN);
+            { return symbol(CreationFormSym.ASSIGN);
             }
           // fall through
           case 110: break;
           case 17:
-            { return symbol(sym.GREATER);
+            { return symbol(CreationFormSym.GREATER);
             }
           // fall through
           case 111: break;
@@ -1587,37 +1590,37 @@ public class FormCreationLexer implements java_cup.runtime.Scanner {
             { table.addVariable(yytext(), null, null,
                                 yyline+1, yycolumn+1);
                             
-                            return symbol(sym.IDENTIFIER, yytext());
+                            return symbol(CreationFormSym.IDENTIFIER, yytext());
             }
           // fall through
           case 112: break;
           case 19:
-            { return symbol(sym.OPEN_SQR_BRACKETS);
+            { return symbol(CreationFormSym.OPEN_SQR_BRACKETS);
             }
           // fall through
           case 113: break;
           case 20:
-            { return symbol(sym.CLOSED_SQR_BRACKETS);
+            { return symbol(CreationFormSym.CLOSED_SQR_BRACKETS);
             }
           // fall through
           case 114: break;
           case 21:
-            { return symbol(sym.EXPO);
+            { return symbol(CreationFormSym.EXPO);
             }
           // fall through
           case 115: break;
           case 22:
-            { return symbol(sym.OPEN_CURLY_BRACKETS);
+            { return symbol(CreationFormSym.OPEN_CURLY_BRACKETS);
             }
           // fall through
           case 116: break;
           case 23:
-            { return symbol(sym.CLOSED_CURLY_BRACKETS);
+            { return symbol(CreationFormSym.CLOSED_CURLY_BRACKETS);
             }
           // fall through
           case 117: break;
           case 24:
-            { return symbol(sym.NOT);
+            { return symbol(CreationFormSym.NOT);
             }
           // fall through
           case 118: break;
@@ -1629,13 +1632,13 @@ public class FormCreationLexer implements java_cup.runtime.Scanner {
           case 26:
             { error(yytext(), "The string is not closed");
                         yybegin(YYINITIAL);
-                        return symbol(sym.error);
+                        return symbol(CreationFormSym.error);
             }
           // fall through
           case 120: break;
           case 27:
             { yybegin(YYINITIAL);
-                            return symbol(sym.STRING, buffer.toString());
+                            return symbol(CreationFormSym.STRING, buffer.toString());
             }
           // fall through
           case 121: break;
@@ -1645,12 +1648,12 @@ public class FormCreationLexer implements java_cup.runtime.Scanner {
           // fall through
           case 122: break;
           case 29:
-            { return symbol(sym.DIFERENT);
+            { return symbol(CreationFormSym.DIFERENT);
             }
           // fall through
           case 123: break;
           case 30:
-            { return symbol(sym.AND);
+            { return symbol(CreationFormSym.AND);
             }
           // fall through
           case 124: break;
@@ -1660,32 +1663,32 @@ public class FormCreationLexer implements java_cup.runtime.Scanner {
           // fall through
           case 125: break;
           case 32:
-            { return symbol(sym.LOE);
+            { return symbol(CreationFormSym.LOE);
             }
           // fall through
           case 126: break;
           case 33:
-            { return symbol(sym.EQUAL);
+            { return symbol(CreationFormSym.EQUAL);
             }
           // fall through
           case 127: break;
           case 34:
-            { return symbol(sym.GOE);
+            { return symbol(CreationFormSym.GOE);
             }
           // fall through
           case 128: break;
           case 35:
-            { return symbol(sym.DO);
+            { return symbol(CreationFormSym.DO);
             }
           // fall through
           case 129: break;
           case 36:
-            { return symbol(sym.IF);
+            { return symbol(CreationFormSym.IF);
             }
           // fall through
           case 130: break;
           case 37:
-            { return symbol(sym.OR);
+            { return symbol(CreationFormSym.OR);
             }
           // fall through
           case 131: break;
@@ -1715,262 +1718,262 @@ public class FormCreationLexer implements java_cup.runtime.Scanner {
           // fall through
           case 136: break;
           case 43:
-            { return symbol(sym.DOUBLE, Double.valueOf(yytext()));
+            { return symbol(CreationFormSym.NUMBER, Double.valueOf(yytext()));
             }
           // fall through
           case 137: break;
           case 44:
-            { return symbol(sym.FOR);
+            { return symbol(CreationFormSym.FOR);
             }
           // fall through
           case 138: break;
           case 45:
-            { return symbol(sym.ELSE);
+            { return symbol(CreationFormSym.ELSE);
             }
           // fall through
           case 139: break;
           case 46:
-            { return symbol(sym.LINE_BORDER);
+            { return symbol(CreationFormSym.LINE_BORDER);
             }
           // fall through
           case 140: break;
           case 47:
-            { return symbol(sym.MONO);
+            { return symbol(CreationFormSym.MONO);
             }
           // fall through
           case 141: break;
           case 48:
-            { return symbol(sym.TEXT);
+            { return symbol(CreationFormSym.TEXT);
             }
           // fall through
           case 142: break;
           case 49:
-            { return symbol(sym.DRAW);
+            { return symbol(CreationFormSym.DRAW);
             }
           // fall through
           case 143: break;
           case 50:
-            { return symbol(sym.TABLE);
+            { return symbol(CreationFormSym.TABLE);
             }
           // fall through
           case 144: break;
           case 51:
-            { return symbol(sym.WHILE);
+            { return symbol(CreationFormSym.WHILE);
             }
           // fall through
           case 145: break;
           case 52:
-            { return symbol(sym.FIFTH);
+            { return symbol(CreationFormSym.FIFTH);
             }
           // fall through
           case 146: break;
           case 53:
-            { return symbol(sym.FIRST);
+            { return symbol(CreationFormSym.FIRST);
             }
           // fall through
           case 147: break;
           case 54:
-            { return symbol(sym.LABEL);
+            { return symbol(CreationFormSym.LABEL);
             }
           // fall through
           case 148: break;
           case 55:
-            { return symbol(sym.THIRD);
+            { return symbol(CreationFormSym.THIRD);
             }
           // fall through
           case 149: break;
           case 56:
-            { return symbol(sym.WIDTH);
+            { return symbol(CreationFormSym.WIDTH);
             }
           // fall through
           case 150: break;
           case 57:
-            { return symbol(sym.SAD);
+            { return symbol(CreationFormSym.SAD);
             }
           // fall through
           case 151: break;
           case 58:
-            { return symbol(sym.SMILE);
+            { return symbol(CreationFormSym.SMILE);
             }
           // fall through
           case 152: break;
           case 59:
-            { return symbol(sym.SERIOUS);
+            { return symbol(CreationFormSym.SERIOUS);
             }
           // fall through
           case 153: break;
           case 60:
-            { return symbol(sym.DOTTED_BORDER);
+            { return symbol(CreationFormSym.DOTTED_BORDER);
             }
           // fall through
           case 154: break;
           case 61:
-            { return symbol(sym.DOUBLE_BORDER);
+            { return symbol(CreationFormSym.DOUBLE_BORDER);
             }
           // fall through
           case 155: break;
           case 62:
-            { return symbol(sym.FOURTH);
+            { return symbol(CreationFormSym.FOURTH);
             }
           // fall through
           case 156: break;
           case 63:
-            { return symbol(sym.HEIGHT);
+            { return symbol(CreationFormSym.HEIGHT);
             }
           // fall through
           case 157: break;
           case 64:
-            { return symbol(sym.NUMBER_VARIABLE);
+            { return symbol(CreationFormSym.NUMBER_VARIABLE);
             }
           // fall through
           case 158: break;
           case 65:
-            { return symbol(sym.POINT_X);
+            { return symbol(CreationFormSym.POINT_X);
             }
           // fall through
           case 159: break;
           case 66:
-            { return symbol(sym.POINT_Y);
+            { return symbol(CreationFormSym.POINT_Y);
             }
           // fall through
           case 160: break;
           case 67:
-            { return symbol(sym.SECOND);
+            { return symbol(CreationFormSym.SECOND);
             }
           // fall through
           case 161: break;
           case 68:
-            { return symbol(sym.STRING_VARIABLE);
+            { return symbol(CreationFormSym.STRING_VARIABLE);
             }
           // fall through
           case 162: break;
           case 69:
-            { return symbol(sym.STYLES);
+            { return symbol(CreationFormSym.STYLES);
             }
           // fall through
           case 163: break;
           case 70:
-            { return symbol(sym.COLOR);
+            { return symbol(CreationFormSym.COLOR);
             }
           // fall through
           case 164: break;
           case 71:
-            { return symbol(sym.CAT);
+            { return symbol(CreationFormSym.CAT);
             }
           // fall through
           case 165: break;
           case 72:
-            { return symbol(sym.HEART);
+            { return symbol(CreationFormSym.HEART);
             }
           // fall through
           case 166: break;
           case 73:
-            { return symbol(sym.CURSIVE);
+            { return symbol(CreationFormSym.CURSIVE);
             }
           // fall through
           case 167: break;
           case 74:
-            { return symbol(sym.ELSE_IF);
+            { return symbol(CreationFormSym.ELSE_IF);
             }
           // fall through
           case 168: break;
           case 75:
-            { return symbol(sym.CONTENT);
+            { return symbol(CreationFormSym.CONTENT);
             }
           // fall through
           case 169: break;
           case 76:
-            { return symbol(sym.CORRECT);
+            { return symbol(CreationFormSym.CORRECT);
             }
           // fall through
           case 170: break;
           case 77:
-            { return symbol(sym.OPTIONS);
+            { return symbol(CreationFormSym.OPTIONS);
             }
           // fall through
           case 171: break;
           case 78:
-            { return symbol(sym.SPECIAL_VARIABLE);
+            { return symbol(CreationFormSym.SPECIAL_VARIABLE);
             }
           // fall through
           case 172: break;
           case 79:
-            { return symbol(sym.BORDER);
+            { return symbol(CreationFormSym.BORDER);
             }
           // fall through
           case 173: break;
           case 80:
-            { return symbol(sym.VERTICAL);
+            { return symbol(CreationFormSym.VERTICAL);
             }
           // fall through
           case 174: break;
           case 81:
-            { return symbol(sym.ELEMENTS);
+            { return symbol(CreationFormSym.ELEMENTS);
             }
           // fall through
           case 175: break;
           case 82:
-            { return symbol(sym.STAR);
+            { return symbol(CreationFormSym.STAR);
             }
           // fall through
           case 176: break;
           case 83:
-            { return symbol(sym.TEXT_SIZE);
+            { return symbol(CreationFormSym.TEXT_SIZE);
             }
           // fall through
           case 177: break;
           case 84:
-            { return symbol(sym.HORIZONTAL);
+            { return symbol(CreationFormSym.HORIZONTAL);
             }
           // fall through
           case 178: break;
           case 85:
-            { return symbol(sym.SANS_SERIF);
+            { return symbol(CreationFormSym.SANS_SERIF);
             }
           // fall through
           case 179: break;
           case 86:
-            { return symbol(sym.STAR_NUMBER);
+            { return symbol(CreationFormSym.STAR_NUMBER);
             }
           // fall through
           case 180: break;
           case 87:
-            { return symbol(sym.ORIENTATION);
+            { return symbol(CreationFormSym.ORIENTATION);
             }
           // fall through
           case 181: break;
           case 88:
-            { return symbol(sym.FONT_FAMILY);
+            { return symbol(CreationFormSym.FONT_FAMILY);
             }
           // fall through
           case 182: break;
           case 89:
-            { return symbol(sym.DROP_QUESTION);
+            { return symbol(CreationFormSym.DROP_QUESTION);
             }
           // fall through
           case 183: break;
           case 90:
-            { return symbol(sym.OPEN_QUESTION);
+            { return symbol(CreationFormSym.OPEN_QUESTION);
             }
           // fall through
           case 184: break;
           case 91:
-            { return symbol(sym.SELECT_QUESTION);
+            { return symbol(CreationFormSym.SELECT_QUESTION);
             }
           // fall through
           case 185: break;
           case 92:
-            { return symbol(sym.BACKGROUND_COLOR);
+            { return symbol(CreationFormSym.BACKGROUND_COLOR);
             }
           // fall through
           case 186: break;
           case 93:
-            { return symbol(sym.MULTIPLE_QUESTION);
+            { return symbol(CreationFormSym.MULTIPLE_QUESTION);
             }
           // fall through
           case 187: break;
           case 94:
-            { return symbol(sym.WHO_IS_THAT_POKEMON);
+            { return symbol(CreationFormSym.WHO_IS_THAT_POKEMON);
             }
           // fall through
           case 188: break;

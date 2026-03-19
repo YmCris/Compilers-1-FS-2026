@@ -12,7 +12,7 @@ public class Symbol {
     private Object value;
     private SymbolType type;
     private String identifier;
-
+    
     // PRIMITIVE VARIABLES -----------------------------------------------------
     private int row;
     private int column;

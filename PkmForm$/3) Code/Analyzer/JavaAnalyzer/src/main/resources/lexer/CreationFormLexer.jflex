@@ -5,7 +5,7 @@ package ymcris.pkmforms.form.creation.analyzer.lexer;
 // CUP
 import java.util.*;
 import java_cup.runtime.*;
-import ymcris.pkmforms.form.creation.analyzer.parser.sym;
+import ymcris.pkmforms.form.creation.analyzer.parser.CreationFormSym;
 
 // SYMBOL TABLE
 import ymcris.pkmforms.analyzer.symbols.table.SymbolTable;
@@ -44,7 +44,7 @@ LetterDigit             = [:jletterdigit:]
 
 Integer                 = [0-9]+
 PositiveInteger         = [1-9][0-9]*
-Double                  = {Integer}\.{Integer}
+Number                  = {Integer}\.{Integer}
 
 Identifier              = {Letter}({LetterDigit})*
 
@@ -89,134 +89,137 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
         return this.errorList;
     }
 
+    public SymbolTable getTable(){
+        return this.table;
+    }
 %}
 
 %%
 /********************************* LEXICAL RULES ******************************/
 <YYINITIAL>{
     // RESERVED WORDS
-    "IF"                { return symbol(sym.IF); }
-    "ELSE IF"           { return symbol(sym.ELSE_IF); }
-    "ELSE"              { return symbol(sym.ELSE); }
+    "IF"                { return symbol(CreationFormSym.IF); }
+    "ELSE IF"           { return symbol(CreationFormSym.ELSE_IF); }
+    "ELSE"              { return symbol(CreationFormSym.ELSE); }
     
-    "WHILE"             { return symbol(sym.WHILE); }
-    "DO"                { return symbol(sym.DO); }
+    "WHILE"             { return symbol(CreationFormSym.WHILE); }
+    "DO"                { return symbol(CreationFormSym.DO); }
     
-    "FOR"               { return symbol(sym.FOR); }
+    "FOR"               { return symbol(CreationFormSym.FOR); }
     
-    "number"            { return symbol(sym.NUMBER_VARIABLE); }
-    "string"            { return symbol(sym.STRING_VARIABLE); }
-    "special"           { return symbol(sym.SPECIAL_VARIABLE); }
+    "number"            { return symbol(CreationFormSym.NUMBER_VARIABLE); }
+    "string"            { return symbol(CreationFormSym.STRING_VARIABLE); }
+    "special"           { return symbol(CreationFormSym.SPECIAL_VARIABLE); }
     
-    "draw"              { return symbol(sym.DRAW); }
+    "draw"              { return symbol(CreationFormSym.DRAW); }
     
-    "width"             { return symbol(sym.WIDTH); }
-    "height"            { return symbol(sym.HEIGHT); }
+    "width"             { return symbol(CreationFormSym.WIDTH); }
+    "height"            { return symbol(CreationFormSym.HEIGHT); }
     
     // ARITHMETIC OPERATORS
-    "+"                 { return symbol(sym.PLUS); }
-    "-"                 { return symbol(sym.MINUS); }
-    "*"                 { return symbol(sym.MULTIPLY); }
-    "/"                 { return symbol(sym.DIVIDE); }
-    "^"                 { return symbol(sym.EXPO); }
-    "%"                 { return symbol(sym.MODULE); }
+    "+"                 { return symbol(CreationFormSym.PLUS); }
+    "-"                 { return symbol(CreationFormSym.MINUS); }
+    "*"                 { return symbol(CreationFormSym.MULTIPLY); }
+    "/"                 { return symbol(CreationFormSym.DIVIDE); }
+    "^"                 { return symbol(CreationFormSym.EXPO); }
+    "%"                 { return symbol(CreationFormSym.MODULE); }
     
     // RELATIONSHIP OPERATORS
-    "=="                { return symbol(sym.EQUAL); }
-    "!!"                { return symbol(sym.DIFERENT); }
-    ">="                { return symbol(sym.GOE); }
-    "<="                { return symbol(sym.LOE); }
-    ">"                 { return symbol(sym.GREATER); }
-    "<"                 { return symbol(sym.LESS); }
-    "="                 { return symbol(sym.ASSIGN); }
+    "=="                { return symbol(CreationFormSym.EQUAL); }
+    "!!"                { return symbol(CreationFormSym.DIFERENT); }
+    ">="                { return symbol(CreationFormSym.GOE); }
+    "<="                { return symbol(CreationFormSym.LOE); }
+    ">"                 { return symbol(CreationFormSym.GREATER); }
+    "<"                 { return symbol(CreationFormSym.LESS); }
+    "="                 { return symbol(CreationFormSym.ASSIGN); }
 
     // LOGIC OPERATORS
-    "&&"                { return symbol(sym.AND); }
-    "||"                { return symbol(sym.OR); }
-    "~"                 { return symbol(sym.NOT); }
+    "&&"                { return symbol(CreationFormSym.AND); }
+    "||"                { return symbol(CreationFormSym.OR); }
+    "~"                 { return symbol(CreationFormSym.NOT); }
 
     // GROUPING SYMBOLS
-    "("                 { return symbol(sym.OPEN_PARENT); }
-    ")"                 { return symbol(sym.CLOSED_PARENT); }
-    "["                 { return symbol(sym.OPEN_SQR_BRACKETS); }
-    "]"                 { return symbol(sym.CLOSED_SQR_BRACKETS); }
-    "{"                 { return symbol(sym.OPEN_CURLY_BRACKETS); }
-    "}"                 { return symbol(sym.CLOSED_CURLY_BRACKETS); }
+    "("                 { return symbol(CreationFormSym.OPEN_PARENT); }
+    ")"                 { return symbol(CreationFormSym.CLOSED_PARENT); }
+    "["                 { return symbol(CreationFormSym.OPEN_SQR_BRACKETS); }
+    "]"                 { return symbol(CreationFormSym.CLOSED_SQR_BRACKETS); }
+    "{"                 { return symbol(CreationFormSym.OPEN_CURLY_BRACKETS); }
+    "}"                 { return symbol(CreationFormSym.CLOSED_CURLY_BRACKETS); }
     
     // END OF LINE
-    ","                 { return symbol(sym.COMMA); }
-    ":"                 { return symbol(sym.TWO_POINTS); }
+    ","                 { return symbol(CreationFormSym.COMMA); }
+    ":"                 { return symbol(CreationFormSym.TWO_POINTS); }
     
     // SECTIONS
-    "pointX"            { return symbol(sym.POINT_X); }
-    "pointY"            { return symbol(sym.POINT_Y); }
-    "orientation"       { return symbol(sym.ORIENTATION); }
-    "VERTICAL"          { return symbol(sym.VERTICAL); }
-    "HORIZONTAL"        { return symbol(sym.HORIZONTAL); }
+    "pointX"            { return symbol(CreationFormSym.POINT_X); }
+    "pointY"            { return symbol(CreationFormSym.POINT_Y); }
+    "orientation"       { return symbol(CreationFormSym.ORIENTATION); }
+    "VERTICAL"          { return symbol(CreationFormSym.VERTICAL); }
+    "HORIZONTAL"        { return symbol(CreationFormSym.HORIZONTAL); }
     
-    "elements"          { return symbol(sym.ELEMENTS); }
+    "elements"          { return symbol(CreationFormSym.ELEMENTS); }
     
     // TABLE
-    "TABLE"             { return symbol(sym.TABLE); }
+    "TABLE"             { return symbol(CreationFormSym.TABLE); }
     
     // TEXT
-    "TEXT"              { return symbol(sym.TEXT); }
-    "content"           { return symbol(sym.CONTENT); }
+    "TEXT"              { return symbol(CreationFormSym.TEXT); }
+    "content"           { return symbol(CreationFormSym.CONTENT); }
     
     //STYLES
-    "styles"            { return symbol(sym.STYLES); }
-    \"color\"           { return symbol(sym.COLOR); }
-    \"background color\" { return symbol(sym.BACKGROUND_COLOR); }
-    \"font family\"     { return symbol(sym.FONT_FAMILY); }
+    "styles"            { return symbol(CreationFormSym.STYLES); }
+    \"color\"           { return symbol(CreationFormSym.COLOR); }
+    \"background color\" { return symbol(CreationFormSym.BACKGROUND_COLOR); }
+    \"font family\"     { return symbol(CreationFormSym.FONT_FAMILY); }
     
-    "MONO"              { return symbol(sym.MONO); }
-    "SANS_SERIF"        { return symbol(sym.SANS_SERIF); }
-    "CURSIVE"           { return symbol(sym.CURSIVE); }
+    "MONO"              { return symbol(CreationFormSym.MONO); }
+    "SANS_SERIF"        { return symbol(CreationFormSym.SANS_SERIF); }
+    "CURSIVE"           { return symbol(CreationFormSym.CURSIVE); }
     
-    \"text size\"       { return symbol(sym.TEXT_SIZE); }
-    \"border\"          { return symbol(sym.BORDER); }
-    "LINE"              { return symbol(sym.LINE_BORDER); }
-    "DOTTED"            { return symbol(sym.DOTTED_BORDER); }
-    "DOUBLE"            { return symbol(sym.DOUBLE_BORDER); }
+    \"text size\"       { return symbol(CreationFormSym.TEXT_SIZE); }
+    \"border\"          { return symbol(CreationFormSym.BORDER); }
+    "LINE"              { return symbol(CreationFormSym.LINE_BORDER); }
+    "DOTTED"            { return symbol(CreationFormSym.DOTTED_BORDER); }
+    "DOUBLE"            { return symbol(CreationFormSym.DOUBLE_BORDER); }
     
     // QUESTIONS
-    "label"             { return symbol(sym.LABEL); }
-    "OPEN_QUESTION"     { return symbol(sym.OPEN_QUESTION); }
-    "DROP_QUESTION"     { return symbol(sym.DROP_QUESTION); }
-    "SELECT_QUESTION"   { return symbol(sym.SELECT_QUESTION); }
-    "MULTIPLE_QUESTION" { return symbol(sym.MULTIPLE_QUESTION); }
-    "options"           { return symbol(sym.OPTIONS); }
-    "first"             { return symbol(sym.FIRST); }
-    "second"            { return symbol(sym.SECOND); }
-    "third"             { return symbol(sym.THIRD); }
-    "fourth"            { return symbol(sym.FOURTH); }
-    "fifth"             { return symbol(sym.FIFTH); }
-    "correct"           { return symbol(sym.CORRECT); }
-    "who_is_that_pokemon" { return symbol(sym.WHO_IS_THAT_POKEMON); }
+    "label"             { return symbol(CreationFormSym.LABEL); }
+    "OPEN_QUESTION"     { return symbol(CreationFormSym.OPEN_QUESTION); }
+    "DROP_QUESTION"     { return symbol(CreationFormSym.DROP_QUESTION); }
+    "SELECT_QUESTION"   { return symbol(CreationFormSym.SELECT_QUESTION); }
+    "MULTIPLE_QUESTION" { return symbol(CreationFormSym.MULTIPLE_QUESTION); }
+    "options"           { return symbol(CreationFormSym.OPTIONS); }
+    "first"             { return symbol(CreationFormSym.FIRST); }
+    "second"            { return symbol(CreationFormSym.SECOND); }
+    "third"             { return symbol(CreationFormSym.THIRD); }
+    "fourth"            { return symbol(CreationFormSym.FOURTH); }
+    "fifth"             { return symbol(CreationFormSym.FIFTH); }
+    "correct"           { return symbol(CreationFormSym.CORRECT); }
+    "who_is_that_pokemon" { return symbol(CreationFormSym.WHO_IS_THAT_POKEMON); }
     
     // Line comment
     \$                  { yybegin(COMMENT); }
     
     // MACROS
-    {Double}            { return symbol(sym.DOUBLE, Double.valueOf(yytext())); }
-    {Integer}           { return symbol(sym.INTEGER, Integer.valueOf(yytext())); }
+    {Number}            { return symbol(CreationFormSym.NUMBER, Double.valueOf(yytext())); }
+    {Integer}           { return symbol(CreationFormSym.INTEGER, Integer.valueOf(yytext())); }
 
     {Identifier}        {
                             table.addVariable(yytext(), null, null,
                                 yyline+1, yycolumn+1);
                             
-                            return symbol(sym.IDENTIFIER, yytext());
+                            return symbol(CreationFormSym.IDENTIFIER, yytext());
                         }
     
     {WhiteSpace}+       { /* IGNORE */ }
     
-    {Smile}             { return symbol(sym.SMILE); }
-    {Sad}               { return symbol(sym.SAD); }
-    {Serious}           { return symbol(sym.SERIOUS); }
-    {Heart}             { return symbol(sym.HEART); }
-    {Star}              { return symbol(sym.STAR); }
-    {StarNumber}        { return symbol(sym.STAR_NUMBER); }
-    {Cat}               { return symbol(sym.CAT); }
+    {Smile}             { return symbol(CreationFormSym.SMILE); }
+    {Sad}               { return symbol(CreationFormSym.SAD); }
+    {Serious}           { return symbol(CreationFormSym.SERIOUS); }
+    {Heart}             { return symbol(CreationFormSym.HEART); }
+    {Star}              { return symbol(CreationFormSym.STAR); }
+    {StarNumber}        { return symbol(CreationFormSym.STAR_NUMBER); }
+    {Cat}               { return symbol(CreationFormSym.CAT); }
     
 
     // STATES
@@ -231,7 +234,7 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
     
     .                   {
                             error(yytext(), "The symbol doesn't exist in this language");
-                            return symbol(sym.error, yytext());
+                            return symbol(CreationFormSym.error, yytext());
                         }
 
 }
@@ -240,7 +243,7 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
     
     \"                  {
                             yybegin(YYINITIAL);
-                            return symbol(sym.STRING, buffer.toString());
+                            return symbol(CreationFormSym.STRING, buffer.toString());
                         }
                   
     [^\n\r\"\\]+        { buffer.append( yytext() ); }
@@ -254,12 +257,12 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
 <STRING>\n {
                         error(yytext(), "The string is not closed");
                         yybegin(YYINITIAL);
-                        return symbol(sym.error);
+                        return symbol(CreationFormSym.error);
 }
 
 <STRING><<EOF>> {
                         error(yytext(), "The string is not closed EOF");
-                        return symbol(sym.EOF);
+                        return symbol(CreationFormSym.EOF);
 }
 
 <COMMENT>{
@@ -271,7 +274,7 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
 
 <COMMENT><<EOF>> {
                         error(yytext(), "The comment is not closed EOF");
-                        return symbol(sym.EOF);
+                        return symbol(CreationFormSym.EOF);
 }
 
 <COMMENT_BLOCK>{
@@ -284,10 +287,10 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
 
 <COMMENT_BLOCK><<EOF>> {
                         error(yytext(), "The comment is not closed EOF");
-                        return symbol(sym.EOF);
+                        return symbol(CreationFormSym.EOF);
 }
 
 
 <<EOF>>           {
-                        return symbol(sym.EOF);
+                        return symbol(CreationFormSym.EOF);
                   }

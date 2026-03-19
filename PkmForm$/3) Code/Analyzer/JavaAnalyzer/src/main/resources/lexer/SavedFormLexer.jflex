@@ -89,6 +89,9 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
         return this.errorList;
     }
 
+    public SymbolTable getTable(){
+        return this.table;
+    }
 %}
 
 %%

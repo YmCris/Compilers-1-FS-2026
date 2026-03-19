@@ -1,26 +1,18 @@
-$ =============================
-$ VARIABLES
-$ =============================
-
-number width = 120
-number height = 80
-number counter = 0
+// VARIABLES 
+number x = 120
+number y = 80
+number z = 0
 string titulo = "Encuesta Pokémon @[:star:3:]"
+string cadena
 
-$ =============================
-$ VARIABLE SPECIAL
-$ =============================
-
+// SPECIAL
 special preguntaDinamica = OPEN_QUESTION [
     width: ?,
     height: 10 + ?,
     label: "Describe tu Pokémon favorito @[:smile:]"
 ]
 
-$ =============================
-$ SECCIÓN PRINCIPAL
-$ =============================
-
+// SECTIONS
 SECTION [
 
     width: width,
@@ -116,17 +108,11 @@ SECTION [
 
 ]
 
-$ =============================
-$ USO DE VARIABLE SPECIAL
-$ =============================
-
+// SPECIAL USE
 preguntaDinamica.draw(60,5)
 
-$ =============================
-$ CONDICIONALES
-$ =============================
-
-IF (10 > 5 && 8 > 2 && 3 !! 4) {
+// CONDITIONALS
+IF (10 > 5 && 8 > 2 && 3 !! 4) {// ERROR
 
     TEXT [
         content: "Condición verdadera"
@@ -146,9 +132,7 @@ IF (10 > 5 && 8 > 2 && 3 !! 4) {
 
 }
 
-$ =============================
-$ CICLOS
-$ =============================
+// WHILE
 
 WHILE (counter < 3) {
 
@@ -156,12 +140,14 @@ WHILE (counter < 3) {
 
 }
 
+// DO
 DO {
 
     counter = counter - 1
 
 } WHILE (counter > 0 || counter > 1)
 
+// FOR
 FOR (i = 0 ; i <= 3 ; i = i + 1) {
 
     TEXT [
@@ -178,11 +164,8 @@ FOR (j in 1 .. 3) {
 
 }
 
-$ =============================
-$ USO DE POKEAPI
-$ =============================
-
-DROP_QUESTION [
+// DROP QUESTION 
+DROP_QUESTION [//ERROR
 
     label: "¿Quién es ese Pokémon?",
     options: who_is_that_pokemon(NUMBER,1,5)
