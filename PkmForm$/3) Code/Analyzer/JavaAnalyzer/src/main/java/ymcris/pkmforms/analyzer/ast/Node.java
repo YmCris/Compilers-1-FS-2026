@@ -22,6 +22,12 @@ public class Node {
         this.value = value;
         this.children = new ArrayList<>();
     }
+    
+    public Node(NodeType type) {
+        this.type = type;
+        this.value = null;
+        this.children = new ArrayList<>();
+    }
 
     // SPECIFIC METHODS --------------------------------------------------------
     public void addChild(Node child) {

@@ -8,89 +8,93 @@ package ymcris.pkmforms.form.creation.analyzer.parser;
 /** CUP generated class containing symbol constants. */
 public class CreationFormSym {
   /* terminals */
-  public static final int HORIZONTAL = 42;
-  public static final int SELECT_QUESTION = 62;
-  public static final int IDENTIFIER = 82;
-  public static final int TEXT_SIZE = 50;
-  public static final int THIRD = 67;
-  public static final int TABLE = 44;
+  public static final int HORIZONTAL = 45;
+  public static final int SELECT_QUESTION = 66;
+  public static final int IDENTIFIER = 86;
+  public static final int TEXT_SIZE = 53;
+  public static final int THIRD = 71;
+  public static final int TABLE = 47;
   public static final int NUMBER_VARIABLE = 8;
-  public static final int TWO_POINTS = 37;
-  public static final int DOUBLE_BORDER = 58;
-  public static final int SANS_SERIF = 53;
-  public static final int DROP_QUESTION = 61;
-  public static final int SECOND = 66;
-  public static final int CLOSED_PARENT = 31;
-  public static final int COMMA = 36;
-  public static final int ELEMENTS = 43;
+  public static final int TWO_POINTS = 39;
+  public static final int DOUBLE_BORDER = 61;
+  public static final int SANS_SERIF = 56;
+  public static final int DROP_QUESTION = 65;
+  public static final int SECOND = 70;
+  public static final int CLOSED_PARENT = 32;
+  public static final int COMMA = 38;
+  public static final int ELEMENTS = 46;
   public static final int DRAW = 11;
-  public static final int LINE_BORDER = 56;
-  public static final int OPEN_QUESTION = 60;
-  public static final int FIRST = 65;
-  public static final int INTEGER = 79;
-  public static final int CLOSED_CURLY_BRACKETS = 35;
-  public static final int BACKGROUND_COLOR = 49;
-  public static final int OPEN_SQR_BRACKETS = 32;
-  public static final int NOT = 29;
-  public static final int TEXT = 45;
+  public static final int LINE_BORDER = 59;
+  public static final int OPEN_QUESTION = 64;
+  public static final int FIRST = 69;
+  public static final int INTEGER = 83;
+  public static final int CLOSED_CURLY_BRACKETS = 36;
+  public static final int BACKGROUND_COLOR = 52;
+  public static final int OPEN_SQR_BRACKETS = 33;
+  public static final int NOT = 30;
+  public static final int TEXT = 48;
   public static final int STRING_VARIABLE = 9;
-  public static final int WIDTH = 12;
-  public static final int OPEN_PARENT = 30;
-  public static final int SMILE = 72;
-  public static final int STAR_NUMBER = 77;
-  public static final int STYLES = 47;
-  public static final int MULTIPLY = 16;
-  public static final int NUMBER = 80;
-  public static final int LOE = 23;
-  public static final int HEART = 75;
-  public static final int CURSIVE = 54;
-  public static final int MONO = 52;
-  public static final int PLUS = 14;
-  public static final int DIVIDE = 17;
-  public static final int SAD = 73;
+  public static final int WIDTH = 13;
+  public static final int OPEN_PARENT = 31;
+  public static final int SMILE = 76;
+  public static final int STAR_NUMBER = 81;
+  public static final int STYLES = 50;
+  public static final int MULTIPLY = 17;
+  public static final int NUMBER = 84;
+  public static final int LOE = 24;
+  public static final int HEART = 79;
+  public static final int CURSIVE = 57;
+  public static final int MONO = 55;
+  public static final int PLUS = 15;
+  public static final int DIVIDE = 18;
+  public static final int SAD = 77;
+  public static final int QUESTION = 63;
   public static final int WHILE = 5;
-  public static final int EQUAL = 20;
-  public static final int MODULE = 19;
-  public static final int DIFERENT = 21;
-  public static final int FIFTH = 69;
-  public static final int ASSIGN = 26;
+  public static final int EQUAL = 21;
+  public static final int MODULE = 20;
+  public static final int DIFERENT = 22;
+  public static final int FIFTH = 73;
+  public static final int ASSIGN = 27;
   public static final int ELSE_IF = 3;
-  public static final int OPEN_CURLY_BRACKETS = 34;
+  public static final int OPEN_CURLY_BRACKETS = 35;
   public static final int DO = 6;
   public static final int FOR = 7;
-  public static final int STAR = 76;
-  public static final int GREATER = 24;
-  public static final int DOTTED_BORDER = 57;
-  public static final int ORIENTATION = 40;
+  public static final int STAR = 80;
+  public static final int GREATER = 25;
+  public static final int DOTTED_BORDER = 60;
+  public static final int ORIENTATION = 43;
   public static final int ELSE = 4;
-  public static final int GOE = 22;
-  public static final int MULTIPLE_QUESTION = 63;
-  public static final int CORRECT = 70;
-  public static final int CONTENT = 46;
+  public static final int GOE = 23;
+  public static final int MULTIPLE_QUESTION = 67;
+  public static final int DOT = 37;
+  public static final int CORRECT = 74;
+  public static final int CONTENT = 49;
   public static final int EOF = 0;
-  public static final int EXPO = 18;
-  public static final int VERTICAL = 41;
-  public static final int SERIOUS = 74;
-  public static final int LABEL = 59;
-  public static final int MINUS = 15;
-  public static final int FOURTH = 68;
-  public static final int OR = 28;
+  public static final int EXPO = 19;
+  public static final int VERTICAL = 44;
+  public static final int SERIOUS = 78;
+  public static final int LABEL = 62;
+  public static final int MINUS = 16;
+  public static final int FOURTH = 72;
+  public static final int OR = 29;
   public static final int error = 1;
-  public static final int POINT_Y = 39;
+  public static final int POINT_Y = 42;
   public static final int IF = 2;
-  public static final int POINT_X = 38;
-  public static final int COLOR = 48;
-  public static final int BORDER = 55;
-  public static final int HEIGHT = 13;
-  public static final int CLOSED_SQR_BRACKETS = 33;
-  public static final int FONT_FAMILY = 51;
-  public static final int CAT = 78;
-  public static final int STRING = 81;
-  public static final int LESS = 25;
-  public static final int OPTIONS = 64;
-  public static final int AND = 27;
+  public static final int POINT_X = 41;
+  public static final int COLOR = 51;
+  public static final int COLOR_VALUE = 12;
+  public static final int BORDER = 58;
+  public static final int HEIGHT = 14;
+  public static final int CLOSED_SQR_BRACKETS = 34;
+  public static final int FONT_FAMILY = 54;
+  public static final int CAT = 82;
+  public static final int STRING = 85;
+  public static final int LESS = 26;
+  public static final int OPTIONS = 68;
+  public static final int AND = 28;
   public static final int SPECIAL_VARIABLE = 10;
-  public static final int WHO_IS_THAT_POKEMON = 71;
+  public static final int WHO_IS_THAT_POKEMON = 75;
+  public static final int SECTION = 40;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -104,6 +108,7 @@ public class CreationFormSym {
   "STRING_VARIABLE",
   "SPECIAL_VARIABLE",
   "DRAW",
+  "COLOR_VALUE",
   "WIDTH",
   "HEIGHT",
   "PLUS",
@@ -128,8 +133,10 @@ public class CreationFormSym {
   "CLOSED_SQR_BRACKETS",
   "OPEN_CURLY_BRACKETS",
   "CLOSED_CURLY_BRACKETS",
+  "DOT",
   "COMMA",
   "TWO_POINTS",
+  "SECTION",
   "POINT_X",
   "POINT_Y",
   "ORIENTATION",
@@ -152,6 +159,7 @@ public class CreationFormSym {
   "DOTTED_BORDER",
   "DOUBLE_BORDER",
   "LABEL",
+  "QUESTION",
   "OPEN_QUESTION",
   "DROP_QUESTION",
   "SELECT_QUESTION",

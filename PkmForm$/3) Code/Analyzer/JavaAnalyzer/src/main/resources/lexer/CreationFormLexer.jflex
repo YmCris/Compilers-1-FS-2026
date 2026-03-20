@@ -51,6 +51,11 @@ Identifier              = {Letter}({LetterDigit})*
 LineTerminator          = \r|\n|\r\n
 WhiteSpace              = {LineTerminator} | [ \t\f]
 
+HexColor                = \#[0-9a-fA-F]{6}
+RGBColor                = \({Integer},{Integer},{Integer}\)
+HSLColor                = \<{Integer},{Integer},{Integer}\>
+BaseColor               = "RED" | "BLUE" | "GREEN" | "PURPLE" | "SKY" | "YELLOW" | "BLACK" | "WHITE"
+
 Smile                   = "@[:\)+]" | "@[:smile:]"
 Sad                     = "@[:\(+]" | "@[:sad:]"
 Serious                 = "@[:\|+]" | "@[:serious:]"
@@ -147,6 +152,7 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
     "}"                 { return symbol(CreationFormSym.CLOSED_CURLY_BRACKETS); }
     
     // END OF LINE
+    "."                 { return symbol(CreationFormSym.DOT); }
     ","                 { return symbol(CreationFormSym.COMMA); }
     ":"                 { return symbol(CreationFormSym.TWO_POINTS); }
     
@@ -184,6 +190,7 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
     
     // QUESTIONS
     "label"             { return symbol(CreationFormSym.LABEL); }
+    \?                  { return symbol(CreationFormSym.QUESTION); }
     "OPEN_QUESTION"     { return symbol(CreationFormSym.OPEN_QUESTION); }
     "DROP_QUESTION"     { return symbol(CreationFormSym.DROP_QUESTION); }
     "SELECT_QUESTION"   { return symbol(CreationFormSym.SELECT_QUESTION); }
@@ -212,6 +219,11 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
                         }
     
     {WhiteSpace}+       { /* IGNORE */ }
+    
+    {HexColor}          { return symbol(CreationFormSym.COLOR_VALUE, yytext()); }
+    {RGBColor}          { return symbol(CreationFormSym.COLOR_VALUE, yytext()); }
+    {HSLColor}          { return symbol(CreationFormSym.COLOR_VALUE, yytext()); }
+    {BaseColor}         { return symbol(CreationFormSym.COLOR_VALUE, yytext()); }
     
     {Smile}             { return symbol(CreationFormSym.SMILE); }
     {Sad}               { return symbol(CreationFormSym.SAD); }

@@ -1029,9 +1029,6 @@ public class FormSavedLexer implements java_cup.runtime.Scanner {
         return this.errorList;
     }
 
-    public SymbolTable getTable(){
-        return this.table;
-    }
 
 
   /**

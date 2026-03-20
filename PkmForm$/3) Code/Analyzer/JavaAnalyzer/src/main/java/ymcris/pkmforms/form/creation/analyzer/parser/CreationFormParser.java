@@ -38,10 +38,30 @@ public class CreationFormParser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\013\000\002\002\004\000\002\002\003\000\002\002" +
-    "\003\000\002\002\002\000\002\002\003\000\002\003\004" +
-    "\000\002\003\004\000\002\004\006\000\002\004\006\000" +
-    "\002\005\005\000\002\005\005" });
+    "\000\115\000\002\002\004\000\002\002\003\000\002\002" +
+    "\003\000\002\002\002\000\002\002\003\000\002\057\005" +
+    "\000\002\057\005\000\002\057\005\000\002\057\005\000" +
+    "\002\057\005\000\002\057\005\000\002\057\004\000\002" +
+    "\057\004\000\002\057\003\000\002\057\003\000\002\057" +
+    "\003\000\002\057\005\000\002\056\005\000\002\056\005" +
+    "\000\002\056\005\000\002\056\005\000\002\056\005\000" +
+    "\002\056\005\000\002\056\005\000\002\056\005\000\002" +
+    "\056\004\000\002\056\005\000\002\003\004\000\002\003" +
+    "\004\000\002\004\006\000\002\004\006\000\002\005\005" +
+    "\000\002\005\005\000\002\006\006\000\002\007\006\000" +
+    "\002\010\005\000\002\010\004\000\002\010\003\000\002" +
+    "\011\005\000\002\011\005\000\002\011\005\000\002\011" +
+    "\005\000\002\011\005\000\002\011\005\000\002\012\010" +
+    "\000\002\013\005\000\002\013\003\000\002\013\002\000" +
+    "\002\016\003\000\002\017\006\000\002\020\006\000\002" +
+    "\021\022\000\002\022\006\000\002\022\002\000\002\023" +
+    "\003\000\002\023\003\000\002\024\007\000\002\024\002" +
+    "\000\002\032\005\000\002\032\003\000\002\027\006\000" +
+    "\002\027\002\000\002\030\005\000\002\030\003\000\002" +
+    "\033\006\000\002\034\005\000\002\035\007\000\002\036" +
+    "\005\000\002\036\003\000\002\037\005\000\002\040\005" +
+    "\000\002\040\003\000\002\041\005\000\002\025\003\000" +
+    "\002\025\003\000\002\025\003\000\002\025\003" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -49,15 +69,50 @@ public class CreationFormParser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\022\000\012\002\ufffe\012\011\013\012\124\010\001" +
-    "\002\000\004\002\024\001\002\000\004\002\uffff\001\002" +
+    "\000\050\000\012\002\ufffe\012\011\013\012\130\010\001" +
+    "\002\000\004\002\052\001\002\000\004\002\uffff\001\002" +
     "\000\004\002\000\001\002\000\004\002\ufffd\001\002\000" +
-    "\004\034\021\001\002\000\004\124\016\001\002\000\004" +
-    "\124\013\001\002\000\006\002\ufffb\034\014\001\002\000" +
-    "\002\001\002\000\004\002\ufff9\001\002\000\006\002\ufffc" +
-    "\034\017\001\002\000\002\001\002\000\004\002\ufffa\001" +
-    "\002\000\002\001\002\000\004\002\ufff8\001\002\000\004" +
-    "\002\ufff7\001\002\000\004\002\001\001\002" });
+    "\004\035\047\001\002\000\004\130\016\001\002\000\004" +
+    "\130\013\001\002\000\006\002\uffe5\035\014\001\002\000" +
+    "\002\001\002\000\004\002\uffe3\001\002\000\006\002\uffe6" +
+    "\035\017\001\002\000\016\021\022\022\025\041\026\125" +
+    "\020\126\023\130\024\001\002\000\022\002\ufff4\021\ufff4" +
+    "\022\ufff4\023\ufff4\024\ufff4\025\ufff4\026\ufff4\042\ufff4\001" +
+    "\002\000\020\002\uffe4\021\031\022\033\023\036\024\034" +
+    "\025\032\026\030\001\002\000\016\021\022\022\025\041" +
+    "\026\125\020\126\023\130\024\001\002\000\022\002\ufff3" +
+    "\021\ufff3\022\ufff3\023\ufff3\024\ufff3\025\ufff3\026\ufff3\042" +
+    "\ufff3\001\002\000\022\002\ufff2\021\ufff2\022\ufff2\023\ufff2" +
+    "\024\ufff2\025\ufff2\026\ufff2\042\ufff2\001\002\000\016\021" +
+    "\022\022\025\041\026\125\020\126\023\130\024\001\002" +
+    "\000\016\021\022\022\025\041\026\125\020\126\023\130" +
+    "\024\001\002\000\020\021\031\022\033\023\036\024\034" +
+    "\025\032\026\030\042\035\001\002\000\016\021\022\022" +
+    "\025\041\026\125\020\126\023\130\024\001\002\000\016" +
+    "\021\022\022\025\041\026\125\020\126\023\130\024\001" +
+    "\002\000\016\021\022\022\025\041\026\125\020\126\023" +
+    "\130\024\001\002\000\016\021\022\022\025\041\026\125" +
+    "\020\126\023\130\024\001\002\000\016\021\022\022\025" +
+    "\041\026\125\020\126\023\130\024\001\002\000\022\002" +
+    "\ufff1\021\ufff1\022\ufff1\023\ufff1\024\ufff1\025\ufff1\026\ufff1" +
+    "\042\ufff1\001\002\000\016\021\022\022\025\041\026\125" +
+    "\020\126\023\130\024\001\002\000\022\002\ufffa\021\ufffa" +
+    "\022\ufffa\023\ufffa\024\ufffa\025\032\026\030\042\ufffa\001" +
+    "\002\000\022\002\ufff9\021\ufff9\022\ufff9\023\ufff9\024\ufff9" +
+    "\025\032\026\030\042\ufff9\001\002\000\022\002\ufffb\021" +
+    "\ufffb\022\ufffb\023\036\024\034\025\032\026\030\042\ufffb" +
+    "\001\002\000\022\002\ufff8\021\ufff8\022\ufff8\023\ufff8\024" +
+    "\ufff8\025\ufff8\026\ufff8\042\ufff8\001\002\000\022\002\ufffc" +
+    "\021\ufffc\022\ufffc\023\036\024\034\025\032\026\030\042" +
+    "\ufffc\001\002\000\022\002\ufff7\021\ufff7\022\ufff7\023\ufff7" +
+    "\024\ufff7\025\ufff7\026\ufff7\042\ufff7\001\002\000\022\002" +
+    "\ufff6\021\ufff6\022\ufff6\023\036\024\034\025\032\026\030" +
+    "\042\ufff6\001\002\000\022\002\ufff5\021\ufff5\022\ufff5\023" +
+    "\036\024\034\025\032\026\030\042\ufff5\001\002\000\016" +
+    "\021\022\022\025\041\026\125\020\126\023\130\024\001" +
+    "\002\000\020\002\uffe2\021\031\022\033\023\036\024\034" +
+    "\025\032\026\030\001\002\000\004\002\uffe1\001\002\000" +
+    "\004\002\001\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -65,13 +120,22 @@ public class CreationFormParser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\022\000\012\002\003\003\005\004\004\005\006\001" +
+    "\000\050\000\012\002\003\003\005\004\004\005\006\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\004\006\014\001\001" +
-    "\000\002\001\001\000\002\001\001\000\004\030\017\001" +
-    "\001\000\002\001\001\000\006\006\022\030\021\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001" });
+    "\002\001\001\000\002\001\001\000\004\015\014\001\001" +
+    "\000\002\001\001\000\002\001\001\000\004\057\020\001" +
+    "\001\000\002\001\001\000\002\001\001\000\004\057\045" +
+    "\001\001\000\002\001\001\000\002\001\001\000\004\057" +
+    "\044\001\001\000\004\057\026\001\001\000\002\001\001" +
+    "\000\004\057\043\001\001\000\004\057\042\001\001\000" +
+    "\004\057\041\001\001\000\004\057\040\001\001\000\004" +
+    "\057\037\001\001\000\002\001\001\000\004\057\036\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\006\015\050\057\047" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -323,7 +387,440 @@ class CUP$CreationFormParser$actions {
           return CUP$CreationFormParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // var_declaration ::= NUMBER_VARIABLE IDENTIFIER 
+          case 5: // arithmetic_expr ::= arithmetic_expr PLUS arithmetic_expr 
+            {
+              Node RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node e1 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e2 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            
+            Node node = new Node(NodeType.ADD, null);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("arithmetic_expr",45, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 6: // arithmetic_expr ::= arithmetic_expr MINUS arithmetic_expr 
+            {
+              Node RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node e1 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e2 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        
+            Node node = new Node(NodeType.SUB);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("arithmetic_expr",45, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 7: // arithmetic_expr ::= arithmetic_expr MULTIPLY arithmetic_expr 
+            {
+              Node RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node e1 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e2 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        
+            Node node = new Node(NodeType.MUL);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("arithmetic_expr",45, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 8: // arithmetic_expr ::= arithmetic_expr DIVIDE arithmetic_expr 
+            {
+              Node RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node e1 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e2 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        
+            Node node = new Node(NodeType.DIV);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("arithmetic_expr",45, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 9: // arithmetic_expr ::= arithmetic_expr EXPO arithmetic_expr 
+            {
+              Node RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node e1 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e2 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        
+            Node node = new Node(NodeType.POW);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("arithmetic_expr",45, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 10: // arithmetic_expr ::= arithmetic_expr MODULE arithmetic_expr 
+            {
+              Node RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node e1 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e2 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            
+            Node node = new Node(NodeType.MOD);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("arithmetic_expr",45, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 11: // arithmetic_expr ::= MINUS arithmetic_expr 
+            {
+              Node RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        
+            Node node = new Node(NodeType.NEG);
+            node.addChild(e);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("arithmetic_expr",45, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 12: // arithmetic_expr ::= PLUS arithmetic_expr 
+            {
+              Node RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        
+            Node node = new Node(NodeType.POS);
+            node.addChild(e);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("arithmetic_expr",45, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 13: // arithmetic_expr ::= INTEGER 
+            {
+              Node RESULT =null;
+		int ileft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int iright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Integer i = (Integer)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        
+            RESULT = new Node(NodeType.NUMBER, i);
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("arithmetic_expr",45, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 14: // arithmetic_expr ::= NUMBER 
+            {
+              Node RESULT =null;
+		int dleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int dright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Double d = (Double)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            RESULT = new Node(NodeType.NUMBER, d);
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("arithmetic_expr",45, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 15: // arithmetic_expr ::= IDENTIFIER 
+            {
+              Node RESULT =null;
+		int idleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		String id = (String)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            RESULT = new Node(NodeType.ID, id);
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("arithmetic_expr",45, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 16: // arithmetic_expr ::= OPEN_PARENT arithmetic_expr CLOSED_PARENT 
+            {
+              Node RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
+		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
+		
+            RESULT = e;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("arithmetic_expr",45, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 17: // logic_expr ::= arithmetic_expr GREATER arithmetic_expr 
+            {
+              Node RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node e1 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e2 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+
+            Node node = new Node(NodeType.GT);
+            node.addChild(e1);
+            node.addChild(e2);
+
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("logic_expr",44, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 18: // logic_expr ::= arithmetic_expr GOE arithmetic_expr 
+            {
+              Node RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node e1 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e2 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        
+            Node node = new Node(NodeType.GE);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("logic_expr",44, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 19: // logic_expr ::= arithmetic_expr LESS arithmetic_expr 
+            {
+              Node RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node e1 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e2 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        
+            Node node = new Node(NodeType.LT);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("logic_expr",44, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 20: // logic_expr ::= arithmetic_expr LOE arithmetic_expr 
+            {
+              Node RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node e1 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e2 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        
+            Node node = new Node(NodeType.LE);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("logic_expr",44, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 21: // logic_expr ::= arithmetic_expr EQUAL arithmetic_expr 
+            {
+              Node RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node e1 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e2 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        
+            Node node = new Node(NodeType.EQ);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("logic_expr",44, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 22: // logic_expr ::= arithmetic_expr DIFERENT arithmetic_expr 
+            {
+              Node RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node e1 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e2 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        
+            Node node = new Node(NodeType.NE);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("logic_expr",44, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 23: // logic_expr ::= logic_expr OR logic_expr 
+            {
+              Node RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node e1 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e2 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        
+            Node node = new Node(NodeType.OR);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("logic_expr",44, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 24: // logic_expr ::= logic_expr AND logic_expr 
+            {
+              Node RESULT =null;
+		int e1left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node e1 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e2 = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        
+            Node node = new Node(NodeType.AND);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("logic_expr",44, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 25: // logic_expr ::= NOT logic_expr 
+            {
+              Node RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        
+            Node node = new Node(NodeType.NOT);
+            node.addChild(e);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("logic_expr",44, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 26: // logic_expr ::= OPEN_PARENT logic_expr CLOSED_PARENT 
+            {
+              Node RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
+		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
+		
+            RESULT = e;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("logic_expr",44, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 27: // var_declaration ::= NUMBER_VARIABLE IDENTIFIER 
             {
               Node RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
@@ -343,7 +840,7 @@ class CUP$CreationFormParser$actions {
           return CUP$CreationFormParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // var_declaration ::= STRING_VARIABLE IDENTIFIER 
+          case 28: // var_declaration ::= STRING_VARIABLE IDENTIFIER 
             {
               Node RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
@@ -363,7 +860,7 @@ class CUP$CreationFormParser$actions {
           return CUP$CreationFormParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // var_initialization ::= NUMBER_VARIABLE IDENTIFIER ASSIGN arithmetic_expr 
+          case 29: // var_initialization ::= NUMBER_VARIABLE IDENTIFIER ASSIGN arithmetic_expr 
             {
               Node RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
@@ -388,7 +885,7 @@ class CUP$CreationFormParser$actions {
           return CUP$CreationFormParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // var_initialization ::= STRING_VARIABLE IDENTIFIER ASSIGN general_string 
+          case 30: // var_initialization ::= STRING_VARIABLE IDENTIFIER ASSIGN general_string 
             {
               Node RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
@@ -414,7 +911,7 @@ class CUP$CreationFormParser$actions {
           return CUP$CreationFormParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // var_assignment ::= IDENTIFIER ASSIGN arithmetic_expr 
+          case 31: // var_assignment ::= IDENTIFIER ASSIGN arithmetic_expr 
             {
               Node RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
@@ -438,7 +935,7 @@ class CUP$CreationFormParser$actions {
           return CUP$CreationFormParser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 10: // var_assignment ::= IDENTIFIER ASSIGN general_string 
+          case 32: // var_assignment ::= IDENTIFIER ASSIGN general_string 
             {
               Node RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
@@ -459,6 +956,744 @@ class CUP$CreationFormParser$actions {
             
         
               CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("var_assignment",3, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 33: // special_var ::= SPECIAL_VARIABLE IDENTIFIER ASSIGN open_special_question 
+            {
+              Node RESULT =null;
+		int idleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		String id = (String)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int oqleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int oqright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node oq = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+    
+            Node node = new Node(NodeType.SPECIAL_INIT);// special
+            node.addChild(new Node(NodeType.ID, id));// myQuestion
+            node.addChild(oq);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("special_var",4, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 34: // open_special_question ::= OPEN_QUESTION OPEN_SQR_BRACKETS q_attributes CLOSED_SQR_BRACKETS 
+            {
+              Node RESULT =null;
+		int atsleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).left;
+		int atsright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
+		Node ats = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
+		
+    
+            Node node = new Node(NodeType.OPEN_QUESTION);
+            node.addChild(ats);
+            
+            RESULT = node;
+    
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("open_special_question",5, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 35: // q_attributes ::= q_attributes COMMA attributes 
+            {
+              Node RESULT =null;
+		int lleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int lright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node l = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int aleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node a = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            l.addChild(a);
+            RESULT = l;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("q_attributes",6, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 36: // q_attributes ::= q_attributes COMMA 
+            {
+              Node RESULT =null;
+		int lleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).left;
+		int lright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
+		Node l = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
+		
+            RESULT = l;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("q_attributes",6, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 37: // q_attributes ::= attributes 
+            {
+              Node RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node a = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            Node node = new Node(NodeType.ATTR_LIST);
+            node.addChild(a);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("q_attributes",6, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 38: // attributes ::= WIDTH TWO_POINTS arithmetic_expr 
+            {
+              Node RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            Node node = new Node(NodeType.ATTR, "width");
+            node.addChild(e);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("attributes",7, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 39: // attributes ::= HEIGHT TWO_POINTS arithmetic_expr 
+            {
+              Node RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            Node node = new Node(NodeType.ATTR, "height");
+            node.addChild(e);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("attributes",7, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 40: // attributes ::= LABEL TWO_POINTS arithmetic_expr 
+            {
+              Node RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            Node node = new Node(NodeType.ATTR, "label");
+            node.addChild(e);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("attributes",7, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 41: // attributes ::= WIDTH TWO_POINTS QUESTION 
+            {
+              Node RESULT =null;
+		
+            Node node = new Node(NodeType.ATTR, "width");
+            node.addChild(new Node(NodeType.PLACEHOLDER));
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("attributes",7, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 42: // attributes ::= HEIGHT TWO_POINTS QUESTION 
+            {
+              Node RESULT =null;
+		
+            Node node = new Node(NodeType.ATTR, "height");
+            node.addChild(new Node(NodeType.PLACEHOLDER));
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("attributes",7, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 43: // attributes ::= LABEL TWO_POINTS QUESTION 
+            {
+              Node RESULT =null;
+		
+            Node node = new Node(NodeType.ATTR, "label");
+            node.addChild(new Node(NodeType.PLACEHOLDER));
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("attributes",7, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 44: // draw_call ::= IDENTIFIER DOT DRAW OPEN_PARENT arg_list CLOSED_PARENT 
+            {
+              Node RESULT =null;
+		int idleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-5)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-5)).right;
+		String id = (String)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-5)).value;
+		int aleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
+		Node a = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
+		
+            Node node = new Node(NodeType.DRAW_CALL);
+            node.addChild(new Node(NodeType.ID, id));
+            node.addChild(a);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("draw_call",8, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-5)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 45: // arg_list ::= arg_list COMMA arithmetic_expr 
+            {
+              Node RESULT =null;
+		int lleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int lright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node l = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int eleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            l.addChild(e);
+            RESULT = l;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("arg_list",9, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 46: // arg_list ::= arithmetic_expr 
+            {
+              Node RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            Node node = new Node(NodeType.ARG_LIST);
+            node.addChild(e);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("arg_list",9, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 47: // arg_list ::= 
+            {
+              Node RESULT =null;
+		
+            RESULT = new Node(NodeType.ARG_LIST);
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("arg_list",9, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 48: // general_text ::= STRING 
+            {
+              Node RESULT =null;
+		int strleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int strright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		String str = (String)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            
+            Node node = new Node(NodeType.STRING, str);
+            
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("general_text",12, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 49: // section ::= SECTION OPEN_SQR_BRACKETS section_body CLOSED_SQR_BRACKETS 
+            {
+              Node RESULT =null;
+		int sbleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).left;
+		int sbright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
+		Node sb = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
+		
+            Node node = new Node(NodeType.SECTION);
+            node.addChild(sb);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("section",13, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 50: // section_body ::= base_attributes opt_orientation opt_elements opt_styles 
+            {
+              Node RESULT =null;
+		int bleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)).right;
+		Node b = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)).value;
+		int oleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int oright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node o = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int eleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
+		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
+		int sleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node s = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            Node node = new Node(NodeType.SECTION);
+            node.addChild(b);
+            if (o != null) {
+                node.addChild(o);
+            }
+            if (e != null){
+                node.addChild(e);
+            } 
+            if (s != null) {
+                node.addChild(s);
+            }
+
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("section_body",14, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 51: // base_attributes ::= WIDTH TWO_POINTS arithmetic_expr COMMA HEIGHT TWO_POINTS arithmetic_expr COMMA POINT_X TWO_POINTS arithmetic_expr COMMA POINT_Y TWO_POINTS arithmetic_expr COMMA 
+            {
+              Node RESULT =null;
+		int wleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-13)).left;
+		int wright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-13)).right;
+		Node w = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-13)).value;
+		int hleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-9)).left;
+		int hright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-9)).right;
+		Node h = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-9)).value;
+		int pxleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-5)).left;
+		int pxright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-5)).right;
+		Node px = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-5)).value;
+		int pyleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).left;
+		int pyright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
+		Node py = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
+		
+            Node node = new Node(NodeType.ATTR_LIST);
+
+            Node wNode = new Node(NodeType.ATTR, "width"); 
+            wNode.addChild(w);
+            
+            Node hNode = new Node(NodeType.ATTR, "height");
+            hNode.addChild(h);
+            
+            Node pxNode = new Node(NodeType.ATTR, "pointX");
+            pxNode.addChild(px);
+            
+            Node pyNode = new Node(NodeType.ATTR, "pointY");
+            pyNode.addChild(py);
+
+            node.addChild(wNode);
+            node.addChild(hNode);
+            node.addChild(pxNode);
+            node.addChild(pyNode);
+
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("base_attributes",15, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-15)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 52: // opt_orientation ::= ORIENTATION TWO_POINTS orientation_val COMMA 
+            {
+              Node RESULT =null;
+		int oleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).left;
+		int oright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
+		Node o = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
+		
+            Node node = new Node(NodeType.ORIENTATION);
+            node.addChild(o);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("opt_orientation",16, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 53: // opt_orientation ::= 
+            {
+              Node RESULT =null;
+		
+            RESULT = null; 
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("opt_orientation",16, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 54: // orientation_val ::= VERTICAL 
+            {
+              Node RESULT =null;
+		
+            RESULT = new Node(NodeType.VERTICAL);
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("orientation_val",17, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 55: // orientation_val ::= HORIZONTAL 
+            {
+              Node RESULT =null;
+		
+            RESULT = new Node(NodeType.HORIZONTAL);
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("orientation_val",17, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 56: // opt_elements ::= ELEMENTS TWO_POINTS OPEN_CURLY_BRACKETS element_list CLOSED_CURLY_BRACKETS 
+            {
+              Node RESULT =null;
+		int lleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).left;
+		int lright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
+		Node l = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
+		
+            Node node = new Node(NodeType.ELEMENTS);
+            node.addChild(l);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("opt_elements",18, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-4)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 57: // opt_elements ::= 
+            {
+              Node RESULT =null;
+		
+            RESULT = null;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("opt_elements",18, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 58: // element_list ::= element_list COMMA element 
+            {
+              Node RESULT =null;
+		int lleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int lright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node l = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int eleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            l.addChild(e);
+            RESULT = l;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("element_list",24, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 59: // element_list ::= element 
+            {
+              Node RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            Node node = new Node(NodeType.ELEMENT_LIST);
+            node.addChild(e);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("element_list",24, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 60: // opt_styles ::= STYLES OPEN_SQR_BRACKETS style_list CLOSED_SQR_BRACKETS 
+            {
+              Node RESULT =null;
+		int sleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
+		Node s = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
+		
+            Node node = new Node(NodeType.STYLE_BLOCK);
+            node.addChild(s);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("opt_styles",21, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 61: // opt_styles ::= 
+            {
+              Node RESULT =null;
+		
+            RESULT = null;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("opt_styles",21, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 62: // style_list ::= style_list COMMA style 
+            {
+              Node RESULT =null;
+		int lleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int lright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node l = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int sleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node s = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            l.addChild(s);
+            RESULT = l;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("style_list",22, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 63: // style_list ::= style 
+            {
+              Node RESULT =null;
+		int sleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node s = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            Node node = new Node(NodeType.STYLE_BLOCK);
+            node.addChild(s);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("style_list",22, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 64: // table ::= TABLE OPEN_SQR_BRACKETS table_body CLOSED_SQR_BRACKETS 
+            {
+              Node RESULT =null;
+		int tbleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).left;
+		int tbright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
+		Node tb = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
+		
+            Node node = new Node(NodeType.TABLE);
+            node.addChild(tb);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("table",25, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 65: // table_body ::= base_attributes table_elements opt_styles 
+            {
+              Node RESULT =null;
+		int bleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node b = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int eleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
+		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
+		int sleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node s = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            Node node = new Node(NodeType.TABLE);
+            node.addChild(b);
+            node.addChild(e);
+
+            if (s != null) {
+                node.addChild(s);
+            }
+
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("table_body",26, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 66: // table_elements ::= ELEMENTS TWO_POINTS OPEN_CURLY_BRACKETS row_list CLOSED_CURLY_BRACKETS 
+            {
+              Node RESULT =null;
+		int rleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).left;
+		int rright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
+		Node r = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
+		
+            Node node = new Node(NodeType.TABLE_ELEMENTS);
+            node.addChild(r);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("table_elements",27, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-4)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 67: // row_list ::= row_list COMMA row 
+            {
+              Node RESULT =null;
+		int lleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int lright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node l = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int rleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int rright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node r = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            l.addChild(r);
+            RESULT = l;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("row_list",28, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 68: // row_list ::= row 
+            {
+              Node RESULT =null;
+		int rleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int rright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node r = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            Node node = new Node(NodeType.TABLE_ELEMENTS);
+            node.addChild(r);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("row_list",28, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 69: // row ::= OPEN_SQR_BRACKETS cell_list CLOSED_SQR_BRACKETS 
+            {
+              Node RESULT =null;
+		int cleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
+		Node c = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
+		
+            Node node = new Node(NodeType.ROW);
+            node.addChild(c);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("row",29, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 70: // cell_list ::= cell_list COMMA cell 
+            {
+              Node RESULT =null;
+		int lleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).left;
+		int lright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
+		Node l = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node c = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            l.addChild(c);
+            RESULT = l;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("cell_list",30, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 71: // cell_list ::= cell 
+            {
+              Node RESULT =null;
+		int cleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node c = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+            Node node = new Node(NodeType.ROW);
+            node.addChild(c);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("cell_list",30, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 72: // cell ::= OPEN_CURLY_BRACKETS element CLOSED_CURLY_BRACKETS 
+            {
+              Node RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
+		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
+		
+            Node node = new Node(NodeType.CELL);
+            node.addChild(e);
+            RESULT = node;
+        
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("cell",31, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 73: // element ::= section 
+            {
+              Node RESULT =null;
+		int sleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node s = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        RESULT = s;
+    
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("element",19, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 74: // element ::= special_var 
+            {
+              Node RESULT =null;
+		int spleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int spright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node sp = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        RESULT = sp;
+    
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("element",19, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 75: // element ::= draw_call 
+            {
+              Node RESULT =null;
+		int dleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int dright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node d = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        RESULT = d;
+    
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("element",19, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
+            }
+          return CUP$CreationFormParser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 76: // element ::= table 
+            {
+              Node RESULT =null;
+		int tleft = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).left;
+		int tright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
+		Node t = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
+		
+        RESULT = t;
+    
+              CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("element",19, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
             }
           return CUP$CreationFormParser$result;
 

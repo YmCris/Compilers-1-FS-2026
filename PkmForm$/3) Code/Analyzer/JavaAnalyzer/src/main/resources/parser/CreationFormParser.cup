@@ -156,6 +156,9 @@ parser code {:
 
             DRAW,
 
+            // COLOR
+            COLOR_VALUE,
+
             // ELEMENT ATTRIBUTES
             WIDTH, HEIGHT,
 
@@ -174,9 +177,10 @@ parser code {:
             OPEN_CURLY_BRACKETS, CLOSED_CURLY_BRACKETS,
 
             // PUNCTUATION SYMBOLS
-            COMMA, TWO_POINTS,
+            DOT, COMMA, TWO_POINTS,
 
             // SECTIONS
+            SECTION,
             POINT_X, POINT_Y, ORIENTATION,
             VERTICAL, HORIZONTAL,
             ELEMENTS,
@@ -193,7 +197,7 @@ parser code {:
             BORDER, LINE_BORDER, DOTTED_BORDER, DOUBLE_BORDER,
 
             // QUESTIONS
-            LABEL, OPEN_QUESTION, DROP_QUESTION,
+            LABEL, QUESTION, OPEN_QUESTION, DROP_QUESTION,
             SELECT_QUESTION, MULTIPLE_QUESTION,
             OPTIONS,
             FIRST, SECOND, THIRD, FOURTH, FIFTH,
@@ -218,16 +222,17 @@ terminal String IDENTIFIER;
     
                 // VARIABLES
                 var_declaration, var_initialization, var_assignment,
-                // TEXT
-                general_string,
+                special_var, open_special_question, q_attributes, attributes, draw_call, arg_list,
                 // STYLE
                 style,
+                general_string,
+                general_text,
                 // SECTIONS
-                section,
+                section, section_body, base_attributes, opt_orientation, orientation_val, opt_elements, element,_list, opt_styles, style_list,
                     // ELEMENTS
-                    elements,
+                    elements, element_list,
                 // TABLES
-                table,
+                table, table_body, table_elements, row_list, row, cell_list, cell,
                 // TEXT ELEMENT
                 text,
                 // QUESTIONS
@@ -273,6 +278,184 @@ precedence left EXPO, MODULE;
         :}|
         | var_assignment:v3 {:
             RESULT = v3;
+        :}
+    ;
+    
+    // ARITHMETIC EXPRESIONS
+    arithmetic_expr ::= arithmetic_expr:e1 PLUS arithmetic_expr:e2 {:
+            
+            Node node = new Node(NodeType.ADD, null);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        :}
+    
+        | arithmetic_expr:e1 MINUS arithmetic_expr:e2 {:
+        
+            Node node = new Node(NodeType.SUB);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        :}
+
+        | arithmetic_expr:e1 MULTIPLY arithmetic_expr:e2 {:
+        
+            Node node = new Node(NodeType.MUL);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        :}
+
+        | arithmetic_expr:e1 DIVIDE arithmetic_expr:e2 {:
+        
+            Node node = new Node(NodeType.DIV);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        :}
+
+        | arithmetic_expr:e1 EXPO arithmetic_expr:e2 {:
+        
+            Node node = new Node(NodeType.POW);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        :}
+
+        | arithmetic_expr:e1 MODULE arithmetic_expr:e2 {:
+            
+            Node node = new Node(NodeType.MOD);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        :}
+        // UNITY OPERATION
+        | MINUS arithmetic_expr:e {:
+        
+            Node node = new Node(NodeType.NEG);
+            node.addChild(e);
+            
+            RESULT = node;
+        :}
+
+        | PLUS arithmetic_expr:e {:
+        
+            Node node = new Node(NodeType.POS);
+            node.addChild(e);
+            
+            RESULT = node;
+        :}
+        
+        // VALUES
+        | INTEGER:i {:
+        
+            RESULT = new Node(NodeType.NUMBER, i);
+        :}
+
+        | NUMBER:d {:
+            RESULT = new Node(NodeType.NUMBER, d);
+        :}
+        
+        // VARIABLES
+        | IDENTIFIER:id {:
+            RESULT = new Node(NodeType.ID, id);
+        :}
+        | OPEN_PARENT arithmetic_expr:e CLOSED_PARENT {:
+            RESULT = e;
+        :}
+    ;
+    
+    // LOGIC EXPRESSIONS
+    logic_expr ::= arithmetic_expr:e1 GREATER arithmetic_expr:e2 {:
+
+            Node node = new Node(NodeType.GT);
+            node.addChild(e1);
+            node.addChild(e2);
+
+            RESULT = node;
+        :}
+
+        | arithmetic_expr:e1 GOE arithmetic_expr:e2 {:
+        
+            Node node = new Node(NodeType.GE);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        :}
+        
+        | arithmetic_expr:e1 LESS arithmetic_expr:e2 {:
+        
+            Node node = new Node(NodeType.LT);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        :}
+
+        | arithmetic_expr:e1 LOE arithmetic_expr:e2 {:
+        
+            Node node = new Node(NodeType.LE);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        :}
+        
+        | arithmetic_expr:e1 EQUAL arithmetic_expr:e2 {:
+        
+            Node node = new Node(NodeType.EQ);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        :}
+
+        | arithmetic_expr:e1 DIFERENT arithmetic_expr:e2 {:
+        
+            Node node = new Node(NodeType.NE);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        :}
+        
+        // LOGICAL OPETATORS
+        | logic_expr:e1 OR logic_expr:e2 {:
+        
+            Node node = new Node(NodeType.OR);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        :}
+        
+        | logic_expr:e1 AND logic_expr:e2 {:
+        
+            Node node = new Node(NodeType.AND);
+            node.addChild(e1);
+            node.addChild(e2);
+            
+            RESULT = node;
+        :}
+
+        | NOT logic_expr:e {:
+        
+            Node node = new Node(NodeType.NOT);
+            node.addChild(e);
+            
+            RESULT = node;
+        :}
+        
+        // PARENTENCES
+        | OPEN_PARENT logic_expr:e CLOSED_PARENT {:
+            RESULT = e;
         :}
     ;
     
@@ -347,3 +530,416 @@ precedence left EXPO, MODULE;
             
         :}
     ;
+
+    // SPECIAL VARIABLE
+    special_var ::= SPECIAL_VARIABLE IDENTIFIER:id ASSIGN open_special_question:oq {:
+    
+            Node node = new Node(NodeType.SPECIAL_INIT);// special
+            node.addChild(new Node(NodeType.ID, id));// myQuestion
+            node.addChild(oq);
+            
+            RESULT = node;
+        :}
+    ;
+    
+    open_special_question ::= OPEN_QUESTION OPEN_SQR_BRACKETS q_attributes:ats CLOSED_SQR_BRACKETS {:
+    
+            Node node = new Node(NodeType.OPEN_QUESTION);
+            node.addChild(ats);
+            
+            RESULT = node;
+    
+        :}
+    ;
+
+    q_attributes ::= q_attributes:l COMMA attributes:a {:
+            l.addChild(a);
+            RESULT = l;
+        :}
+        | q_attributes:l COMMA {:
+            RESULT = l;
+        :}
+        | attributes:a {:
+            Node node = new Node(NodeType.ATTR_LIST);
+            node.addChild(a);
+            RESULT = node;
+        :}
+    ;
+
+    attributes ::= WIDTH TWO_POINTS arithmetic_expr:e {:
+            Node node = new Node(NodeType.ATTR, "width");
+            node.addChild(e);
+            RESULT = node;
+        :}
+
+        | HEIGHT TWO_POINTS arithmetic_expr:e {:
+            Node node = new Node(NodeType.ATTR, "height");
+            node.addChild(e);
+            RESULT = node;
+        :}
+
+        | LABEL TWO_POINTS arithmetic_expr:e {:
+            Node node = new Node(NodeType.ATTR, "label");
+            node.addChild(e);
+            RESULT = node;
+        :}
+        | WIDTH TWO_POINTS QUESTION {:
+            Node node = new Node(NodeType.ATTR, "width");
+            node.addChild(new Node(NodeType.PLACEHOLDER));
+            RESULT = node;
+        :}
+
+        | HEIGHT TWO_POINTS QUESTION {:
+            Node node = new Node(NodeType.ATTR, "height");
+            node.addChild(new Node(NodeType.PLACEHOLDER));
+            RESULT = node;
+        :}
+
+        | LABEL TWO_POINTS QUESTION {:
+            Node node = new Node(NodeType.ATTR, "label");
+            node.addChild(new Node(NodeType.PLACEHOLDER));
+            RESULT = node;
+        :}
+    ;
+
+    draw_call ::= IDENTIFIER:id DOT DRAW OPEN_PARENT arg_list:a CLOSED_PARENT {:
+            Node node = new Node(NodeType.DRAW_CALL);
+            node.addChild(new Node(NodeType.ID, id));
+            node.addChild(a);
+            RESULT = node;
+        :}
+    ;
+
+    arg_list ::= arg_list:l COMMA arithmetic_expr:e {:
+            l.addChild(e);
+            RESULT = l;
+        :}
+
+        | arithmetic_expr:e {:
+            Node node = new Node(NodeType.ARG_LIST);
+            node.addChild(e);
+            RESULT = node;
+        :}
+        | {:
+            RESULT = new Node(NodeType.ARG_LIST);
+        :}
+    ;
+
+
+    // GENERAL TEXT
+    general_text ::= STRING:str {:
+            
+            Node node = new Node(NodeType.STRING, str);
+            
+            RESULT = node;
+        :}
+    ;
+
+    // SECTION
+    section ::= SECTION OPEN_SQR_BRACKETS section_body:sb CLOSED_SQR_BRACKETS {:
+            Node node = new Node(NodeType.SECTION);
+            node.addChild(sb);
+            RESULT = node;
+        :}
+    ;
+
+    section_body ::= base_attributes:b opt_orientation:o opt_elements:e opt_styles:s {:
+            Node node = new Node(NodeType.SECTION);
+            node.addChild(b);
+            if (o != null) {
+                node.addChild(o);
+            }
+            if (e != null){
+                node.addChild(e);
+            } 
+            if (s != null) {
+                node.addChild(s);
+            }
+
+            RESULT = node;
+        :}
+    ;
+
+    base_attributes ::= 
+            WIDTH TWO_POINTS arithmetic_expr:w COMMA
+            HEIGHT TWO_POINTS arithmetic_expr:h COMMA
+            POINT_X TWO_POINTS arithmetic_expr:px COMMA
+            POINT_Y TWO_POINTS arithmetic_expr:py COMMA
+        {:
+            Node node = new Node(NodeType.ATTR_LIST);
+
+            Node wNode = new Node(NodeType.ATTR, "width"); 
+            wNode.addChild(w);
+            
+            Node hNode = new Node(NodeType.ATTR, "height");
+            hNode.addChild(h);
+            
+            Node pxNode = new Node(NodeType.ATTR, "pointX");
+            pxNode.addChild(px);
+            
+            Node pyNode = new Node(NodeType.ATTR, "pointY");
+            pyNode.addChild(py);
+
+            node.addChild(wNode);
+            node.addChild(hNode);
+            node.addChild(pxNode);
+            node.addChild(pyNode);
+
+            RESULT = node;
+        :}
+    ;
+
+    opt_orientation ::= ORIENTATION TWO_POINTS orientation_val:o COMMA {:
+            Node node = new Node(NodeType.ORIENTATION);
+            node.addChild(o);
+            RESULT = node;
+        :}
+    | /* EMPTY */ {:
+            RESULT = null; 
+        :}
+    ;
+
+    orientation_val ::= VERTICAL {:
+            RESULT = new Node(NodeType.VERTICAL);
+        :}
+        | HORIZONTAL {:
+            RESULT = new Node(NodeType.HORIZONTAL);
+        :}
+    ;
+
+    opt_elements ::= ELEMENTS TWO_POINTS OPEN_CURLY_BRACKETS element_list:l CLOSED_CURLY_BRACKETS {:
+            Node node = new Node(NodeType.ELEMENTS);
+            node.addChild(l);
+            RESULT = node;
+        :}
+        | /* EMPTY */ {:
+            RESULT = null;
+        :}
+    ;
+/****************************INCOMPLETE****************************************/
+    element_list ::= element_list:l COMMA element:e {:
+            l.addChild(e);
+            RESULT = l;
+        :}
+        | element:e {:
+            Node node = new Node(NodeType.ELEMENT_LIST);
+            node.addChild(e);
+            RESULT = node;
+        :}
+    ;
+
+    opt_styles ::= STYLES OPEN_SQR_BRACKETS style_list:s CLOSED_SQR_BRACKETS {:
+            Node node = new Node(NodeType.STYLE_BLOCK);
+            node.addChild(s);
+            RESULT = node;
+        :}
+        | /* EMPTY */ {:
+            RESULT = null;
+        :}
+    ;
+
+    style_list ::= style_list:l COMMA style:s {:
+            l.addChild(s);
+            RESULT = l;
+        :}
+        | style:s {:
+            Node node = new Node(NodeType.STYLE_BLOCK);
+            node.addChild(s);
+            RESULT = node;
+        :}
+    ;
+
+
+    // TABLES
+    table ::= TABLE OPEN_SQR_BRACKETS table_body:tb CLOSED_SQR_BRACKETS {:
+            Node node = new Node(NodeType.TABLE);
+            node.addChild(tb);
+            RESULT = node;
+        :}
+    ;
+
+    table_body ::= base_attributes:b table_elements:e opt_styles:s {:
+            Node node = new Node(NodeType.TABLE);
+            node.addChild(b);
+            node.addChild(e);
+
+            if (s != null) {
+                node.addChild(s);
+            }
+
+            RESULT = node;
+        :}
+    ;
+
+    table_elements ::= ELEMENTS TWO_POINTS OPEN_CURLY_BRACKETS row_list:r CLOSED_CURLY_BRACKETS {:
+            Node node = new Node(NodeType.TABLE_ELEMENTS);
+            node.addChild(r);
+            RESULT = node;
+        :}
+    ;
+
+    row_list ::= row_list:l COMMA row:r {:
+            l.addChild(r);
+            RESULT = l;
+        :}
+        | row:r
+        {:
+            Node node = new Node(NodeType.TABLE_ELEMENTS);
+            node.addChild(r);
+            RESULT = node;
+        :}
+    ;
+
+    row ::= OPEN_SQR_BRACKETS cell_list:c CLOSED_SQR_BRACKETS
+        {:
+            Node node = new Node(NodeType.ROW);
+            node.addChild(c);
+            RESULT = node;
+        :}
+    ;
+
+    cell_list ::= cell_list:l COMMA cell:c {:
+            l.addChild(c);
+            RESULT = l;
+        :}
+        | cell:c {:
+            Node node = new Node(NodeType.ROW);
+            node.addChild(c);
+            RESULT = node;
+        :}
+    ;
+    
+    cell ::= OPEN_CURLY_BRACKETS element:e CLOSED_CURLY_BRACKETS {:
+            Node node = new Node(NodeType.CELL);
+            node.addChild(e);
+            RESULT = node;
+        :}
+    ;
+
+
+    element ::= section:s
+    {:
+        RESULT = s;
+    :}
+    | special_var:sp
+    {:
+        RESULT = sp;
+    :}
+    | draw_call:d
+    {:
+        RESULT = d;
+    :}
+    | table:t
+    {:
+        RESULT = t;
+    :}
+    ;
+
+/*
+
+    // TEXT ELEMENT
+    text ::=  {:
+            
+            
+            
+            RESULT = node;
+        :}
+    ;
+    
+    // QUESTIONS
+    open_question ::=  {:
+            
+            
+            
+            RESULT = node;
+        :}
+    ;
+    
+    drop_question ::=  {:
+            
+            
+            
+            RESULT = node;
+        :}
+    ;
+    
+    select_question ::=  {:
+            
+            
+            
+            RESULT = node;
+        :}
+    ;
+    
+    multiple_question ::=  {:
+            
+            
+            
+            RESULT = node;
+        :}
+    ;
+    
+    who_is_that_pokemon ::=  {:
+            
+            
+            
+            RESULT = node;
+        :}
+    ;
+
+    // CODE BLOCKS
+    // IF
+    if_stmt ::=  {:
+            
+            
+            
+            RESULT = node;
+        :}
+    ;
+    
+    // IF-ELSE
+    if_else_stmt ::=  {:
+            
+            
+            
+            RESULT = node;
+        :}
+    ;
+    
+    // ELSE
+    else_stmt ::=  {:
+            
+            
+            
+            RESULT = node;
+        :}
+    ;
+    
+    // WHILE
+    while_stmt ::=  {:
+            
+            
+            
+            RESULT = node;
+        :}
+    ;
+
+    // DO-WHILE
+    do_while_stmt ::=  {:
+            
+            
+            
+            RESULT = node;
+        :}
+    ;
+      
+    // FOR
+    for_stmt ::=  {:
+            
+            
+    
+            RESULT = node;
+        :}
+    ;
+
+*/
