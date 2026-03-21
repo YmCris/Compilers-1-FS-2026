@@ -15,6 +15,7 @@ import ymcris.pkmforms.analyzer.tokens.errors.ErrorType;
 import ymcris.pkmforms.analyzer.tokens.errors.ErrorToken;
 
 // SYMBOL TABLE
+import ymcris.pkmforms.analyzer.symbols.SymbolType;
 import ymcris.pkmforms.analyzer.symbols.table.SymbolTable;
 
 // LEXER
@@ -266,11 +267,11 @@ terminal String IDENTIFIER;
                     for_stmt,
                     for_init,
                     for_update,
-                    for_in_stmt
+                    for_in_stmt,
+                    logic_expr,
+                    arithmetic_expr
     ;
 
-non terminal Node logic_expr;
-non terminal Node arithmetic_expr;
 
 /********************************* PRECEDENCE *********************************/
 
@@ -538,7 +539,7 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ASSIGN, null)); // =
             node.addChild(e); // 20.10
 
-            table.assignValueToVariable(id,e.getValue());
+            table.assignValueToVariable(id,SymbolType.NUMBER,e.getValue());
 
             RESULT = node;
         :}
@@ -551,7 +552,7 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ASSIGN, null)); // =
             node.addChild(s); // "Toribio"
 
-            table.assignValueToVariable(id,s.getValue());
+            table.assignValueToVariable(id,SymbolType.STRING, s.getValue());
 
             RESULT = node;
 
@@ -567,7 +568,7 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ASSIGN, null)); // = 
             node.addChild(e); // 10
 
-            table.assignValueToVariable(id,e.getValue());
+            table.assignValueToVariable(id,SymbolType.NUMBER,e.getValue());
             
             RESULT = node;
         :}
@@ -579,7 +580,7 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ASSIGN, null)); // = 
             node.addChild(s); // 10
             
-            table.assignValueToVariable(id,s.getValue());
+            table.assignValueToVariable(id,SymbolType.STRING, s.getValue());
 
             RESULT = node;
             
@@ -593,6 +594,8 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ID, id));// myQuestion
             node.addChild(oq);
             
+            table.assignValueToVariable(id,SymbolType.SPECIAL,oq.getValue());
+
             RESULT = node;
         :}
     ;
@@ -789,9 +792,7 @@ precedence left ELSE_IF;
     ;
 
     opt_styles ::= STYLES OPEN_SQR_BRACKETS style_list:s CLOSED_SQR_BRACKETS {:
-            Node node = new Node(NodeType.STYLE_BLOCK);
-            node.addChild(s);
-            RESULT = node;
+            RESULT = s;
         :}
         | /* EMPTY */ {:
             RESULT = null;
@@ -821,7 +822,7 @@ precedence left ELSE_IF;
         :}
         | TEXT_SIZE TWO_POINTS arithmetic_expr:e {:
             Node node = new Node(NodeType.TEXT_SIZE_STYLE, "text_size");
-            node.addChild(new Node(NodeType.TEXT_SIZE,e));
+            node.addChild(new Node(NodeType.TEXT_SIZE,e.getValue()));
             RESULT = node;
         :}
         | FONT_FAMILY TWO_POINTS MONO {:
@@ -871,9 +872,7 @@ precedence left ELSE_IF;
 
     // TABLES
     table ::= TABLE OPEN_SQR_BRACKETS table_body:tb CLOSED_SQR_BRACKETS {:
-            Node node = new Node(NodeType.TABLE);
-            node.addChild(tb);
-            RESULT = node;
+            RESULT = tb;
         :}
     ;
 
@@ -891,9 +890,7 @@ precedence left ELSE_IF;
     ;
 
     table_elements ::= ELEMENTS TWO_POINTS OPEN_CURLY_BRACKETS row_list:r CLOSED_CURLY_BRACKETS COMMA {:
-            Node node = new Node(NodeType.TABLE_ELEMENTS);
-            node.addChild(r);
-            RESULT = node;
+            RESULT = r;
         :}
     ;
 
@@ -1058,9 +1055,7 @@ precedence left ELSE_IF;
 
         // DROP QUESTION
     drop_question ::= DROP_QUESTION OPEN_SQR_BRACKETS dq_body:d CLOSED_SQR_BRACKETS {:
-            Node node = new Node(NodeType.DROP_QUESTION);
-            node.addChild(d);
-            RESULT = node;
+            RESULT = d;
         :}
     ;
     
@@ -1114,9 +1109,7 @@ precedence left ELSE_IF;
 
         // SELECT QUESTION
     select_question ::= SELECT_QUESTION OPEN_SQR_BRACKETS sq_body:d CLOSED_SQR_BRACKETS {:
-            Node node = new Node(NodeType.SELECT_QUESTION);
-            node.addChild(d);
-            RESULT = node;
+            RESULT = d;
         :}
     ;
     
@@ -1146,9 +1139,7 @@ precedence left ELSE_IF;
         
         // MULTIPLE QUESTION
     multiple_question ::= MULTIPLE_QUESTION OPEN_SQR_BRACKETS mq_body:d CLOSED_SQR_BRACKETS {:
-            Node node = new Node(NodeType.MULTIPLE_QUESTION);
-            node.addChild(d);
-            RESULT = node;
+            RESULT = d;
         :}
     ;
     

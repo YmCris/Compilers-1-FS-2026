@@ -1658,7 +1658,7 @@ public class FormCreationLexer implements java_cup.runtime.Scanner {
           case 119: break;
           case 20:
             { table.addVariable(yytext(), null, null,
-                                yyline+1, yycolumn+1);
+                            yyline+1, yycolumn+1);
                             
                             return symbol(CreationFormSym.IDENTIFIER, yytext());
             }

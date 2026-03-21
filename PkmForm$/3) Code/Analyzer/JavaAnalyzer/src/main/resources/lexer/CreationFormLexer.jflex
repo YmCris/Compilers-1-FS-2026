@@ -233,7 +233,7 @@ StarNumber              = "@[:star:"{PositiveInteger}":]"|"@[:star-"{PositiveInt
     
     {Identifier}        {
                             table.addVariable(yytext(), null, null,
-                                yyline+1, yycolumn+1);
+                            yyline+1, yycolumn+1);
                             
                             return symbol(CreationFormSym.IDENTIFIER, yytext());
                         }

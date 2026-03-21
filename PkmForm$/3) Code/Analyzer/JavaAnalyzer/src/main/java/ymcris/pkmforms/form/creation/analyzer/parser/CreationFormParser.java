@@ -11,6 +11,7 @@ import ymcris.pkmforms.analyzer.ast.Node;
 import ymcris.pkmforms.analyzer.ast.NodeType;
 import ymcris.pkmforms.analyzer.tokens.errors.ErrorType;
 import ymcris.pkmforms.analyzer.tokens.errors.ErrorToken;
+import ymcris.pkmforms.analyzer.symbols.SymbolType;
 import ymcris.pkmforms.analyzer.symbols.table.SymbolTable;
 import ymcris.pkmforms.form.creation.analyzer.lexer.FormCreationLexer;
 import java_cup.runtime.XMLElement;
@@ -1713,7 +1714,7 @@ class CUP$CreationFormParser$actions {
             node.addChild(new Node(NodeType.ASSIGN, null)); // =
             node.addChild(e); // 20.10
 
-            table.assignValueToVariable(id,e.getValue());
+            table.assignValueToVariable(id,SymbolType.NUMBER,e.getValue());
 
             RESULT = node;
         
@@ -1740,7 +1741,7 @@ class CUP$CreationFormParser$actions {
             node.addChild(new Node(NodeType.ASSIGN, null)); // =
             node.addChild(s); // "Toribio"
 
-            table.assignValueToVariable(id,s.getValue());
+            table.assignValueToVariable(id,SymbolType.STRING, s.getValue());
 
             RESULT = node;
 
@@ -1767,7 +1768,7 @@ class CUP$CreationFormParser$actions {
             node.addChild(new Node(NodeType.ASSIGN, null)); // = 
             node.addChild(e); // 10
 
-            table.assignValueToVariable(id,e.getValue());
+            table.assignValueToVariable(id,SymbolType.NUMBER,e.getValue());
             
             RESULT = node;
         
@@ -1793,7 +1794,7 @@ class CUP$CreationFormParser$actions {
             node.addChild(new Node(NodeType.ASSIGN, null)); // = 
             node.addChild(s); // 10
             
-            table.assignValueToVariable(id,s.getValue());
+            table.assignValueToVariable(id,SymbolType.STRING, s.getValue());
 
             RESULT = node;
             
@@ -1818,6 +1819,8 @@ class CUP$CreationFormParser$actions {
             node.addChild(new Node(NodeType.ID, id));// myQuestion
             node.addChild(oq);
             
+            table.assignValueToVariable(id,SymbolType.SPECIAL,oq.getValue());
+
             RESULT = node;
         
               CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("special_var",6, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
@@ -2285,9 +2288,7 @@ class CUP$CreationFormParser$actions {
 		int sright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
 		Node s = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
 		
-            Node node = new Node(NodeType.STYLE_BLOCK);
-            node.addChild(s);
-            RESULT = node;
+            RESULT = s;
         
               CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("opt_styles",24, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
             }
@@ -2379,7 +2380,7 @@ class CUP$CreationFormParser$actions {
 		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
 		
             Node node = new Node(NodeType.TEXT_SIZE_STYLE, "text_size");
-            node.addChild(new Node(NodeType.TEXT_SIZE,e));
+            node.addChild(new Node(NodeType.TEXT_SIZE,e.getValue()));
             RESULT = node;
         
               CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("style",12, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
@@ -2512,9 +2513,7 @@ class CUP$CreationFormParser$actions {
 		int tbright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
 		Node tb = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
 		
-            Node node = new Node(NodeType.TABLE);
-            node.addChild(tb);
-            RESULT = node;
+            RESULT = tb;
         
               CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("table",29, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
             }
@@ -2556,9 +2555,7 @@ class CUP$CreationFormParser$actions {
 		int rright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).right;
 		Node r = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)).value;
 		
-            Node node = new Node(NodeType.TABLE_ELEMENTS);
-            node.addChild(r);
-            RESULT = node;
+            RESULT = r;
         
               CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("table_elements",31, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-5)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
             }
@@ -2992,9 +2989,7 @@ class CUP$CreationFormParser$actions {
 		int dright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
 		Node d = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
 		
-            Node node = new Node(NodeType.DROP_QUESTION);
-            node.addChild(d);
-            RESULT = node;
+            RESULT = d;
         
               CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("drop_question",42, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
             }
@@ -3122,9 +3117,7 @@ class CUP$CreationFormParser$actions {
 		int dright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
 		Node d = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
 		
-            Node node = new Node(NodeType.SELECT_QUESTION);
-            node.addChild(d);
-            RESULT = node;
+            RESULT = d;
         
               CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("select_question",46, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
             }
@@ -3186,9 +3179,7 @@ class CUP$CreationFormParser$actions {
 		int dright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).right;
 		Node d = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-1)).value;
 		
-            Node node = new Node(NodeType.MULTIPLE_QUESTION);
-            node.addChild(d);
-            RESULT = node;
+            RESULT = d;
         
               CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("multiple_question",48, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
             }

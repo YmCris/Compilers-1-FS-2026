@@ -9,8 +9,7 @@ package ymcris.pkmforms.analyzer.symbols;
 public enum SymbolType {
 
     // ENUMS -------------------------------------------------------------------
-    INTEGER,
-    DOUBLE,
+    NUMBER,
     STRING,
     SPECIAL;
 

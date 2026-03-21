@@ -27,8 +27,9 @@ public class SymbolTable {
     public void addVariable(String variableName, SymbolType type, Object value,
             int row, int column) {
 
-        if (table.containsKey(variableName)) {/*
-            throw new VariableAlreadyExistsException("The variable "
+        if (table.containsKey(variableName)) {
+            System.out.println("The variable " + variableName + " already exists");
+            /*throw new VariableAlreadyExistsException("The variable "
                     + variableName + " already exists");*/
         }
 
@@ -42,7 +43,7 @@ public class SymbolTable {
         return table.get(variableName);
     }
 
-    public void assignValueToVariable(String variableName, Object newValue) {
+    public void assignValueToVariable(String variableName, SymbolType type, Object newValue) {
 
         Symbol symbol = table.get(variableName);
 
@@ -51,6 +52,10 @@ public class SymbolTable {
                     + variableName + " doesn't exist");
         }
 
+        if (type != null) {
+            symbol.setType(type);
+        }
+        
         symbol.setValue(newValue);
     }
 

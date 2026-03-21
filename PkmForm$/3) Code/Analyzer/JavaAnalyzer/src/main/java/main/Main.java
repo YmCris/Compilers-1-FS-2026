@@ -6,7 +6,6 @@ import ymcris.pkmforms.analyzer.tokens.errors.ErrorToken;
 import ymcris.pkmforms.form.creation.analyzer.lexer.FormCreationLexer;
 import ymcris.pkmforms.form.creation.analyzer.parser.CreationFormParser;
 
-import java.io.FileReader;
 import java.io.StringReader;
 import java.util.List;
 
