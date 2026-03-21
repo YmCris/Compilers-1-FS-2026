@@ -25,6 +25,6 @@ echo "Generating creation form analyzer..."
 
 # CREATING JAVA CLASS ----------------------------------------------------------
 java -jar "$JFLEX" -d "$DESTINATION_LEXER" "$LEXER"
-java -jar "$CUP" -parser CreationFormParser -symbols CreationFormSym -destdir "$DESTINATION_PARSER" "$PARSER"
+java -jar "$CUP"  -expect 1 -parser CreationFormParser -symbols CreationFormSym -destdir "$DESTINATION_PARSER" "$PARSER"
 
 echo "Analyzer generated successfully"

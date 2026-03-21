@@ -27,9 +27,9 @@ public class SymbolTable {
     public void addVariable(String variableName, SymbolType type, Object value,
             int row, int column) {
 
-        if (table.containsKey(variableName)) {
+        if (table.containsKey(variableName)) {/*
             throw new VariableAlreadyExistsException("The variable "
-                    + variableName + " already exists");
+                    + variableName + " already exists");*/
         }
 
         Symbol symbol = new Symbol(variableName, type, value, row, column);

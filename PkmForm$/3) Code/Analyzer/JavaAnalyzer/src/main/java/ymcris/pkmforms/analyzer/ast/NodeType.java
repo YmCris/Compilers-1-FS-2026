@@ -48,6 +48,34 @@ public enum NodeType {
     TABLE,
     TABLE_ELEMENTS,
     ROW,
-    CELL
+    CELL,
+    TEXT,
+    CONTENT,
+    //
+    OPTION_LIST,
+    VALUE_LIST,
+    WHO_IS_THAT_POKEMON,
+    BLOCK,
+    IF,
+    ELSE,
+    ELSE_IF,
+    FOR,
+    WHILE,
+    DO_WHILE,
+    INIT,
+    UPDATE,
+    FOR_RANGE,
+   
+    
+    //QUESTION
+    LABEL,
+    DROP_QUESTION,
+    MULTIPLE_QUESTION,
+    SELECT_QUESTION,
+    OPTIONS,
+    OPTION,
+    CORRECT_LIST,
+    CORRECT, PROGRAM, STMT_LIST
+    
 
 }

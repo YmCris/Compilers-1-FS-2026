@@ -177,7 +177,10 @@ parser code {:
             OPEN_CURLY_BRACKETS, CLOSED_CURLY_BRACKETS,
 
             // PUNCTUATION SYMBOLS
-            DOT, COMMA, TWO_POINTS,
+            DOT, COMMA, TWO_POINTS, 
+            
+            // EXTRAS
+            SEMICOLON, IN,RANGE,
 
             // SECTIONS
             SECTION,
@@ -219,38 +222,50 @@ terminal String IDENTIFIER;
 
     non terminal Node
                 pkm_forms,
+                start_stmt_list, start_stmt,
     
                 // VARIABLES
                 var_declaration, var_initialization, var_assignment,
                 special_var, open_special_question, q_attributes, attributes, draw_call, arg_list,
                 // STYLE
                 style,
+                text_body,
+                content,
                 general_string,
                 general_text,
                 // SECTIONS
-                section, section_body, base_attributes, opt_orientation, orientation_val, opt_elements, element,_list, opt_styles, style_list,
+                section, section_body, base_attributes, opt_orientation, orientation_val, opt_elements, opt_styles, style_list,
                     // ELEMENTS
-                    elements, element_list,
+                    elements, element_list, element,
                 // TABLES
                 table, table_body, table_elements, row_list, row, cell_list, cell,
                 // TEXT ELEMENT
                 text,
                 // QUESTIONS
-                open_question, drop_question, select_question, multiple_question,
+                open_question, oq_body, opt_width, opt_height, label, 
+                drop_question, dq_body, options, dq_options,
+                select_question, sq_body,
+                multiple_question, mq_body, opt_correct_list, correct_values, opt_correct,
+
                 who_is_that_pokemon,
                 // CODE BLOCKS
+                block, stmt_list, stmt,
                     // IF
                     if_stmt,
+
                     // IF-ELSE
-                    if_else_stmt,
+                    else_if_list,
+                    else_if,
                     // ELSE
-                    else_stmt,
+                    else_opt,
                     // WHILE
                     while_stmt,
                     // DO-WHILE
                     do_while_stmt,
                     // FOR 
-                    for_stmt
+                    for_stmt,
+                    for_init,
+                    for_update
     ;
 
 non terminal Node logic_expr;
@@ -267,20 +282,50 @@ precedence left PLUS, MINUS;
 precedence left MULTIPLY, DIVIDE;
 precedence left EXPO, MODULE;
 
+precedence left ELSE;
+precedence left ELSE_IF;
+
 /********************************** GRAMMAR ***********************************/
+
+
     start with pkm_forms;
 
-    pkm_forms ::= var_declaration:v1{:
-            RESULT = v1;
-        :}
-        | var_initialization:v2 {:
-            RESULT = v2;
-        :}|
-        | var_assignment:v3 {:
-            RESULT = v3;
+    pkm_forms ::= start_stmt_list:s {:
+            Node node = new Node(NodeType.PROGRAM);
+            node.addChild(s);
+            RESULT = node;
         :}
     ;
-    
+
+    start_stmt_list ::= stmt_list:l start_stmt:s {:
+            l.addChild(s);
+            RESULT = l;
+        :}
+        | start_stmt :s {:
+            Node node = new Node(NodeType.STMT_LIST);
+            node.addChild(s);
+            RESULT = node;
+        :}
+    ;
+
+    start_stmt ::= var_declaration
+           | var_initialization
+           | var_assignment
+           | section
+           | table
+           | text
+           | open_question
+           | drop_question
+           | select_question
+           | multiple_question
+           | special_var
+           | draw_call
+           | if_stmt
+           | while_stmt
+           | do_while_stmt
+           | for_stmt
+    ;
+
     // ARITHMETIC EXPRESIONS
     arithmetic_expr ::= arithmetic_expr:e1 PLUS arithmetic_expr:e2 {:
             
@@ -490,6 +535,8 @@ precedence left EXPO, MODULE;
             node.addChild(new Node(NodeType.ID, id)); // myHeight
             node.addChild(new Node(NodeType.ASSIGN, null)); // =
             node.addChild(e); // 20.10
+
+            table.addVariable()
 
             RESULT = node;
         :}
@@ -728,7 +775,7 @@ precedence left EXPO, MODULE;
         :}
     ;
 
-    opt_styles ::= STYLES OPEN_SQR_BRACKETS style_list:s CLOSED_SQR_BRACKETS {:
+    opt_styles ::= COMMA STYLES OPEN_SQR_BRACKETS style_list:s CLOSED_SQR_BRACKETS {:
             Node node = new Node(NodeType.STYLE_BLOCK);
             node.addChild(s);
             RESULT = node;
@@ -835,111 +882,395 @@ precedence left EXPO, MODULE;
     :}
     ;
 
-/*
-
     // TEXT ELEMENT
-    text ::=  {:
-            
-            
-            
+    text ::= TEXT OPEN_SQR_BRACKETS text_body:tb CLOSED_SQR_BRACKETS {:
+            Node node = new Node(NodeType.TEXT);
+            node.addChild(tb);
+            RESULT = node;
+        :}
+    ;
+    
+    text_body ::= opt_width:w opt_height:h content:c opt_styles:s {:
+            Node node = new Node(NodeType.TEXT);
+
+            if (w != null) {
+                node.addChild(w);
+            }
+            if (h != null) {
+                node.addChild(h);
+            }
+
+            node.addChild(c);
+
+            if (s != null){
+                node.addChild(s);
+            } 
+
+            RESULT = node;
+        :}
+    ;
+    
+    opt_width ::= WIDTH TWO_POINTS arithmetic_expr:e COMMA {:
+            Node node = new Node(NodeType.ATTR, "width");
+            node.addChild(e);
+            RESULT = node;
+        :}
+        | /* EMPTY */ {: 
+            RESULT = null;
+        :}
+    ;
+
+    opt_height ::= HEIGHT TWO_POINTS arithmetic_expr:e COMMA {:
+            Node node = new Node(NodeType.ATTR, "height");
+            node.addChild(e);
+            RESULT = node;
+        :}
+        | /* EMPTY */ {: 
+            RESULT = null;
+        :}
+    ;
+
+    content ::= CONTENT TWO_POINTS general_text:s {:
+            Node node = new Node(NodeType.CONTENT);
+            node.addChild(s);
             RESULT = node;
         :}
     ;
     
     // QUESTIONS
-    open_question ::=  {:
-            
-            
-            
+        // OPEN QUESTIONS
+    open_question ::= OPEN_QUESTION OPEN_SQR_BRACKETS oq_body:b CLOSED_SQR_BRACKETS {:
+            Node node = new Node(NodeType.OPEN_QUESTION);
+            node.addChild(b);
+            RESULT = node;
+        :}
+    ;
+
+    oq_body ::= opt_width:w opt_height:h label:l opt_styles:s {:
+            Node node = new Node(NodeType.OPEN_QUESTION);
+
+            if (w != null) {
+                node.addChild(w);
+            }
+            if (h != null) {
+                node.addChild(h);
+            }
+
+            node.addChild(l);
+
+            if (s != null) {
+                node.addChild(s);
+            }
+
+            RESULT = node;
+        :}
+    ;
+
+    label ::= LABEL TWO_POINTS general_text:s {:
+            Node node = new Node(NodeType.LABEL);
+            node.addChild(s);
+            RESULT = node;
+        :}
+    ;
+
+        // DROP QUESTION
+    drop_question ::= DROP_QUESTION OPEN_SQR_BRACKETS dq_body:d CLOSED_SQR_BRACKETS {:
+            Node node = new Node(NodeType.DROP_QUESTION);
+            node.addChild(d);
             RESULT = node;
         :}
     ;
     
-    drop_question ::=  {:
-            
-            
-            
+    dq_body ::= opt_width:w opt_height:h label:l options:op opt_correct:c opt_styles:s {:
+            Node node = new Node(NodeType.DROP_QUESTION);
+
+            if (w != null) {
+                node.addChild(w);
+            }
+            if (h != null) {
+                node.addChild(h);
+            }
+
+            node.addChild(l);
+            node.addChild(op);
+
+            if(c!=null){
+                node.addChild(c);
+            }
+            if (s != null) {
+                node.addChild(s);
+            }
+
             RESULT = node;
         :}
     ;
     
-    select_question ::=  {:
-            
-            
-            
+    options ::= OPTIONS TWO_POINTS OPEN_CURLY_BRACKETS dq_options:dq CLOSED_CURLY_BRACKETS COMMA {:
+            Node node = new Node(NodeType.OPTIONS);
+            node.addChild(dq);
             RESULT = node;
         :}
     ;
     
-    multiple_question ::=  {:
-            
-            
-            
+    dq_options ::= dq_options:l COMMA general_text:g {:
+            l.addChild(g);
+            RESULT = l;
+        :}
+        | general_text:g
+        {:
+            Node node = new Node(NodeType.OPTION_LIST);
+            node.addChild(g);
+            RESULT = node;
+        :}
+    ;
+
+        // SELECT QUESTION
+    select_question ::= SELECT_QUESTION OPEN_SQR_BRACKETS sq_body:d CLOSED_SQR_BRACKETS {:
+            Node node = new Node(NodeType.SELECT_QUESTION);
+            node.addChild(d);
             RESULT = node;
         :}
     ;
     
-    who_is_that_pokemon ::=  {:
-            
-            
+    sq_body ::= opt_width:w opt_height:h label:l options:op opt_correct:c opt_styles:s {:
+            Node node = new Node(NodeType.SELECT_QUESTION);
+
+            if (w != null) {
+                node.addChild(w);
+            }
+            if (h != null) {
+                node.addChild(h);
+            }
+
+            node.addChild(l);
+            node.addChild(op);
+
+            if(c!=null){
+                node.addChild(c);
+            }
+            if (s != null) {
+                node.addChild(s);
+            }
+
+            RESULT = node;
+        :}
+    ;
+        
+        // MULTIPLE QUESTION
+    multiple_question ::= MULTIPLE_QUESTION OPEN_SQR_BRACKETS mq_body:d CLOSED_SQR_BRACKETS {:
+            Node node = new Node(NodeType.MULTIPLE_QUESTION);
+            node.addChild(d);
+            RESULT = node;
+        :}
+    ;
+    
+    mq_body ::= opt_width:w opt_height:h label:l options:op opt_correct_list:c opt_styles:s {:
+            Node node = new Node(NodeType.MULTIPLE_QUESTION);
+            if (w != null) {
+                node.addChild(w);
+            }
+            if (h != null) {
+                node.addChild(h);
+            }
+
+            node.addChild(l);
+            node.addChild(op);
+
+            if(c!=null){
+                node.addChild(c);
+            }
+            if (s != null) {
+                node.addChild(s);
+            }
+
+            RESULT = node;
+        :}
+    ;
+    
+    opt_correct_list ::= COMMA CORRECT TWO_POINTS OPEN_CURLY_BRACKETS correct_values:co CLOSED_CURLY_BRACKETS {:
+            Node node = new Node(NodeType.CORRECT_LIST);
+            node.addChild(co);
+            RESULT = node;
+        :}
+        | /* EMPTY */ {: 
+            RESULT = null;
+        :}
+    ;
+    
+    correct_values ::= correct_values:l COMMA arithmetic_expr:e {:
+            l.addChild(e);
+            RESULT = l;
+        :}
+        | arithmetic_expr:e {:
+            Node node = new Node(NodeType.VALUE_LIST);
+            node.addChild(e);
+            RESULT = node;
+        :}
+    ;
+    
+    opt_correct ::= CORRECT TWO_POINTS arithmetic_expr:e {:
+            Node node = new Node(NodeType.CORRECT);
+            node.addChild(e);
+            RESULT = node;
+        :}
+        | /* EMPTY */ {:
+            RESULT = null; 
+        :}
+    ;
+
+
+        // POKEMON
+    who_is_that_pokemon ::= WHO_IS_THAT_POKEMON OPEN_PARENT NUMBER 
+            COMMA arithmetic_expr:e1 COMMA arithmetic_expr:e2 CLOSED_PARENT {:
+            Node node = new Node(NodeType.WHO_IS_THAT_POKEMON);
+            node.addChild(e1);
+            node.addChild(e2);
             
             RESULT = node;
         :}
     ;
 
     // CODE BLOCKS
+    block ::= OPEN_CURLY_BRACKETS stmt_list:s CLOSED_CURLY_BRACKETS {:
+            Node node = new Node(NodeType.BLOCK);
+            node.addChild(s);
+            RESULT = node;
+        :}
+    ;
+        
+    stmt_list ::= stmt_list:l stmt:s {:
+            l.addChild(s);
+            RESULT = l;
+        :}
+        | stmt:s {:
+            Node node = new Node(NodeType.BLOCK);
+            node.addChild(s);
+            RESULT = node;
+        :}
+    ;
+    
+    stmt ::= var_declaration
+           | var_assignment
+           | open_question
+           | drop_question
+           | select_question
+           | multiple_question
+           | section
+           | table
+           | text
+           | if_stmt
+           | while_stmt
+           | do_while_stmt
+           | for_stmt
+    ;
+
     // IF
-    if_stmt ::=  {:
-            
-            
-            
+    if_stmt ::= IF OPEN_PARENT logic_expr:c CLOSED_PARENT block:b else_if_list:e else_opt:o {:
+            Node node = new Node(NodeType.IF);
+
+            node.addChild(c);
+            node.addChild(b);
+
+            if (e != null) {
+                node.addChild(e);
+            }
+            if (o != null) {
+                node.addChild(o);
+            }
+
             RESULT = node;
         :}
     ;
     
     // IF-ELSE
-    if_else_stmt ::=  {:
-            
-            
-            
+    else_if_list ::= else_if_list:l else_if:e {:
+            l.addChild(e);
+            RESULT = l;
+        :}
+        | else_if:e {:
+            Node node = new Node(NodeType.ELSE_IF);
+            node.addChild(e);
+            RESULT = node;
+        :} | /* EMPRY */ {:
+            RESULT = null;
+        :}
+    ;
+    
+    else_if ::= ELSE_IF OPEN_PARENT logic_expr:c CLOSED_PARENT block:b {:
+            Node node = new Node(NodeType.ELSE_IF);
+            node.addChild(c);
+            node.addChild(b);
             RESULT = node;
         :}
     ;
     
     // ELSE
-    else_stmt ::=  {:
-            
-            
-            
+    else_opt ::= ELSE block:b
+        {:
+            Node node = new Node(NodeType.ELSE);
+            node.addChild(b);
             RESULT = node;
         :}
+        | /* EMPYTY */ {:
+            RESULT = null; 
+        :}
     ;
+
     
     // WHILE
-    while_stmt ::=  {:
-            
-            
-            
+    while_stmt ::= WHILE OPEN_PARENT logic_expr:c CLOSED_PARENT block:b {:
+            Node node = new Node(NodeType.WHILE);
+            node.addChild(c);
+            node.addChild(b);
             RESULT = node;
         :}
     ;
 
     // DO-WHILE
-    do_while_stmt ::=  {:
-            
-            
-            
+    do_while_stmt ::= DO block:b WHILE OPEN_PARENT logic_expr:c CLOSED_PARENT {:
+            Node node = new Node(NodeType.DO_WHILE);
+            node.addChild(b);
+            node.addChild(c);
             RESULT = node;
         :}
     ;
-      
     // FOR
-    for_stmt ::=  {:
-            
-            
+    for_stmt ::= FOR OPEN_PARENT for_init:i SEMICOLON logic_expr:c SEMICOLON for_update:u CLOSED_PARENT block:b {:
+            Node node = new Node(NodeType.FOR);
+
+            node.addChild(i);
+            node.addChild(c);
+            node.addChild(u);
+            node.addChild(b);
+
+            RESULT = node;
+        :}
+    ;
     
+    for_init ::= IDENTIFIER:id ASSIGN arithmetic_expr:e {:
+            Node node = new Node(NodeType.INIT);
+            node.addChild(new Node(NodeType.ID, id));
+            node.addChild(e);
+            RESULT = node;
+        :}
+    ;
+    
+    for_update ::= IDENTIFIER:id ASSIGN arithmetic_expr:e {:
+            Node node = new Node(NodeType.UPDATE);
+            node.addChild(new Node(NodeType.ID, id));
+            node.addChild(e);
             RESULT = node;
         :}
     ;
 
-*/
+    for_stmt ::= FOR OPEN_PARENT IDENTIFIER:id IN arithmetic_expr:start RANGE arithmetic_expr:end CLOSED_PARENT block:b {:
+            Node node = new Node(NodeType.FOR_RANGE);
+
+            node.addChild(new Node(NodeType.ID, id));
+            node.addChild(start);
+            node.addChild(end);
+            node.addChild(b);
+
+            RESULT = node;
+        :}
+    ;
