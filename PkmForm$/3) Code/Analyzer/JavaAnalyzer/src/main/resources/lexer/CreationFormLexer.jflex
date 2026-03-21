@@ -54,15 +54,15 @@ WhiteSpace              = {LineTerminator} | [ \t\f]
 HexColor                = \#[0-9a-fA-F]{6}
 RGBColor                = \({Integer},{Integer},{Integer}\)
 HSLColor                = \<{Integer},{Integer},{Integer}\>
-BaseColor               = "RED" | "BLUE" | "GREEN" | "PURPLE" | "SKY" | "YELLOW" | "BLACK" | "WHITE"
+BaseColor               = "RED"|"BLUE"|"GREEN"|"PURPLE"|"SKY"|"YELLOW"|"BLACK"|"WHITE"
 
-Smile                   = "@[:\)+]" | "@[:smile:]"
-Sad                     = "@[:\(+]" | "@[:sad:]"
-Serious                 = "@[:\|+]" | "@[:serious:]"
-Heart                   = "@[\<+\3+]"| "@[:heart:]"
+Smile                   = "@[:\)+]"|"@[:smile:]"
+Sad                     = "@[:\(+]"|"@[:sad:]"
+Serious                 = "@[:\|+]"|"@[:serious:]"
+Heart                   = "@[\<+\3+]"|"@[:heart:]"
+Cat                     = "@[:^^:]"|"@[:cat:]"
 Star                    = "@[:star:]"
-StarNumber              = "@[:star:"{PositiveInteger}":]" | "@[:star-"{PositiveInteger}":]"
-Cat                     = "@[:^^:]" | "@[:cat:]"
+StarNumber              = "@[:star:"{PositiveInteger}":]"|"@[:star-"{PositiveInteger}":]"
 
 // JAVA CODE -------------------------------------------------------------------
 %{
@@ -102,6 +102,16 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
 %%
 /********************************* LEXICAL RULES ******************************/
 <YYINITIAL>{
+    
+    // Line comment
+    \$                  { yybegin(COMMENT); }
+
+    \"color\"           { return symbol(CreationFormSym.COLOR); }
+    \"background\ color\" { return symbol(CreationFormSym.BACKGROUND_COLOR); }
+    \"font\ family\"     { return symbol(CreationFormSym.FONT_FAMILY); }
+    \"text\ size\"       { return symbol(CreationFormSym.TEXT_SIZE); }
+    \"border\"          { return symbol(CreationFormSym.BORDER); }
+    
     // RESERVED WORDS
     "IF"                { return symbol(CreationFormSym.IF); }
     "ELSE IF"           { return symbol(CreationFormSym.ELSE_IF); }
@@ -111,6 +121,7 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
     "DO"                { return symbol(CreationFormSym.DO); }
     
     "FOR"               { return symbol(CreationFormSym.FOR); }
+    "in"               { return symbol(CreationFormSym.IN); }
     
     "number"            { return symbol(CreationFormSym.NUMBER_VARIABLE); }
     "string"            { return symbol(CreationFormSym.STRING_VARIABLE); }
@@ -152,11 +163,13 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
     "}"                 { return symbol(CreationFormSym.CLOSED_CURLY_BRACKETS); }
     
     // END OF LINE
+    ".."                 { return symbol(CreationFormSym.RANGE); }
     "."                 { return symbol(CreationFormSym.DOT); }
     ","                 { return symbol(CreationFormSym.COMMA); }
     ":"                 { return symbol(CreationFormSym.TWO_POINTS); }
     
     // SECTIONS
+    "SECTION"           { return symbol(CreationFormSym.SECTION); }
     "pointX"            { return symbol(CreationFormSym.POINT_X); }
     "pointY"            { return symbol(CreationFormSym.POINT_Y); }
     "orientation"       { return symbol(CreationFormSym.ORIENTATION); }
@@ -174,16 +187,11 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
     
     //STYLES
     "styles"            { return symbol(CreationFormSym.STYLES); }
-    \"color\"           { return symbol(CreationFormSym.COLOR); }
-    \"background color\" { return symbol(CreationFormSym.BACKGROUND_COLOR); }
-    \"font family\"     { return symbol(CreationFormSym.FONT_FAMILY); }
     
     "MONO"              { return symbol(CreationFormSym.MONO); }
     "SANS_SERIF"        { return symbol(CreationFormSym.SANS_SERIF); }
     "CURSIVE"           { return symbol(CreationFormSym.CURSIVE); }
     
-    \"text size\"       { return symbol(CreationFormSym.TEXT_SIZE); }
-    \"border\"          { return symbol(CreationFormSym.BORDER); }
     "LINE"              { return symbol(CreationFormSym.LINE_BORDER); }
     "DOTTED"            { return symbol(CreationFormSym.DOTTED_BORDER); }
     "DOUBLE"            { return symbol(CreationFormSym.DOUBLE_BORDER); }
@@ -204,20 +212,10 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
     "correct"           { return symbol(CreationFormSym.CORRECT); }
     "who_is_that_pokemon" { return symbol(CreationFormSym.WHO_IS_THAT_POKEMON); }
     
-    // Line comment
-    \$                  { yybegin(COMMENT); }
-    
     // MACROS
     {Number}            { return symbol(CreationFormSym.NUMBER, Double.valueOf(yytext())); }
     {Integer}           { return symbol(CreationFormSym.INTEGER, Integer.valueOf(yytext())); }
 
-    {Identifier}        {
-                            table.addVariable(yytext(), null, null,
-                                yyline+1, yycolumn+1);
-                            
-                            return symbol(CreationFormSym.IDENTIFIER, yytext());
-                        }
-    
     {WhiteSpace}+       { /* IGNORE */ }
     
     {HexColor}          { return symbol(CreationFormSym.COLOR_VALUE, yytext()); }
@@ -233,6 +231,12 @@ Cat                     = "@[:^^:]" | "@[:cat:]"
     {StarNumber}        { return symbol(CreationFormSym.STAR_NUMBER); }
     {Cat}               { return symbol(CreationFormSym.CAT); }
     
+    {Identifier}        {
+                            table.addVariable(yytext(), null, null,
+                                yyline+1, yycolumn+1);
+                            
+                            return symbol(CreationFormSym.IDENTIFIER, yytext());
+                        }
 
     // STATES
     // Block comment

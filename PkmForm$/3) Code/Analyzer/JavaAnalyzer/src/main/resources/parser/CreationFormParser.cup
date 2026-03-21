@@ -81,7 +81,7 @@ parser code {:
         StringBuilder mssBuilder = new StringBuilder();
 
         String lexeme = (cur_token.value != null) ? cur_token.value.toString() : symbl_name_from_id(cur_token.sym);
-        mssBuilder.append(symbl_name_from_id(cur_token.sym));
+        mssBuilder.append(symbl_name_from_id(cur_token.sym)+" ");
         
         if(cur_token.value != null) {
             mssBuilder.append(cur_token.value.toString());
@@ -228,7 +228,7 @@ terminal String IDENTIFIER;
                 var_declaration, var_initialization, var_assignment,
                 special_var, open_special_question, q_attributes, attributes, draw_call, arg_list,
                 // STYLE
-                style,
+                style, border_attr,
                 text_body,
                 content,
                 general_string,
@@ -265,7 +265,8 @@ terminal String IDENTIFIER;
                     // FOR 
                     for_stmt,
                     for_init,
-                    for_update
+                    for_update,
+                    for_in_stmt
     ;
 
 non terminal Node logic_expr;
@@ -297,33 +298,34 @@ precedence left ELSE_IF;
         :}
     ;
 
-    start_stmt_list ::= stmt_list:l start_stmt:s {:
+    start_stmt_list ::= start_stmt_list:l start_stmt:s {:
             l.addChild(s);
             RESULT = l;
         :}
-        | start_stmt :s {:
+        | start_stmt:s {:
             Node node = new Node(NodeType.STMT_LIST);
             node.addChild(s);
             RESULT = node;
         :}
     ;
 
-    start_stmt ::= var_declaration
-           | var_initialization
-           | var_assignment
-           | section
-           | table
-           | text
-           | open_question
-           | drop_question
-           | select_question
-           | multiple_question
-           | special_var
-           | draw_call
-           | if_stmt
-           | while_stmt
-           | do_while_stmt
-           | for_stmt
+    start_stmt ::= var_declaration:v    {: RESULT = v; :}
+        | var_initialization:v          {: RESULT = v; :}
+        | var_assignment:v              {: RESULT = v; :}
+        | section:v                     {: RESULT = v; :}
+        | table:v                       {: RESULT = v; :}
+        | text:v                        {: RESULT = v; :}
+        | open_question:v               {: RESULT = v; :}
+        | drop_question:v               {: RESULT = v; :}
+        | select_question:v             {: RESULT = v; :}
+        | multiple_question:v           {: RESULT = v; :}
+        | special_var:v                 {: RESULT = v; :}
+        | draw_call:v                   {: RESULT = v; :}
+        | if_stmt:v                     {: RESULT = v; :}
+        | while_stmt:v                  {: RESULT = v; :}
+        | do_while_stmt:v               {: RESULT = v; :}
+        | for_stmt:v                    {: RESULT = v; :}
+        | for_in_stmt:v                 {: RESULT = v; :}
     ;
 
     // ARITHMETIC EXPRESIONS
@@ -536,7 +538,7 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ASSIGN, null)); // =
             node.addChild(e); // 20.10
 
-            table.addVariable()
+            table.assignValueToVariable(id,e.getValue());
 
             RESULT = node;
         :}
@@ -548,6 +550,8 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ID, id)); // name
             node.addChild(new Node(NodeType.ASSIGN, null)); // =
             node.addChild(s); // "Toribio"
+
+            table.assignValueToVariable(id,s.getValue());
 
             RESULT = node;
 
@@ -562,6 +566,8 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ID, id)); // x
             node.addChild(new Node(NodeType.ASSIGN, null)); // = 
             node.addChild(e); // 10
+
+            table.assignValueToVariable(id,e.getValue());
             
             RESULT = node;
         :}
@@ -573,6 +579,8 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ASSIGN, null)); // = 
             node.addChild(s); // 10
             
+            table.assignValueToVariable(id,s.getValue());
+
             RESULT = node;
             
         :}
@@ -596,6 +604,11 @@ precedence left ELSE_IF;
             
             RESULT = node;
     
+        :}
+    ;
+
+    general_string ::= STRING:str {:
+            RESULT = new Node(NodeType.STRING, str);
         :}
     ;
 
@@ -625,9 +638,9 @@ precedence left ELSE_IF;
             RESULT = node;
         :}
 
-        | LABEL TWO_POINTS arithmetic_expr:e {:
+        | LABEL TWO_POINTS general_string: g{:
             Node node = new Node(NodeType.ATTR, "label");
-            node.addChild(e);
+            node.addChild(g);
             RESULT = node;
         :}
         | WIDTH TWO_POINTS QUESTION {:
@@ -691,7 +704,7 @@ precedence left ELSE_IF;
     ;
 
     section_body ::= base_attributes:b opt_orientation:o opt_elements:e opt_styles:s {:
-            Node node = new Node(NodeType.SECTION);
+            Node node = new Node(NodeType.SECTION_BODY);
             node.addChild(b);
             if (o != null) {
                 node.addChild(o);
@@ -754,7 +767,7 @@ precedence left ELSE_IF;
         :}
     ;
 
-    opt_elements ::= ELEMENTS TWO_POINTS OPEN_CURLY_BRACKETS element_list:l CLOSED_CURLY_BRACKETS {:
+    opt_elements ::= ELEMENTS TWO_POINTS OPEN_CURLY_BRACKETS element_list:l CLOSED_CURLY_BRACKETS COMMA {:
             Node node = new Node(NodeType.ELEMENTS);
             node.addChild(l);
             RESULT = node;
@@ -775,7 +788,7 @@ precedence left ELSE_IF;
         :}
     ;
 
-    opt_styles ::= COMMA STYLES OPEN_SQR_BRACKETS style_list:s CLOSED_SQR_BRACKETS {:
+    opt_styles ::= STYLES OPEN_SQR_BRACKETS style_list:s CLOSED_SQR_BRACKETS {:
             Node node = new Node(NodeType.STYLE_BLOCK);
             node.addChild(s);
             RESULT = node;
@@ -796,6 +809,65 @@ precedence left ELSE_IF;
         :}
     ;
 
+    style ::= COLOR TWO_POINTS COLOR_VALUE:c {:
+            Node node = new Node(NodeType.COLOR_STYLE, "color");
+            node.addChild(new Node(NodeType.COLOR_VALUE, c));
+            RESULT = node;
+        :}
+        | BACKGROUND_COLOR TWO_POINTS COLOR_VALUE:c {: 
+            Node node = new Node(NodeType.BACKGROUND_COLOR_STYLE, "backgroud_color");
+            node.addChild(new Node(NodeType.BACKGROUND_COLOR, c));
+            RESULT = node;
+        :}
+        | TEXT_SIZE TWO_POINTS arithmetic_expr:e {:
+            Node node = new Node(NodeType.TEXT_SIZE_STYLE, "text_size");
+            node.addChild(new Node(NodeType.TEXT_SIZE,e));
+            RESULT = node;
+        :}
+        | FONT_FAMILY TWO_POINTS MONO {:
+            Node node = new Node(NodeType.FONT_FAMILY_STYLE, "text_size");
+            node.addChild(new Node(NodeType.FONT_FAMILY, "mono"));
+            RESULT = node;
+        :}
+        | FONT_FAMILY TWO_POINTS SANS_SERIF {:
+            Node node = new Node(NodeType.FONT_FAMILY_STYLE, "text_size");
+            node.addChild(new Node(NodeType.FONT_FAMILY, "sans_serif"));
+            RESULT = node;
+        :}
+        | FONT_FAMILY TWO_POINTS CURSIVE {:
+            Node node = new Node(NodeType.FONT_FAMILY_STYLE, "text_size");
+            node.addChild(new Node(NodeType.FONT_FAMILY, "cursive"));
+            RESULT = node;
+        :}
+        | BORDER TWO_POINTS OPEN_PARENT border_attr:b CLOSED_PARENT{: 
+            Node node = new Node(NodeType.BORDER);
+            node.addChild(b);
+            RESULT = node;
+        :}
+    ;
+
+    border_attr ::= NUMBER:e COMMA LINE_BORDER COMMA COLOR_VALUE:c {:
+            Node node = new Node(NodeType.BORDER_ATTR);
+            node.addChild(new Node(NodeType.NUMBER, e));
+            node.addChild(new Node(NodeType.LINE_BORDER, "line_border"));
+            node.addChild(new Node(NodeType.COLOR_VALUE, c));
+            RESULT = node;
+        :}
+        | NUMBER:e COMMA DOTTED_BORDER COMMA COLOR_VALUE:c {:
+            Node node = new Node(NodeType.BORDER_ATTR);
+            node.addChild(new Node(NodeType.NUMBER, e));
+            node.addChild(new Node(NodeType.DOTTED_BORDER, "dotted_border"));
+            node.addChild(new Node(NodeType.COLOR_VALUE, c));
+            RESULT = node;
+        :}
+        | NUMBER:e COMMA DOUBLE_BORDER COMMA COLOR_VALUE:c {:
+            Node node = new Node(NodeType.BORDER_ATTR);
+            node.addChild(new Node(NodeType.NUMBER, e));
+            node.addChild(new Node(NodeType.DOUBLE_BORDER, "double_border"));
+            node.addChild(new Node(NodeType.COLOR_VALUE, c));
+            RESULT = node;
+        :}
+    ;
 
     // TABLES
     table ::= TABLE OPEN_SQR_BRACKETS table_body:tb CLOSED_SQR_BRACKETS {:
@@ -818,7 +890,7 @@ precedence left ELSE_IF;
         :}
     ;
 
-    table_elements ::= ELEMENTS TWO_POINTS OPEN_CURLY_BRACKETS row_list:r CLOSED_CURLY_BRACKETS {:
+    table_elements ::= ELEMENTS TWO_POINTS OPEN_CURLY_BRACKETS row_list:r CLOSED_CURLY_BRACKETS COMMA {:
             Node node = new Node(NodeType.TABLE_ELEMENTS);
             node.addChild(r);
             RESULT = node;
@@ -864,22 +936,33 @@ precedence left ELSE_IF;
     ;
 
 
-    element ::= section:s
-    {:
-        RESULT = s;
-    :}
-    | special_var:sp
-    {:
-        RESULT = sp;
-    :}
-    | draw_call:d
-    {:
-        RESULT = d;
-    :}
-    | table:t
-    {:
-        RESULT = t;
-    :}
+    element ::= section:s {:
+            RESULT = s;
+        :}
+        | special_var:sp {:
+            RESULT = sp;
+        :}
+        | draw_call:d {:// ? Hmm
+            RESULT = d;
+        :}
+        | table:t {:
+            RESULT = t;
+        :}
+        | text:tx {:
+            RESULT = tx;
+        :}
+        | open_question:v {:
+            RESULT = v;
+        :}
+        | drop_question:v {: 
+            RESULT = v; 
+        :}
+        | select_question:v {: 
+            RESULT = v;
+        :}
+        | multiple_question:v {:
+            RESULT = v;
+        :}
     ;
 
     // TEXT ELEMENT
@@ -891,7 +974,7 @@ precedence left ELSE_IF;
     ;
     
     text_body ::= opt_width:w opt_height:h content:c opt_styles:s {:
-            Node node = new Node(NodeType.TEXT);
+            Node node = new Node(NodeType.TEXT_BODY);
 
             if (w != null) {
                 node.addChild(w);
@@ -966,7 +1049,7 @@ precedence left ELSE_IF;
         :}
     ;
 
-    label ::= LABEL TWO_POINTS general_text:s {:
+    label ::= LABEL TWO_POINTS general_text:s COMMA {:
             Node node = new Node(NodeType.LABEL);
             node.addChild(s);
             RESULT = node;
@@ -1008,6 +1091,11 @@ precedence left ELSE_IF;
     options ::= OPTIONS TWO_POINTS OPEN_CURLY_BRACKETS dq_options:dq CLOSED_CURLY_BRACKETS COMMA {:
             Node node = new Node(NodeType.OPTIONS);
             node.addChild(dq);
+            RESULT = node;
+        :}
+        | OPTIONS TWO_POINTS who_is_that_pokemon:w COMMA {:
+            Node node = new Node(NodeType.OPTIONS);
+            node.addChild(w);
             RESULT = node;
         :}
     ;
@@ -1087,7 +1175,7 @@ precedence left ELSE_IF;
         :}
     ;
     
-    opt_correct_list ::= COMMA CORRECT TWO_POINTS OPEN_CURLY_BRACKETS correct_values:co CLOSED_CURLY_BRACKETS {:
+    opt_correct_list ::= CORRECT TWO_POINTS OPEN_CURLY_BRACKETS correct_values:co CLOSED_CURLY_BRACKETS COMMA {:
             Node node = new Node(NodeType.CORRECT_LIST);
             node.addChild(co);
             RESULT = node;
@@ -1108,7 +1196,7 @@ precedence left ELSE_IF;
         :}
     ;
     
-    opt_correct ::= CORRECT TWO_POINTS arithmetic_expr:e {:
+    opt_correct ::= CORRECT TWO_POINTS arithmetic_expr:e COMMA {:
             Node node = new Node(NodeType.CORRECT);
             node.addChild(e);
             RESULT = node;
@@ -1143,25 +1231,26 @@ precedence left ELSE_IF;
             RESULT = l;
         :}
         | stmt:s {:
-            Node node = new Node(NodeType.BLOCK);
+            Node node = new Node(NodeType.STMT_LIST);
             node.addChild(s);
             RESULT = node;
         :}
     ;
     
-    stmt ::= var_declaration
-           | var_assignment
-           | open_question
-           | drop_question
-           | select_question
-           | multiple_question
-           | section
-           | table
-           | text
-           | if_stmt
-           | while_stmt
-           | do_while_stmt
-           | for_stmt
+    stmt ::= var_declaration:v          {: RESULT = v; :}
+        | var_assignment:v              {: RESULT = v; :}
+        | open_question:v               {: RESULT = v; :}
+        | drop_question:v               {: RESULT = v; :}
+        | select_question:v             {: RESULT = v; :}
+        | multiple_question:v           {: RESULT = v; :}
+        | section:v                     {: RESULT = v; :}
+        | table:v                       {: RESULT = v; :}
+        | text:v                        {: RESULT = v; :}
+        | if_stmt:v                     {: RESULT = v; :}
+        | while_stmt:v                  {: RESULT = v; :}
+        | do_while_stmt:v               {: RESULT = v; :}
+        | for_stmt:v                    {: RESULT = v; :}
+        | for_in_stmt:v                 {: RESULT = v; :}
     ;
 
     // IF
@@ -1263,7 +1352,7 @@ precedence left ELSE_IF;
         :}
     ;
 
-    for_stmt ::= FOR OPEN_PARENT IDENTIFIER:id IN arithmetic_expr:start RANGE arithmetic_expr:end CLOSED_PARENT block:b {:
+    for_in_stmt ::= FOR OPEN_PARENT IDENTIFIER:id IN arithmetic_expr:start RANGE arithmetic_expr:end CLOSED_PARENT block:b {:
             Node node = new Node(NodeType.FOR_RANGE);
 
             node.addChild(new Node(NodeType.ID, id));

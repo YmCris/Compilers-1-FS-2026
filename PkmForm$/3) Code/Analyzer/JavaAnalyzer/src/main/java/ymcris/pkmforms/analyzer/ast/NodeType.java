@@ -65,8 +65,6 @@ public enum NodeType {
     INIT,
     UPDATE,
     FOR_RANGE,
-   
-    
     //QUESTION
     LABEL,
     DROP_QUESTION,
@@ -75,7 +73,22 @@ public enum NodeType {
     OPTIONS,
     OPTION,
     CORRECT_LIST,
-    CORRECT, PROGRAM, STMT_LIST
-    
+    CORRECT,
+    PROGRAM,
+    STMT_LIST, 
+    SECTION_BODY,
+    COLOR_STYLE,
+    COLOR_VALUE, 
+    BACKGROUND_COLOR_STYLE, 
+    BACKGROUND_COLOR, 
+    TEXT_SIZE_STYLE, 
+    TEXT_SIZE, 
+    FONT_FAMILY_STYLE, 
+    FONT_FAMILY, 
+    BORDER, 
+    BORDER_ATTR, 
+    LINE_BORDER, 
+    DOTTED_BORDER,
+    DOUBLE_BORDER, TEXT_BODY
 
 }
