@@ -1,0 +1,178 @@
+package ymcris.pkmforms.form.creation.analyzer.parser.semantic;
+
+import java.util.List;
+import ymcris.pkmforms.analyzer.ast.Node;
+import ymcris.pkmforms.analyzer.symbols.table.SymbolTable;
+import ymcris.pkmforms.analyzer.tokens.errors.ErrorToken;
+import ymcris.pkmforms.analyzer.utilities.exceptions.InvalidRootException;
+
+/**
+ * The SemanticAnalyzer class is the class responsible for
+ *
+ * @author YmCris
+ * @since Mar 21, 2026
+ */
+public class SemanticAnalyzer {
+
+    // REFERENCE VARIABLES -----------------------------------------------------
+    private SymbolTable table;
+    private List<ErrorToken> errorList;
+    private StyleElement currentStyle;
+
+    // PRIMITIVE VARIABLES -----------------------------------------------------
+    private boolean insideElement = false;
+
+    // CONSTRUCTOR METHOD ------------------------------------------------------
+    public SemanticAnalyzer(SymbolTable table, List<ErrorToken> errorList) {
+        this.table = table;
+        this.errorList = errorList;
+        this.currentStyle = new StyleElement();
+    }
+
+    // SPECIFIC METHODS --------------------------------------------------------
+    public void analyze(Node node) throws InvalidRootException {
+        if (node == null) {
+            throw new InvalidRootException("The node is null");
+        }
+        for (Node child : node.getChildren()) {
+            visitNode(child);
+        }
+    }
+
+    private void visitNode(Node node) {
+        if (node == null) {
+            return;
+        }
+/*
+        switch (node.getType()) {
+            case STMT_LIST ->
+                visitStmtList(node);
+            case VAR_DECLARATION ->
+                visitVarDeclaration(node);
+            case VAR_INITIALIZATION ->
+                visitVarInitialization(node);
+            case VAR_ASSIGNMENT ->
+                visitVarAssignment(node);
+            case SPECIAL_INIT ->
+                visitSpecialInit(node);
+            case DRAW_CALL ->
+                visitDrawCall(node);
+            case SECTION ->
+                visitSection(node, currentStyle);
+            case TABLE ->
+                visitTable(node, currentStyle);
+            case TEXT ->
+                visitText(node, currentStyle);
+            case OPEN_QUESTION ->
+                visitOpenQuestion(node, currentStyle);
+            case DROP_QUESTION ->
+                visitDropQuestion(node, currentStyle);
+            case SELECT_QUESTION ->
+                visitSelectQuestion(node, currentStyle);
+            case MULTIPLE_QUESTION ->
+                visitMultipleQuestion(node, currentStyle);
+            case IF ->
+                visitIf(node);
+            case WHILE ->
+                visitWhile(node);
+            case DO_WHILE ->
+                visitDoWhile(node);
+            case FOR ->
+                visitFor(node);
+            case FOR_RANGE ->
+                visitForRange(node);
+            case BLOCK ->
+                visitBlock(node);
+            default -> {
+                for (Node child : node.getChildren()) {
+                    visitNode(child);
+                }
+            }
+        }*/
+    }
+
+    // GENERAL
+    /*
+    1. todo atributo que acepte un numero puede aceptar una expresión aritmética
+     */
+    // VARIABLES
+    /*
+    1. Variables usables fuera de todo y en bloques de código
+    2. Asignar un valor default a las variables no inicializadas 0 , ""
+    3. No se puede redifinir una variable
+    4. Tipos incorrectos asignados a las variables
+    5. Special almacena solo preguntas y se tiene que inicializar siempre
+    6. Comodines
+    7. No se pueden declarar ni asignar variables dentro de secciones, tablas o preguntas
+     */
+    // ARITHMETIC EXPRESSIONS
+    /*
+    1. Las variables de tipo special NO pueden usarse en expresiones aritméticas
+    2. Las variables de tipo special NO pueden usarse en expresiones aritméticas
+     */
+    // LOGIC EXPRESSION
+    /*
+    1. Solo se puede unar un único operador y not por expresión
+    2. variables deben estar declaradas antes de usarse en una expresión
+    3. tipo de la expresión debe ser number, no string
+    4. los operandos de comparación deben ser de tipo number
+
+     */
+    // DRAW CALL
+    /*
+    1. La variable debe existir
+    2. La variable debe ser de tipo special
+    3. El número de argumentos debe coincidir con el número de comodines '?'
+    4. AGREGAR: los argumentos deben ser de tipo number
+     */
+    // STYLE
+    /*
+    1. Los colores predefinidos para las letras es negro
+    2. Los colores predefinidos para el fondo es blanco
+    3. herencia — si el hijo no define un estilo, hereda el del padre
+    4. styles no puede venir vacío (debe tener al menos un estilo)
+    5. text size debe ser un número positivo
+    6. border — el grosor debe ser un número positivo
+     */
+    // SECTION
+    /*
+    1. orientacion default es VERTICAL
+    2. width, height, pointX, pointY deben ser números positivos
+    3. elements puede estar vacío pero si existe debe tener al menos un elemento
+    4. secciones se pueden anidar sin límite
+     */
+    // TABLE
+    /*
+    1. Alto y ancho de la tabla tienen que distribuirse equitativamente
+    2. todas las filas deben tener el mismo número de columnas
+    3. cada celda puede contener cualquier elemento (sección, pregunta, tabla, texto)
+    4. width, height, pointX, pointY deben ser positivos
+     */
+    // TEXT
+    /*
+    1. Debe ir dentro de una sección o una tabla
+    2. hereda width/height del padre si no se especifican
+    3. content es obligatorio
+    
+     */
+    // QUESTIONS
+    /*
+    1. Preguntas solo dentro de una sección o una tabla
+    2. En SELECT QUESTION si el usuario ingresa más de 5 opciones se le debe mostrar un mensaje
+    3. correct debe ser un entero no negativo
+    4. correct fuera de rango de options → ERROR
+    5. MULTIPLE_QUESTION — cada índice en correct{} debe estar en rango
+    6. who_is_that_pokemon — el rango n..m debe ser positivo y n <= m
+    7. options no puede estar vacío
+    8. label es obligatorio en todas las preguntas
+    9. herencia de width/height/styles del padre
+     */
+    // CODE BLOCKS
+    /*
+    1. Todos los bloques se pueden anidar
+    2. Variable del FOR — si ya existe y no es number → ERROR
+    3. si la variable del FOR no existe → se declara implícitamente como number con valor 0
+    4. FOR IN — mismas reglas que FOR para la variable
+    5. condición del IF/WHILE/DO-WHILE debe ser una expresión lógica válida
+     */
+}

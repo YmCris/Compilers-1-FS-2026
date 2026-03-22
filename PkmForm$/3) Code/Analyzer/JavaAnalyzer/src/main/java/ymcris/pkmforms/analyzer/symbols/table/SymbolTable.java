@@ -29,8 +29,6 @@ public class SymbolTable {
 
         if (table.containsKey(variableName)) {
             System.out.println("The variable " + variableName + " already exists");
-            /*throw new VariableAlreadyExistsException("The variable "
-                    + variableName + " already exists");*/
         }
 
         Symbol symbol = new Symbol(variableName, type, value, row, column);
@@ -55,7 +53,7 @@ public class SymbolTable {
         if (type != null) {
             symbol.setType(type);
         }
-        
+
         symbol.setValue(newValue);
     }
 
@@ -72,6 +70,14 @@ public class SymbolTable {
     // GETTERS -----------------------------------------------------------------
     public Map getTable() {
         return table;
+    }
+
+    public boolean exists(String name) {
+        return table.containsKey(name);
+    }
+
+    public SymbolType getType(String name) {
+        return table.get(name).getType();
     }
 
 }

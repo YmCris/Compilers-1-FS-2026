@@ -8,6 +8,7 @@ import ymcris.pkmforms.form.creation.analyzer.parser.CreationFormParser;
 
 import java.io.StringReader;
 import java.util.List;
+import ymcris.pkmforms.form.creation.analyzer.parser.semantic.SemanticAnalyzer;
 
 public class Main {
 
@@ -131,7 +132,11 @@ public class Main {
                     ]
                 ]
             
-            } ELSE {
+            } ELSE IF (10 > 5 && hola == 3){
+                                               TEXT [
+                                                   content: "¡Tienes todos tus intentos intactos! @[:cat:]"
+                                               ]
+            }ELSE {
                 contador = contador + 1
             }
             
@@ -176,6 +181,10 @@ public class Main {
             }
 
             AST ast = runParser(lexer);
+            // Después de runParser(lexer):
+            SemanticAnalyzer semantic = new SemanticAnalyzer(lexer.getTable(), lexer.getLexicalErrors());
+            semantic.analyze(ast.getRoot());
+
             if (ast == null) {
                 System.out.println("AST null");
                 return;

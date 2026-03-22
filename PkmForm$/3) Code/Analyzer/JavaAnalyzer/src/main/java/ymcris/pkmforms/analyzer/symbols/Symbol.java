@@ -12,10 +12,11 @@ public class Symbol {
     private Object value;
     private SymbolType type;
     private String identifier;
-    
+
     // PRIMITIVE VARIABLES -----------------------------------------------------
     private int row;
     private int column;
+    private int placeholderCount;
 
     // CONSTRUCTOR METHOD ------------------------------------------------------
     public Symbol(String identifier, SymbolType type, Object value, int row, int column) {
@@ -52,6 +53,10 @@ public class Symbol {
         return column;
     }
 
+    public int getPlaceholderCount() {
+        return placeholderCount;
+    }
+
     // SETTERS -----------------------------------------------------------------
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
@@ -71,6 +76,10 @@ public class Symbol {
 
     public void setColumn(int column) {
         this.column = column;
+    }
+
+    public void setPlaceholderCount(int placeholderCount) {
+        this.placeholderCount = placeholderCount;
     }
 
 }

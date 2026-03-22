@@ -539,7 +539,9 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ASSIGN, null)); // =
             node.addChild(e); // 20.10
 
-            table.assignValueToVariable(id,SymbolType.NUMBER,e.getValue());
+            if(e.getValue()!=null){
+                table.assignValueToVariable(id,SymbolType.NUMBER,e.getValue());
+            }
 
             RESULT = node;
         :}
@@ -551,8 +553,9 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ID, id)); // name
             node.addChild(new Node(NodeType.ASSIGN, null)); // =
             node.addChild(s); // "Toribio"
-
-            table.assignValueToVariable(id,SymbolType.STRING, s.getValue());
+            if(s.getValue()!=null){
+                table.assignValueToVariable(id,SymbolType.STRING, s.getValue());
+            }
 
             RESULT = node;
 
@@ -567,9 +570,9 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ID, id)); // x
             node.addChild(new Node(NodeType.ASSIGN, null)); // = 
             node.addChild(e); // 10
-
-            table.assignValueToVariable(id,SymbolType.NUMBER,e.getValue());
-            
+            if(e.getValue()!=null){
+                table.assignValueToVariable(id,SymbolType.NUMBER,e.getValue());
+            }
             RESULT = node;
         :}
         |IDENTIFIER:id ASSIGN general_string:s {: // x = "PEPE"
@@ -579,9 +582,9 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ID, id)); // x
             node.addChild(new Node(NodeType.ASSIGN, null)); // = 
             node.addChild(s); // 10
-            
-            table.assignValueToVariable(id,SymbolType.STRING, s.getValue());
-
+            if(s.getValue()!=null){
+                table.assignValueToVariable(id,SymbolType.STRING, s.getValue());
+            }
             RESULT = node;
             
         :}
@@ -593,9 +596,9 @@ precedence left ELSE_IF;
             Node node = new Node(NodeType.SPECIAL_INIT);// special
             node.addChild(new Node(NodeType.ID, id));// myQuestion
             node.addChild(oq);
-            
-            table.assignValueToVariable(id,SymbolType.SPECIAL,oq.getValue());
-
+            if(oq.getValue()!=null){
+                table.assignValueToVariable(id,SymbolType.SPECIAL,oq.getValue());
+            }
             RESULT = node;
         :}
     ;
@@ -1268,9 +1271,11 @@ precedence left ELSE_IF;
             RESULT = l;
         :}
         | else_if:e {:
+            /*
             Node node = new Node(NodeType.ELSE_IF);
             node.addChild(e);
-            RESULT = node;
+            */
+            RESULT = e;
         :} | /* EMPRY */ {:
             RESULT = null;
         :}

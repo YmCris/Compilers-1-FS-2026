@@ -1714,7 +1714,9 @@ class CUP$CreationFormParser$actions {
             node.addChild(new Node(NodeType.ASSIGN, null)); // =
             node.addChild(e); // 20.10
 
-            table.assignValueToVariable(id,SymbolType.NUMBER,e.getValue());
+            if(e.getValue()!=null){
+                table.assignValueToVariable(id,SymbolType.NUMBER,e.getValue());
+            }
 
             RESULT = node;
         
@@ -1740,8 +1742,9 @@ class CUP$CreationFormParser$actions {
             node.addChild(new Node(NodeType.ID, id)); // name
             node.addChild(new Node(NodeType.ASSIGN, null)); // =
             node.addChild(s); // "Toribio"
-
-            table.assignValueToVariable(id,SymbolType.STRING, s.getValue());
+            if(s.getValue()!=null){
+                table.assignValueToVariable(id,SymbolType.STRING, s.getValue());
+            }
 
             RESULT = node;
 
@@ -1767,9 +1770,9 @@ class CUP$CreationFormParser$actions {
             node.addChild(new Node(NodeType.ID, id)); // x
             node.addChild(new Node(NodeType.ASSIGN, null)); // = 
             node.addChild(e); // 10
-
-            table.assignValueToVariable(id,SymbolType.NUMBER,e.getValue());
-            
+            if(e.getValue()!=null){
+                table.assignValueToVariable(id,SymbolType.NUMBER,e.getValue());
+            }
             RESULT = node;
         
               CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("var_assignment",5, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-2)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
@@ -1793,9 +1796,9 @@ class CUP$CreationFormParser$actions {
             node.addChild(new Node(NodeType.ID, id)); // x
             node.addChild(new Node(NodeType.ASSIGN, null)); // = 
             node.addChild(s); // 10
-            
-            table.assignValueToVariable(id,SymbolType.STRING, s.getValue());
-
+            if(s.getValue()!=null){
+                table.assignValueToVariable(id,SymbolType.STRING, s.getValue());
+            }
             RESULT = node;
             
         
@@ -1818,9 +1821,9 @@ class CUP$CreationFormParser$actions {
             Node node = new Node(NodeType.SPECIAL_INIT);// special
             node.addChild(new Node(NodeType.ID, id));// myQuestion
             node.addChild(oq);
-            
-            table.assignValueToVariable(id,SymbolType.SPECIAL,oq.getValue());
-
+            if(oq.getValue()!=null){
+                table.assignValueToVariable(id,SymbolType.SPECIAL,oq.getValue());
+            }
             RESULT = node;
         
               CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("special_var",6, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.elementAt(CUP$CreationFormParser$top-3)), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
@@ -3620,9 +3623,11 @@ class CUP$CreationFormParser$actions {
 		int eright = ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()).right;
 		Node e = (Node)((java_cup.runtime.Symbol) CUP$CreationFormParser$stack.peek()).value;
 		
+            /*
             Node node = new Node(NodeType.ELSE_IF);
             node.addChild(e);
-            RESULT = node;
+            */
+            RESULT = e;
         
               CUP$CreationFormParser$result = parser.getSymbolFactory().newSymbol("else_if_list",58, ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), ((java_cup.runtime.Symbol)CUP$CreationFormParser$stack.peek()), RESULT);
             }
