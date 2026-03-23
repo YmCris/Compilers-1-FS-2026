@@ -6,5 +6,4 @@ class Form {
 
     var elements : List<Element> = ArrayList()
 
-
 }

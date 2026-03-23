@@ -12,5 +12,5 @@ data class Table (
     override val position: Point,
     val rows: Int,
     val columns: Int,
-    val elements: Grid<Element>
+    val elements: Grid
 ): Element(width, height, style) , Positionable
