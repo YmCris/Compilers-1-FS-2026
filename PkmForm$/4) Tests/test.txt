@@ -1,0 +1,305 @@
+                $ ==========================================
+                $ 1. DEFINICIÓN DE VARIABLES GLOBAL
+                $ ==========================================
+                string hola
+                hola = "Holaaa"
+                number contador = 10
+                number intentos = 3
+                number arithExpr= 12+857+45+intentos
+                string titulo = "Encuesta de Entrenadores @[:star:3:]"
+                
+                /*
+                Las variables especiales deben inicializarse siempre
+                y pueden contener comodines '?'
+                */
+                special preguntaDinamica = OPEN_QUESTION [
+                    width: 3,
+                    height: 1,
+                    label: "Describe a tu Pokémon favorito @[:smile:]"
+                ]
+                preguntaDinamica.draw()
+                
+                $ ==========================================
+                $ 2. MAQUETACIÓN PRINCIPAL (SECCIONES Y TABLAS)
+                $ ==========================================
+                SECTION [
+                    width: 800+intentos,      $ Valores literales, no variables
+                    height: 600+12+20.5,
+                    pointX: 0,
+                    pointY: 0,
+                    orientation: VERTICAL,
+                    elements: {
+                        TEXT [
+                            content: "¡Bienvenido a la Liga Pokémon! @[:heart:]"
+                        ],
+                        TEXT [
+                            width: 800+intentos,
+                            height: 600+12+20.5,
+                            content: "¿Eres líder de gimnasio?"
+                
+                        styles [
+                            "color": BLACK,
+                            "background color": WHITE,
+                            "font family": SANS_SERIF,
+                            "text size": 16,
+                            "border": (2.0, DOUBLE, BLUE)
+                        ]
+                        ],
+                
+                        DROP_QUESTION [
+                            width: 300,
+                            height: 40,
+                            label: "Elige tu inicial de Kanto:",
+                            $ Uso de la función a la PokéAPI
+                            options: who_is_that_pokemon(2.2, 1, 3),
+                            correct: 1,
+                        ],
+                
+                        TABLE [
+                            width: 600,
+                            height: 150,
+                            pointX: 10,
+                            pointY: 10,
+                            elements: {
+                                [
+                                    {
+                                        TEXT [
+                                            content: "¿Eres líder de gimnasio?"
+                                        ]
+                                    },
+                                    {
+                                        SELECT_QUESTION [
+                                            label: "Elige tu inicial de Kanto:",
+                                            options: {"Sí", "No"},
+                                            correct: 1,
+                                        ]
+                                    }
+                                ]
+                            },
+                
+                            styles [
+                                "color": BLACK,
+                                "background color": BLACK,
+                                "font family": MONO,
+                                "text size": 14,
+                                "border": (1.2, LINE, BLACK)
+                            ]
+                        ]
+                    },
+                
+                    styles [
+                        "color": BLACK,
+                        "background color": WHITE,
+                        "font family": SANS_SERIF,
+                        "text size": 16,
+                        "border": (2.0, DOUBLE, BLUE)
+                    ]
+                ]
+                SECTION [
+                    width: 800+intentos,      $ Valores literales, no variables
+                    height: 600+12+20.5,
+                    pointX: 0,
+                    pointY: 0,
+                
+                    elements: {
+                
+                        SECTION [
+                            width: 800+intentos,
+                            height: 600+12+20.5,
+                            pointX: 0,
+                            pointY: 0,
+                        ],
+                
+                        OPEN_QUESTION [
+                            width: 300,
+                            height: 40,
+                            label: "Elige tu inicial de KantoOOOOOOOOOOOOOOOOOO:",
+                
+                            styles [
+                                "color": BLACK,
+                                "background color": WHITE,
+                                "font family": SANS_SERIF,
+                                "text size": 16,
+                                "border": (2.0, DOUBLE, BLUE)
+                            ]
+                        ],
+                        OPEN_QUESTION [
+                            label: "Elige tu inicial de Kanto:",
+                        ],
+                
+                        DROP_QUESTION [
+                            width: 300,
+                            height: 40,
+                            label: "Elige tu inicial de Kanto:",
+                            $ Uso de la función a la PokéAPI
+                            options: who_is_that_pokemon(2.2, 1, 3),
+                            correct: 1,
+                
+                            styles [
+                                "color": BLACK,
+                                "background color": WHITE,
+                                "font family": SANS_SERIF,
+                                "text size": 16,
+                                "border": (2.0, DOUBLE, BLUE)
+                            ]
+                        ],
+                        DROP_QUESTION [
+                            label: "Elige tu inicial de Kanto:",
+                            options: {"uno","dos"},
+                        ],
+                        SELECT_QUESTION [
+                            width: 300,
+                            height: 40,
+                            label: "Elige tu inicial de Kanto:",
+                            options: who_is_that_pokemon(2.2, 1, 3),
+                            correct: 1,
+                
+                            styles [
+                                "color": BLACK,
+                                "background color": WHITE,
+                                "font family": SANS_SERIF,
+                                "text size": 16,
+                                "border": (2.0, DOUBLE, BLUE)
+                            ]
+                        ],
+                        SELECT_QUESTION [
+                            label: "Elige tu inicial de Kanto:",
+                            options: who_is_that_pokemon(2.2, 1, 3),
+                        ],
+                        MULTIPLE_QUESTION [
+                            width: 300,
+                            height: 40,
+                            label: "Elige tu inicial de Kanto:",
+                            options: {"uno","dos"},
+                            correct: {0,1},
+                
+                            styles [
+                                "color": BLACK,
+                                "background color": WHITE,
+                                "font family": SANS_SERIF,
+                                "text size": 16,
+                                "border": (2.0, DOUBLE, BLUE)
+                            ]
+                        ],
+                        MULTIPLE_QUESTION [
+                            label: "Elige tu inicial de Kanto:",
+                            options: {"uno","dos"},
+                        ],
+                
+                
+                        TABLE [
+                            width: 600,
+                            height: 150,
+                            pointX: 10,
+                            pointY: 10,
+                            elements: {
+                                [
+                                    {
+                                        TEXT [
+                                            content: "¿Eres líder de gimnasio?"
+                                        ]
+                                    },
+                                    {
+                                        SELECT_QUESTION [
+                                            label: "Elige tu inicial de Kanto:",
+                                            options: {"Sí", "No"},
+                                            correct: 1,
+                                        ]
+                                    }, {
+                                        SECTION [
+                                            width: 800+intentos,
+                                            height: 600+12+20.5,
+                                            pointX: 0,
+                                            pointY: 0,
+                                        ]
+                                    }
+                                ]
+                            },
+                        ]
+                    },
+                
+                    styles [
+                        "color": BLACK,
+                        "background color": WHITE,
+                        "font family": SANS_SERIF,
+                        "text size": 16,
+                        "border": (2.0, DOUBLE, BLUE)
+                    ]
+                ]
+                
+                $ ==========================================
+                $ 3. USO DE VARIABLES ESPECIALES
+                $ ==========================================
+                $ Se reemplazan los comodines '?' por 400 (width) y 80 (height)
+                preguntaDinamica.draw()
+                
+                $ ==========================================
+                $ 4. BLOQUES DE CÓDIGO Y LÓGICA
+                $ ==========================================
+                
+                $ Condicional con un solo tipo de operador lógico (&&)
+                IF (10 > 5 && intentos == 3) {
+                
+                    SECTION [
+                        width: 300,
+                        height: 100,
+                        pointX: 0,
+                        pointY: 0,
+                        elements: {
+                            TEXT [
+                                content: "¡Tienes todos tus intentos intactos! @[:cat:]"
+                            ]
+                        },
+                        styles [
+                            "color": GREEN,
+                            "background color": WHITE,
+                            "font family": MONO,
+                            "text size": 14,
+                            "border": (1.2, LINE, GREEN)
+                        ]
+                    ]
+                
+                } ELSE IF (10 > 5 && contador == 3){
+                    SECTION [
+                        width: 300,
+                        height: 100,
+                        pointX: 0,
+                        pointY: 0,
+                        elements: {
+                            TEXT [
+                                content: "¡Tienes todos tus intentos intactos! @[:cat:]"
+                            ]
+                        },
+                    ]
+                }ELSE {
+                    contador = contador + 1
+                }
+                
+                $ Ciclo WHILE válido usando la variable 'contador' ya declarada
+                WHILE (contador < 3) {
+                    contador = contador + 1
+                }
+                
+                $ Ciclo FOR de rango. La pregunta OBLIGATORIAMENTE va dentro de una SECTION.
+                FOR (i in 1 .. 3) {
+                    SECTION [
+                        width: 400,
+                        height: 150,
+                        pointX: 0,
+                        pointY: 0,
+                        elements: {
+                            MULTIPLE_QUESTION [
+                                label: "Elige tu inicial de Kanto:",
+                                options: {"Ataque", "Defensa", "Velocidad"},
+                                correct: {0, 2},
+                            ]
+                        },
+                        styles [
+                            "color": RED,
+                            "background color": WHITE,
+                            "font family": MONO,
+                            "text size": 12,
+                            "border": (1.0, DOTTED, RED)
+                        ]
+                    ]
+                }

@@ -8,4 +8,10 @@ data class Style(
     val fontFamily: FontFamily,
     val textSize: Double,
     val border: Border
-)
+){
+    companion object {
+        fun default(): Style {
+            return Style("", "", FontFamily.MONO, 12.0, Border.default())
+        }
+    }
+}

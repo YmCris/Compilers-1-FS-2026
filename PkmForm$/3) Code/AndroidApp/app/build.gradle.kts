@@ -31,8 +31,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         compose = true
@@ -49,7 +49,15 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.runtime)
+    
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    
+    
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    // https://mvnrepository.com/artifact/de.jflex/cup_runtime
+    implementation("de.jflex:cup_runtime:11b-20160615")
+    // https://mvnrepository.com/artifact/com.itextpdf/itextpdf
+    implementation("com.itextpdf:itextpdf:5.5.13.3")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

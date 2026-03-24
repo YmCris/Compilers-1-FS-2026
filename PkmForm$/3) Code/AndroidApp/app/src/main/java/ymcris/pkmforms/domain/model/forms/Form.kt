@@ -4,6 +4,6 @@ import ymcris.pkmforms.domain.model.forms.elements.Element
 
 class Form {
 
-    var elements : List<Element> = ArrayList()
+    var elements : MutableList<Element> = ArrayList()
 
 }

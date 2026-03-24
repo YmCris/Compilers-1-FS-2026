@@ -8,5 +8,4 @@ data class OpenQuestion (
     override val height: Double,
     override val style: Style,
     override val label: String,
-    val response: String
 ) : Question(width, height, style, label)

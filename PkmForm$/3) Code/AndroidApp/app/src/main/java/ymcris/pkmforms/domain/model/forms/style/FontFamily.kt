@@ -4,6 +4,13 @@ enum class FontFamily {
 
     MONO,
     SANS_SERIF,
-    CURSIVE
+    CURSIVE;
+    companion object {
+        fun fromString(value: String): FontFamily {
+            return entries.firstOrNull {
+                it.name.equals(value, ignoreCase = true)
+            } ?: MONO
+        }
+    }
 
 }

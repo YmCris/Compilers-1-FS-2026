@@ -51,6 +51,19 @@ public class Main {
                     TEXT [
                         content: "¡Bienvenido a la Liga Pokémon! @[:heart:]"
                     ],
+                    TEXT [
+                        width: 800+intentos,
+                        height: 600+12+20.5,
+                        content: "¿Eres líder de gimnasio?"
+                       
+                    styles [
+                        "color": BLACK,
+                        "background color": WHITE,
+                        "font family": SANS_SERIF,
+                        "text size": 16,
+                        "border": (2.0, DOUBLE, BLUE)
+                    ]
+                    ],
             
                     DROP_QUESTION [
                         width: 300,
