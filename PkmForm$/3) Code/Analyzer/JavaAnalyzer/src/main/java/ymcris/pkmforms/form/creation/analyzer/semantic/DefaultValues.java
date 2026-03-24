@@ -1,4 +1,4 @@
-package ymcris.pkmforms.form.creation.analyzer.parser.semantic;
+package ymcris.pkmforms.form.creation.analyzer.semantic;
 
 /**
  * The enum DefaultValues is the enum responsible for representing

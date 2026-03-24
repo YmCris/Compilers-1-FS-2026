@@ -28,7 +28,6 @@ public class SymbolTable {
             int row, int column) {
 
         if (table.containsKey(variableName)) {
-            System.out.println("The variable " + variableName + " already exists");
         }
 
         Symbol symbol = new Symbol(variableName, type, value, row, column);

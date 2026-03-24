@@ -315,11 +315,11 @@ precedence left ELSE_IF;
         | var_assignment:v              {: RESULT = v; :}
         | section:v                     {: RESULT = v; :}
         | table:v                       {: RESULT = v; :}
-        | text:v                        {: RESULT = v; :}
-        | open_question:v               {: RESULT = v; :}
-        | drop_question:v               {: RESULT = v; :}
-        | select_question:v             {: RESULT = v; :}
-        | multiple_question:v           {: RESULT = v; :}
+       // | text:v                        {: RESULT = v; :}
+       // | open_question:v               {: RESULT = v; :}
+       // | drop_question:v               {: RESULT = v; :}
+       // | select_question:v             {: RESULT = v; :}
+       // | multiple_question:v           {: RESULT = v; :}
         | special_var:v                 {: RESULT = v; :}
         | draw_call:v                   {: RESULT = v; :}
         | if_stmt:v                     {: RESULT = v; :}
@@ -540,7 +540,7 @@ precedence left ELSE_IF;
             node.addChild(e); // 20.10
 
             if(e.getValue()!=null){
-                table.assignValueToVariable(id,SymbolType.NUMBER,e.getValue());
+                //table.assignValueToVariable(id,SymbolType.NUMBER,e.getValue());
             }
 
             RESULT = node;
@@ -554,7 +554,7 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ASSIGN, null)); // =
             node.addChild(s); // "Toribio"
             if(s.getValue()!=null){
-                table.assignValueToVariable(id,SymbolType.STRING, s.getValue());
+                //table.assignValueToVariable(id,SymbolType.STRING, s.getValue());
             }
 
             RESULT = node;
@@ -571,7 +571,7 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ASSIGN, null)); // = 
             node.addChild(e); // 10
             if(e.getValue()!=null){
-                table.assignValueToVariable(id,SymbolType.NUMBER,e.getValue());
+                //table.assignValueToVariable(id,SymbolType.NUMBER,e.getValue());
             }
             RESULT = node;
         :}
@@ -583,7 +583,7 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ASSIGN, null)); // = 
             node.addChild(s); // 10
             if(s.getValue()!=null){
-                table.assignValueToVariable(id,SymbolType.STRING, s.getValue());
+                //table.assignValueToVariable(id,SymbolType.STRING, s.getValue());
             }
             RESULT = node;
             
@@ -597,7 +597,7 @@ precedence left ELSE_IF;
             node.addChild(new Node(NodeType.ID, id));// myQuestion
             node.addChild(oq);
             if(oq.getValue()!=null){
-                table.assignValueToVariable(id,SymbolType.SPECIAL,oq.getValue());
+                //table.assignValueToVariable(id,SymbolType.SPECIAL,oq.getValue());
             }
             RESULT = node;
         :}
@@ -1023,9 +1023,7 @@ precedence left ELSE_IF;
     // QUESTIONS
         // OPEN QUESTIONS
     open_question ::= OPEN_QUESTION OPEN_SQR_BRACKETS oq_body:b CLOSED_SQR_BRACKETS {:
-            Node node = new Node(NodeType.OPEN_QUESTION);
-            node.addChild(b);
-            RESULT = node;
+            RESULT = b;
         :}
     ;
 

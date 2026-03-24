@@ -1,4 +1,4 @@
-package ymcris.pkmforms.form.creation.analyzer.parser.semantic;
+package ymcris.pkmforms.form.creation.analyzer.semantic;
 
 /**
  * The StyleElement class is the class responsible for 

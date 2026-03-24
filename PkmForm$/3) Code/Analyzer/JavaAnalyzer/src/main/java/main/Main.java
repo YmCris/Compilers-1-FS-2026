@@ -8,7 +8,7 @@ import ymcris.pkmforms.form.creation.analyzer.parser.CreationFormParser;
 
 import java.io.StringReader;
 import java.util.List;
-import ymcris.pkmforms.form.creation.analyzer.parser.semantic.SemanticAnalyzer;
+import ymcris.pkmforms.form.creation.analyzer.semantic.SemanticAnalyzer;
 
 public class Main {
 
@@ -20,8 +20,11 @@ public class Main {
             $ ==========================================
             $ 1. DEFINICIÓN DE VARIABLES GLOBAL
             $ ==========================================
-            number contador = 0
+            string hola
+            hola = "Holaaa"
+            number contador = 10
             number intentos = 3
+            number arithExpr= 12+857+45+intentos
             string titulo = "Encuesta de Entrenadores @[:star:3:]"
             
             /*
@@ -29,23 +32,22 @@ public class Main {
             y pueden contener comodines '?'
             */
             special preguntaDinamica = OPEN_QUESTION [
-                width: ?,
-                height: ?,
+                width: 3,
+                height: 1,
                 label: "Describe a tu Pokémon favorito @[:smile:]"
             ]
+            preguntaDinamica.draw()
             
             $ ==========================================
             $ 2. MAQUETACIÓN PRINCIPAL (SECCIONES Y TABLAS)
             $ ==========================================
             SECTION [
-                width: 800,      $ Valores literales, no variables
-                height: 600,
+                width: 800+intentos,      $ Valores literales, no variables
+                height: 600+12+20.5,
                 pointX: 0,
                 pointY: 0,
                 orientation: VERTICAL,
-            
                 elements: {
-                    
                     TEXT [
                         content: "¡Bienvenido a la Liga Pokémon! @[:heart:]"
                     ],
@@ -99,12 +101,143 @@ public class Main {
                     "border": (2.0, DOUBLE, BLUE)
                 ]
             ]
+            SECTION [
+                width: 800+intentos,      $ Valores literales, no variables
+                height: 600+12+20.5,
+                pointX: 0,
+                pointY: 0,
             
+                elements: {
+                       
+                    SECTION [
+                        width: 800+intentos,
+                        height: 600+12+20.5,
+                        pointX: 0,
+                        pointY: 0,
+                    ],
+                       
+                    OPEN_QUESTION [
+                        width: 300,
+                        height: 40,
+                        label: "Elige tu inicial de KantoOOOOOOOOOOOOOOOOOO:",
+                       
+                        styles [
+                            "color": BLACK,
+                            "background color": WHITE,
+                            "font family": SANS_SERIF,
+                            "text size": 16,
+                            "border": (2.0, DOUBLE, BLUE)
+                        ]
+                    ],
+                    OPEN_QUESTION [
+                        label: "Elige tu inicial de Kanto:",
+                    ],
+                    
+                    DROP_QUESTION [
+                        width: 300,
+                        height: 40,
+                        label: "Elige tu inicial de Kanto:",
+                        $ Uso de la función a la PokéAPI
+                        options: who_is_that_pokemon(2.2, 1, 3),
+                        correct: 1,
+                       
+                        styles [
+                            "color": BLACK,
+                            "background color": WHITE,
+                            "font family": SANS_SERIF,
+                            "text size": 16,
+                            "border": (2.0, DOUBLE, BLUE)
+                        ]
+                    ],
+                    DROP_QUESTION [
+                        label: "Elige tu inicial de Kanto:",
+                        options: {"uno","dos"},
+                    ],
+                    SELECT_QUESTION [
+                        width: 300,
+                        height: 40,
+                        label: "Elige tu inicial de Kanto:",
+                        options: who_is_that_pokemon(2.2, 1, 3),
+                        correct: 1,
+                       
+                        styles [
+                            "color": BLACK,
+                            "background color": WHITE,
+                            "font family": SANS_SERIF,
+                            "text size": 16,
+                            "border": (2.0, DOUBLE, BLUE)
+                        ]
+                    ],
+                    SELECT_QUESTION [
+                        label: "Elige tu inicial de Kanto:",
+                        options: who_is_that_pokemon(2.2, 1, 3),
+                    ],
+                    MULTIPLE_QUESTION [
+                        width: 300,
+                        height: 40,
+                        label: "Elige tu inicial de Kanto:",
+                        options: {"uno","dos"},
+                        correct: {0,1},
+                       
+                        styles [
+                            "color": BLACK,
+                            "background color": WHITE,
+                            "font family": SANS_SERIF,
+                            "text size": 16,
+                            "border": (2.0, DOUBLE, BLUE)
+                        ]
+                    ],
+                    MULTIPLE_QUESTION [
+                        label: "Elige tu inicial de Kanto:",
+                        options: {"uno","dos"},
+                    ],
+
+            
+                    TABLE [
+                        width: 600,
+                        height: 150,
+                        pointX: 10,
+                        pointY: 10,
+                        elements: {
+                            [
+                                {
+                                    TEXT [
+                                        content: "¿Eres líder de gimnasio?"
+                                    ]
+                                },
+                                {
+                                    SELECT_QUESTION [
+                                        label: "Elige tu inicial de Kanto:",
+                                        options: {"Sí", "No"},
+                                        correct: 1,
+                                    ]
+                                }, {
+                                    SECTION [
+                                        width: 800+intentos,
+                                        height: 600+12+20.5,
+                                        pointX: 0,
+                                        pointY: 0,
+                                    ]
+                                }
+                            ]
+                        },
+                    ]
+                },
+            
+                styles [
+                    "color": BLACK,
+                    "background color": WHITE,
+                    "font family": SANS_SERIF,
+                    "text size": 16,
+                    "border": (2.0, DOUBLE, BLUE)
+                ]
+            ]
+                       
             $ ==========================================
             $ 3. USO DE VARIABLES ESPECIALES
             $ ==========================================
             $ Se reemplazan los comodines '?' por 400 (width) y 80 (height)
-            preguntaDinamica.draw(400, 80)
+            preguntaDinamica.draw()
             
             $ ==========================================
             $ 4. BLOQUES DE CÓDIGO Y LÓGICA
@@ -132,10 +265,18 @@ public class Main {
                     ]
                 ]
             
-            } ELSE IF (10 > 5 && hola == 3){
-                                               TEXT [
-                                                   content: "¡Tienes todos tus intentos intactos! @[:cat:]"
-                                               ]
+            } ELSE IF (10 > 5 && contador == 3){
+                SECTION [
+                    width: 300,
+                    height: 100,
+                    pointX: 0,
+                    pointY: 0,
+                    elements: {
+                        TEXT [
+                            content: "¡Tienes todos tus intentos intactos! @[:cat:]"
+                        ]
+                    },
+                ]
             }ELSE {
                 contador = contador + 1
             }
@@ -181,9 +322,13 @@ public class Main {
             }
 
             AST ast = runParser(lexer);
-            // Después de runParser(lexer):
-            SemanticAnalyzer semantic = new SemanticAnalyzer(lexer.getTable(), lexer.getLexicalErrors());
+            System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            System.out.println("  FASE 3: ANÁLISIS SEMÁNTICO");
+            System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            SemanticAnalyzer semantic = new SemanticAnalyzer(
+                    lexer.getTable(), lexer.getLexicalErrors());
             semantic.analyze(ast.getRoot());
+            System.out.println("✔ Semántico completado.");
 
             if (ast == null) {
                 System.out.println("AST null");
